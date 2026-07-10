@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Operation Command Center — Dashboard')
+@section('title', 'HAI Care COT — Dashboard')
 @section('page_title', 'Dashboard')
 
 @section('content')

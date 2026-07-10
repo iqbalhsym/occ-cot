@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login SSO — OCC COT RSUI</title>
+  <title>Login SSO — HAI Care COT</title>
   <link rel="icon" href="{{ asset('favicon.ico') }}">
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   <style>
@@ -293,8 +293,8 @@
   {{-- Foto gedung kiri --}}
   <div class="login-photo">
     <div class="login-photo-text">
-      <h2>Operation Command Center COT</h2>
-      <p>Rumah Sakit Universitas Indonesia</p>
+      <h2>HAI Care COT</h2>
+      <p>Operation Command Center</p>
     </div>
   </div>
 
@@ -312,7 +312,7 @@
 
     <div class="login-divider"></div>
 
-    <div class="login-title">Masuk ke OCC COT</div>
+    <div class="login-title">Masuk ke HAI Care COT</div>
     <div class="login-subtitle">Gunakan akun RSUI Anda untuk mengakses sistem.</div>
 
     {{-- Error / Success --}}
@@ -383,7 +383,7 @@
     <div class="login-footer">
       Akun dikelola oleh <strong>Active Directory RSUI</strong>.<br>
       Tidak bisa login? Hubungi <strong>IT Division RSUI</strong>.<br><br>
-      OCC COT &copy; {{ date('Y') }} — Rumah Sakit Universitas Indonesia
+      HAI Care COT &copy; {{ date('Y') }} — Rumah Sakit Universitas Indonesia
     </div>
   </div>
 

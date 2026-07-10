@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'OCC — Operation Command Center COT RSUI')</title>
+    <title>@yield('title', 'HAI Care COT — Operation Command Center')</title>
     <link rel="icon" href="{{ asset('favicon.ico') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
     <style>
@@ -81,9 +81,8 @@
         <div class="brand">
           <img src="{{ asset('logo-rsui-big.png') }}" alt="Logo RSUI" class="brand-logo">
           <div class="brand-text">
-            <h1>Operation Command Center</h1>
-            <p>Kontrol Kamar Bedah Sentral</p>
-            <p style="color:rgba(249,168,37,0.85); font-weight:600;">COT RSUI</p>
+            <h1>HAI Care COT</h1>
+            <p>Operation Command Center</p>
           </div>
         </div>
 

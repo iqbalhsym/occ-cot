@@ -1,0 +1,234 @@
+[
+  {
+    "nama": "SPINAL ANESTESI",
+    "tarif": 1974568
+  },
+  {
+    "nama": "GENERAL ANESTESI",
+    "tarif": 3672400
+  },
+  {
+    "nama": "EPIDURAL ANESTESI",
+    "tarif": 2915212
+  },
+  {
+    "nama": "TIVA",
+    "tarif": 1422120
+  },
+  {
+    "nama": "APPENDIKTOMI",
+    "tarif": 4525776
+  },
+  {
+    "nama": "ACL",
+    "tarif": 7640056
+  },
+  {
+    "nama": "AV SHUNT",
+    "tarif": 7087372
+  },
+  {
+    "nama": "BESS",
+    "tarif": 3079300
+  },
+  {
+    "nama": "BIOPSI PROSTAT",
+    "tarif": 2722292
+  },
+  {
+    "nama": "BRONKOSKOPI",
+    "tarif": 6099028
+  },
+  {
+    "nama": "CVC",
+    "tarif": 4616088
+  },
+  {
+    "nama": "DEBRIDEMENT",
+    "tarif": 3585768
+  },
+  {
+    "nama": "DEKOMPRESI STABILISASI (SPINE)",
+    "tarif": 21052024
+  },
+  {
+    "nama": "EKSISI",
+    "tarif": 2593396
+  },
+  {
+    "nama": "EKSISI MATA",
+    "tarif": 4129548
+  },
+  {
+    "nama": "ENDOSKOPI",
+    "tarif": 1815568
+  },
+  {
+    "nama": "EMVA",
+    "tarif": 3264142
+  },
+  {
+    "nama": "FESS",
+    "tarif": 4350664
+  },
+  {
+    "nama": "HERNIOTOMI",
+    "tarif": 7364032
+  },
+  {
+    "nama": "HISTEREKTOMI",
+    "tarif": 4761944
+  },
+  {
+    "nama": "IMPLAN GLAUKOMA",
+    "tarif": 9172180
+  },
+  {
+    "nama": "KATARAK PHACO",
+    "tarif": 8877400
+  },
+  {
+    "nama": "KRANIOTOMI",
+    "tarif": 25768812
+  },
+  {
+    "nama": "KURETASE",
+    "tarif": 1285780
+  },
+  {
+    "nama": "LABIOPLASTY PALATOPLASTY",
+    "tarif": 3319920
+  },
+  {
+    "nama": "LAPARATOMI",
+    "tarif": 5756648
+  },
+  {
+    "nama": "LAPAROTOMI ANAK",
+    "tarif": 16079566
+  },
+  {
+    "nama": "LAPAROTOMI LAR",
+    "tarif": 20798900
+  },
+  {
+    "nama": "LAPAROSKOPI (UMUM)",
+    "tarif": 39258590
+  },
+  {
+    "nama": "LAPAROSKOPI APP",
+    "tarif": 31098740
+  },
+  {
+    "nama": "LAPAROSKOPI KE",
+    "tarif": 29510290
+  },
+  {
+    "nama": "LAPAROSKOPI OBGYN",
+    "tarif": 44666660
+  },
+  {
+    "nama": "LAMINEKTOMI",
+    "tarif": 21776300
+  },
+  {
+    "nama": "NUSS PROCEDURE",
+    "tarif": 17221000
+  },
+  {
+    "nama": "MASTEKTOMI",
+    "tarif": 9062200
+  },
+  {
+    "nama": "ODONTEKTOMI",
+    "tarif": 5497200
+  },
+  {
+    "nama": "ORIF",
+    "tarif": 3773400
+  },
+  {
+    "nama": "ORIF MANDIBULA",
+    "tarif": 10779869
+  },
+  {
+    "nama": "PCI CAG",
+    "tarif": 2324000
+  },
+  {
+    "nama": "PCNL",
+    "tarif": 18720000
+  },
+  {
+    "nama": "PSA ANAK",
+    "tarif": 11385566
+  },
+  {
+    "nama": "RIRS",
+    "tarif": 2413700
+  },
+  {
+    "nama": "RELEASE CTS",
+    "tarif": 6343500
+  },
+  {
+    "nama": "REKONSTRUKSI THT",
+    "tarif": 4843200
+  },
+  {
+    "nama": "REKONSTRUKSI BURRIED PENIS",
+    "tarif": 9926900
+  },
+  {
+    "nama": "SECTIO CAESAR (SC)",
+    "tarif": 5129200
+  },
+  {
+    "nama": "SIRKUMSISI",
+    "tarif": 1862300
+  },
+  {
+    "nama": "SNRB",
+    "tarif": 1988000
+  },
+  {
+    "nama": "THR-TKR",
+    "tarif": 3938600
+  },
+  {
+    "nama": "TIROIDEKTOMI",
+    "tarif": 3301900
+  },
+  {
+    "nama": "TONSILEKTOMI",
+    "tarif": 3124300
+  },
+  {
+    "nama": "TORAKOTOMI",
+    "tarif": 21872700
+  },
+  {
+    "nama": "TRAKEOSTOMI",
+    "tarif": 5279300
+  },
+  {
+    "nama": "TURP",
+    "tarif": 8646000
+  },
+  {
+    "nama": "TVH KOLPOKLEISIS",
+    "tarif": 6350700
+  },
+  {
+    "nama": "URS",
+    "tarif": 10304200
+  },
+  {
+    "nama": "VP SHUNT",
+    "tarif": 7890500
+  },
+  {
+    "nama": "WSD",
+    "tarif": 5662100
+  }
+]

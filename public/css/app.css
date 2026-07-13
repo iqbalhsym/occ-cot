@@ -783,3 +783,57 @@ tbody tr { cursor: pointer; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--slate-200); border-radius: 6px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--primary-300, #90CAF9); }
+
+/* Pagination Style */
+.pagination-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1.5px solid var(--slate-100);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.pagination-info {
+  font-size: 13px;
+  color: var(--slate-500);
+}
+.pagination-links {
+  display: flex;
+  gap: 6px;
+}
+.pagination-links a, .pagination-links span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: 1px solid var(--slate-200);
+  background: var(--white);
+  color: var(--slate-700);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+.pagination-links a:hover {
+  border-color: var(--primary-400);
+  color: var(--primary-700);
+  background: var(--primary-50);
+}
+.pagination-links .active {
+  background: var(--primary-700);
+  color: var(--white);
+  border-color: var(--primary-700);
+  font-weight: 600;
+}
+.pagination-links .disabled {
+  color: var(--slate-400);
+  background: var(--slate-50);
+  cursor: not-allowed;
+  border-color: var(--slate-200);
+}

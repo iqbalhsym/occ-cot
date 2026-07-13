@@ -9,23 +9,20 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $cases = OperationCase::with(['dpjp', 'tindakan'])->get();
-
-        $total = $cases->count();
-        $aktif = $cases->filter(function ($c) {
-            return in_array($c->status, ['InProgress', 'Submitted']);
-        })->count();
-        $selesai = $cases->where('status', 'Completed')->count();
-        $returned = $cases->where('status', 'Returned')->count();
+        $total = OperationCase::count();
+        $aktif = OperationCase::whereIn('status', ['InProgress', 'Submitted'])->count();
+        $selesai = OperationCase::where('status', 'Completed')->count();
+        $returned = OperationCase::where('status', 'Returned')->count();
 
         $byPenjamin = [
-            'Asuransi' => $cases->where('penjamin', 'Asuransi')->count(),
-            'Umum' => $cases->where('penjamin', 'Umum')->count()
+            'Asuransi' => OperationCase::where('penjamin', 'Asuransi')->count(),
+            'Umum' => OperationCase::where('penjamin', 'Umum')->count()
         ];
 
-        // Sort cases by createdAt desc for the timeline
+        // Sort cases by createdAt desc for the timeline, limited to the latest 20 cases for efficiency
         $timelineCases = OperationCase::with(['dpjp', 'tindakan'])
             ->orderBy('created_at', 'desc')
+            ->limit(20)
             ->get();
 
         return view('dashboard.index', compact('total', 'aktif', 'selesai', 'returned', 'byPenjamin', 'timelineCases'));
@@ -33,18 +30,14 @@ class DashboardController extends Controller
 
     public function getStats()
     {
-        $cases = OperationCase::all();
-
-        $total = $cases->count();
-        $aktif = $cases->filter(function ($c) {
-            return in_array($c->status, ['InProgress', 'Submitted']);
-        })->count();
-        $selesai = $cases->where('status', 'Completed')->count();
-        $returned = $cases->where('status', 'Returned')->count();
+        $total = OperationCase::count();
+        $aktif = OperationCase::whereIn('status', ['InProgress', 'Submitted'])->count();
+        $selesai = OperationCase::where('status', 'Completed')->count();
+        $returned = OperationCase::where('status', 'Returned')->count();
 
         $byPenjamin = [
-            'Asuransi' => $cases->where('penjamin', 'Asuransi')->count(),
-            'Umum' => $cases->where('penjamin', 'Umum')->count()
+            'Asuransi' => OperationCase::where('penjamin', 'Asuransi')->count(),
+            'Umum' => OperationCase::where('penjamin', 'Umum')->count()
         ];
 
         return response()->json([

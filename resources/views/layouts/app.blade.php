@@ -42,32 +42,9 @@
       ];
 
       // Queue count per active role
-      $allCasesForCount = \App\Models\OperationCase::with(['va','kasir','adru','farmasi','adminCot','caseManager','cs'])->get();
       $queueCount = 0;
-      foreach ($allCasesForCount as $c) {
-          if ($c->status === 'Cancelled' || $c->status === 'Draft') continue;
-          $match = false;
-          if ($activeRole === 'VA') {
-              $match = ($c->penjamin === 'Asuransi' && (!$c->va || $c->va->estimasi_total == 0)) ||
-                       ($c->penjamin === 'Asuransi' && $c->caseManager && $c->caseManager->done && (!$c->va || !$c->va->done));
-          } elseif ($activeRole === 'Kasir') {
-              $match = ($c->penjamin === 'Umum') && (!$c->kasir->done || ($c->caseManager && $c->caseManager->done && $c->status === 'InProgress'));
-          } elseif ($activeRole === 'ADRUCOT') {
-              $match = ($c->penjamin === 'Umum') && (!$c->adru->done || ($c->caseManager && $c->caseManager->done && $c->status === 'InProgress'));
-          } elseif ($activeRole === 'Farmasi') {
-              $match = !$c->farmasi->done;
-          } elseif ($activeRole === 'AdminCOT') {
-              if ($c->lokasi_tindakan === 'COT') {
-                  if (!$c->adminCot->prelim_done) { $match = true; }
-                  else { $routeDone = ($c->penjamin === 'Asuransi') ? $c->cs->done : ($c->kasir->done && $c->adru->done); $match = $routeDone && !$c->adminCot->final_done; }
-              }
-          } elseif ($activeRole === 'CaseManager') {
-              $stage1Done = ($c->penjamin === 'Asuransi') ? ($c->va->estimasi_total > 0) : ($c->kasir->done && $c->adru->done);
-              $match = $stage1Done && $c->farmasi->done && ($c->lokasi_tindakan !== 'COT' || $c->adminCot->prelim_done) && !$c->caseManager->done;
-          } elseif ($activeRole === 'CS') {
-              $match = ($c->penjamin === 'Asuransi') && $c->va->done && !$c->cs->done;
-          }
-          if ($match) $queueCount++;
+      if ($activeRole !== 'Viewer') {
+          $queueCount = \App\Models\OperationCase::getQueueQueryForRole($activeRole)->count();
       }
     @endphp
 

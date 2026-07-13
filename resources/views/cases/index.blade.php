@@ -85,5 +85,37 @@
         </tbody>
       </table>
     </div>
+
+    @if($cases instanceof \Illuminate\Pagination\LengthAwarePaginator && $cases->hasPages())
+      <div class="pagination-wrapper">
+        <div class="pagination-info">
+          Menampilkan {{ $cases->firstItem() }} - {{ $cases->lastItem() }} dari {{ $cases->total() }} data
+        </div>
+        <div class="pagination-links">
+          {{-- Previous Page Link --}}
+          @if ($cases->onFirstPage())
+            <span class="disabled">&laquo;</span>
+          @else
+            <a href="{{ $cases->previousPageUrl() }}">&laquo;</a>
+          @endif
+
+          {{-- Pagination Elements --}}
+          @foreach ($cases->getUrlRange(max(1, $cases->currentPage() - 2), min($cases->lastPage(), $cases->currentPage() + 2)) as $page => $url)
+            @if ($page == $cases->currentPage())
+              <span class="active">{{ $page }}</span>
+            @else
+              <a href="{{ $url }}">{{ $page }}</a>
+            @endif
+          @endforeach
+
+          {{-- Next Page Link --}}
+          @if ($cases->hasMorePages())
+            <a href="{{ $cases->nextPageUrl() }}">&raquo;</a>
+          @else
+            <span class="disabled">&raquo;</span>
+          @endif
+        </div>
+      </div>
+    @endif
   </div>
 @endsection

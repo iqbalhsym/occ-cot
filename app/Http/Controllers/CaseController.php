@@ -79,7 +79,20 @@ class CaseController extends Controller
 
     public function index(Request $request)
     {
-        $query = OperationCase::with(['dpjp', 'tindakan', 'va', 'kasir', 'adru', 'farmasi', 'adminCot', 'caseManager', 'cs']);
+        // Apply Antrian Saya (My Queue) filter directly on query if requested
+        if ($request->query('queue') === 'mine') {
+            $activeRole = session('role', 'Nurse');
+            if ($activeRole !== 'Viewer') {
+                $query = OperationCase::getQueueQueryForRole($activeRole);
+            } else {
+                $query = OperationCase::whereRaw('1 = 0');
+            }
+        } else {
+            $query = OperationCase::query();
+        }
+
+        // Eager load relations
+        $query->with(['dpjp', 'tindakan', 'va', 'kasir', 'adru', 'farmasi', 'adminCot', 'caseManager', 'cs']);
 
         // Quick search
         if ($request->filled('search')) {
@@ -101,54 +114,7 @@ class CaseController extends Controller
             $query->where('current_flow', $request->flow);
         }
 
-        $cases = $query->orderBy('created_at', 'desc')->get();
-
-        // Apply Antrian Saya (My Queue) collection filter
-        if ($request->query('queue') === 'mine') {
-            $activeRole = session('role', 'Nurse');
-            $cases = $cases->filter(function ($c) use ($activeRole) {
-                if ($c->status === 'Cancelled' || $c->status === 'Draft') {
-                    return false;
-                }
-                
-                if ($activeRole === 'Nurse') {
-                    return true;
-                }
-                if ($activeRole === 'VA') {
-                    return ($c->penjamin === 'Asuransi' && (!$c->va || $c->va->estimasi_total == 0)) ||
-                           ($c->penjamin === 'Asuransi' && $c->caseManager && $c->caseManager->done && (!$c->va || !$c->va->done));
-                }
-                if ($activeRole === 'Kasir') {
-                    return ($c->penjamin === 'Umum') &&
-                           (!$c->kasir->done || ($c->caseManager && $c->caseManager->done && $c->status === 'InProgress'));
-                }
-                if ($activeRole === 'ADRUCOT') {
-                    return ($c->penjamin === 'Umum') &&
-                           (!$c->adru->done || ($c->caseManager && $c->caseManager->done && $c->status === 'InProgress'));
-                }
-                if ($activeRole === 'Farmasi') {
-                    return !$c->farmasi->done;
-                }
-                if ($activeRole === 'AdminCOT') {
-                    if ($c->lokasi_tindakan === 'COT') {
-                        if (!$c->adminCot->prelim_done) {
-                            return true;
-                        }
-                        $routeDone = ($c->penjamin === 'Asuransi') ? $c->cs->done : ($c->kasir->done && $c->adru->done);
-                        return $routeDone && !$c->adminCot->final_done;
-                    }
-                    return false;
-                }
-                if ($activeRole === 'CaseManager') {
-                    $stage1Done = ($c->penjamin === 'Asuransi') ? ($c->va->estimasi_total > 0) : ($c->kasir->done && $c->adru->done);
-                    return $stage1Done && $c->farmasi->done && ($c->lokasi_tindakan !== 'COT' || $c->adminCot->prelim_done) && !$c->caseManager->done;
-                }
-                if ($activeRole === 'CS') {
-                    return ($c->penjamin === 'Asuransi') && $c->va->done && !$c->cs->done;
-                }
-                return false;
-            });
-        }
+        $cases = $query->orderBy('created_at', 'desc')->paginate(20);
 
         return view('cases.index', compact('cases'));
     }

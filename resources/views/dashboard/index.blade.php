@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'HAI Care COT — Dashboard')
+@section('title', 'Hospital Action Interface Care — Dashboard')
 @section('page_title', 'Dashboard')
 
 @section('content')

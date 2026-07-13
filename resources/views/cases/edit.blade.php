@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'HAI Care COT — Edit Case ' . $case->id)
+@section('title', 'Hospital Action Interface Care — Edit Case ' . $case->id)
 @section('page_title', 'Edit Case ' . $case->id)
 
 @section('content')

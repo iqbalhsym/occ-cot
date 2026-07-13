@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'OCC — Manajemen Pengguna')
+@section('title', 'Hospital Action Interface Care — Manajemen Pengguna')
 @section('page_title', 'Manajemen Pengguna SSO')
 
 @section('content')

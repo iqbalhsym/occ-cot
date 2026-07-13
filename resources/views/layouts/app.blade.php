@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'HAI Care COT — Operation Command Center')</title>
+    <title>@yield('title', 'Hospital Action Interface Care — COT Operation Command Center')</title>
     <link rel="icon" href="{{ asset('favicon.ico') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
     <style>
@@ -81,8 +81,8 @@
         <div class="brand">
           <img src="{{ asset('logo-rsui-big.png') }}" alt="Logo RSUI" class="brand-logo">
           <div class="brand-text">
-            <h1>HAI Care COT</h1>
-            <p>Operation Command Center</p>
+            <h1>Hospital Action Interface Care</h1>
+            <p>COT Operation Command Center</p>
           </div>
         </div>
 
@@ -158,7 +158,7 @@
             </div>
           @endif
           <div class="sidebar-foot-text" style="margin-top:8px; font-size:10px; color:rgba(255,255,255,0.30); line-height:1.4;">
-            OCC COT RSUI &copy; {{ date('Y') }}
+            COT OCC RSUI &copy; {{ date('Y') }}
           </div>
         </div>
       </aside>

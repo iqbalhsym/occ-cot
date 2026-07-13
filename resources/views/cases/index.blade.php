@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'HAI Care COT — Daftar Kasus')
+@section('title', 'Hospital Action Interface Care — Daftar Kasus')
 @section('page_title', request()->query('queue') === 'mine' ? 'Antrian Saya' : 'Semua Case')
 
 @section('content')

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'HAI Care COT — Role & Status Reference')
+@section('title', 'Hospital Action Interface Care — Role & Status Reference')
 @section('page_title', 'Role & Status Reference')
 
 @section('content')

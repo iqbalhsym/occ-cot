@@ -8,6 +8,7 @@ use App\Http\Controllers\TindakanController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\MasterDataController;
 
 // Guest Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -65,5 +66,10 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/admin/doctors', [DoctorController::class, 'store'])->name('admin.doctors.store');
         Route::put('/admin/doctors/{id}', [DoctorController::class, 'update'])->name('admin.doctors.update');
         Route::delete('/admin/doctors/{id}', [DoctorController::class, 'destroy'])->name('admin.doctors.destroy');
+
+        Route::get('/admin/master', [MasterDataController::class, 'index'])->name('admin.master');
+        Route::post('/admin/master', [MasterDataController::class, 'store'])->name('admin.master.store');
+        Route::put('/admin/master/{id}', [MasterDataController::class, 'update'])->name('admin.master.update');
+        Route::delete('/admin/master/{id}', [MasterDataController::class, 'destroy'])->name('admin.master.destroy');
     });
 });

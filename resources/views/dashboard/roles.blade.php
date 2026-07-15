@@ -17,22 +17,22 @@
         </thead>
         <tbody>
           <tr>
-            <td><strong>Nurse</strong></td>
+            <td><strong>Nurse (Entry Point)</strong></td>
             <td>Membuat pengajuan, edit saat Draft, submit, memantau dashboard.</td>
             <td style="color:var(--red-500)">Mengubah data setelah submit kecuali status Returned.</td>
           </tr>
           <tr>
-            <td><strong>VA</strong></td>
+            <td><strong>VA (Asuransi)</strong></td>
             <td>Verifikasi administrasi asuransi, estimasi biaya, kelengkapan dokumen (khusus Penjamin=Asuransi).</td>
             <td style="color:var(--red-500)">Menangani pasien Umum.</td>
           </tr>
           <tr>
-            <td><strong>Kasir</strong></td>
+            <td><strong>Kasir (Umum)</strong></td>
             <td>Administrasi/pembayaran pasien umum secara paralel dengan ADRU COT.</td>
             <td style="color:var(--red-500)">Menangani pasien Asuransi.</td>
           </tr>
           <tr>
-            <td><strong>ADRU COT</strong></td>
+            <td><strong>ADRU COT (Umum)</strong></td>
             <td>Estimasi biaya, konfirmasi pasien umum, meneruskan ke Admin COT tanpa CS.</td>
             <td style="color:var(--red-500)">Menangani pasien Asuransi.</td>
           </tr>
@@ -57,7 +57,7 @@
             <td style="color:var(--red-500)">Menangani pasien Umum (ditangani ADRU COT).</td>
           </tr>
           <tr>
-            <td><strong>Viewer</strong></td>
+            <td><strong>Viewer (Hanya Lihat)</strong></td>
             <td>Memantau seluruh proses berjalan, melihat keterangan tiap unit, dan estimasi (jasa medis &amp; total).</td>
             <td style="color:var(--red-500)">Membuat/mengubah pengajuan, melakukan aksi apa pun, atau melihat rincian harga BMHP.</td>
           </tr>

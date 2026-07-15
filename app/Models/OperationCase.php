@@ -170,11 +170,11 @@ class OperationCase extends Model
 
     public static function getQueueQueryForRole(string $activeRole)
     {
-        $query = self::whereNotIn('status', ['Cancelled', 'Draft']);
-
         if ($activeRole === 'Nurse') {
-            return $query;
+            return self::whereIn('status', ['Draft', 'Returned']);
         }
+
+        $query = self::whereNotIn('status', ['Cancelled', 'Draft']);
 
         if ($activeRole === 'VA') {
             return $query->where('penjamin', 'Asuransi')

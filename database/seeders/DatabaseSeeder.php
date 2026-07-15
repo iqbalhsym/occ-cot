@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             PaketBmhpSeeder::class,
             AlatKhususSeeder::class,
             PasienSeeder::class,
+            DokterSeeder::class,
         ]);
     }
 }

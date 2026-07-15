@@ -8,17 +8,17 @@
     $currentUser   = Auth::user();
     $activeRole    = session('role', $currentUser ? $currentUser->role : 'Nurse');
     $roleLabels    = [
-      'Nurse'       => 'Nurse (Pengaju)',
-      'VA'          => 'VA (Verifikator Asuransi)',
-      'Kasir'       => 'Kasir (Billing)',
-      'ADRUCOT'     => 'ADRU COT (Estimator)',
-      'Farmasi'     => 'Farmasi (BMHP/Obat)',
-      'AdminCOT'    => 'Admin COT (Penjadwal & Alat)',
-      'CaseManager' => 'Case Manager (CM)',
-      'CS'          => 'Customer Service (CS)',
+      'Nurse'       => 'Nurse (Entry Point)',
+      'VA'          => 'VA (Asuransi)',
+      'Kasir'       => 'Kasir (Umum)',
+      'ADRUCOT'     => 'ADRU COT (Umum)',
+      'Farmasi'     => 'Farmasi',
+      'AdminCOT'    => 'Admin COT',
+      'CaseManager' => 'Case Manager',
+      'CS'          => 'Customer Service',
       'SuperAdmin'  => 'Super Admin',
       'Administrator' => 'Administrator',
-      'Viewer'      => 'Viewer',
+      'Viewer'      => 'Viewer (Hanya Lihat)',
     ];
     $activeRoleLabel = $roleLabels[$activeRole] ?? $activeRole;
   @endphp
@@ -345,6 +345,7 @@
         inp.name = "dpjp[]";
         inp.value = v;
         inp.placeholder = "Nama DPJP (mis. dr. Andi, Sp.B)";
+        inp.className = "form-control";
         inp.addEventListener("input", (e) => dpjpList[i] = e.target.value);
         row.appendChild(inp);
         
@@ -357,6 +358,12 @@
           row.appendChild(btn);
         }
         el.appendChild(row);
+
+        const docSuggestions = masterData.doctors ? masterData.doctors.map(d => d.nama_gelar) : [];
+        makeAutocomplete(inp, docSuggestions, (selectedName) => {
+          dpjpList[i] = selectedName;
+          renderDpjpRows();
+        });
       });
     }
 
@@ -375,7 +382,7 @@
         inpN.name = "operator[]";
         inpN.value = v;
         inpN.placeholder = "Nama Operator";
-        inpN.style.flex = "1";
+        inpN.className = "form-control";
         inpN.addEventListener("input", (e) => opList[i] = e.target.value);
         row.appendChild(inpN);
 
@@ -383,7 +390,7 @@
         inpS.name = "operatorSpesialisasi[]";
         inpS.value = opSpesList[i] || "";
         inpS.placeholder = "Spesialisasi";
-        inpS.style.flex = "1";
+        inpS.className = "form-control";
         inpS.addEventListener("input", (e) => opSpesList[i] = e.target.value);
         row.appendChild(inpS);
         
@@ -396,6 +403,19 @@
           row.appendChild(btn);
         }
         el.appendChild(row);
+
+        const docSuggestions = masterData.doctors ? masterData.doctors.map(d => d.nama_gelar) : [];
+        makeAutocomplete(inpN, docSuggestions, (selectedName) => {
+          opList[i] = selectedName;
+          if (masterData.doctors) {
+            const found = masterData.doctors.find(d => d.nama_gelar === selectedName);
+            if (found && found.spesialis) {
+              opSpesList[i] = found.spesialis;
+            }
+          }
+          renderOpRows();
+        });
+
         makeAutocomplete(inpS, masterData.spesialisasi);
       });
     }
@@ -502,30 +522,100 @@
     function renderAlatRows() {
       const el = document.getElementById("alatEditor");
       el.innerHTML = "";
+
       alatList.forEach((v, i) => {
         const row = document.createElement("div");
         row.className = "dyn-row";
         row.style.marginBottom = "8px";
+        row.style.display = "flex";
+        row.style.gap = "12px";
+        row.style.alignItems = "center";
         
         const inp = document.createElement("input");
+        inp.type = "text";
         inp.name = "alat[]";
         inp.value = v;
-        inp.placeholder = "Nama Alat Khusus";
-        inp.style.flex = "1";
-        inp.addEventListener("input", (e) => alatList[i] = e.target.value);
+        inp.placeholder = "Ketik & pilih Alat Khusus...";
+        inp.className = "form-control";
+        
+        let selectedTarif = 0;
+        if (masterData.alat_details) {
+          const found = masterData.alat_details.find(item => item.nama === v);
+          if (found) selectedTarif = found.tarif;
+        }
         
         row.appendChild(inp);
+        
+        const priceLabel = document.createElement("span");
+        priceLabel.style.flex = "1";
+        priceLabel.style.fontWeight = "bold";
+        priceLabel.style.color = "var(--slate-600)";
+        priceLabel.style.textAlign = "right";
+        priceLabel.style.whiteSpace = "nowrap";
+        priceLabel.style.minWidth = "120px";
+        priceLabel.textContent = rupiah(selectedTarif);
+        row.appendChild(priceLabel);
         
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "btn btn-sm btn-danger";
         btn.textContent = "Hapus";
+        btn.style.flex = "0 0 auto";
         btn.onclick = () => { alatList.splice(i, 1); renderAlatRows(); };
         row.appendChild(btn);
         
         el.appendChild(row);
-        makeAutocomplete(inp, masterData.alat);
+
+        // Setup autocomplete
+        const suggestions = masterData.alat_details ? masterData.alat_details.map(x => x.nama) : [];
+        makeAutocomplete(inp, suggestions, (selectedName) => {
+          alatList[i] = selectedName;
+          renderAlatRows();
+        });
+
+        // Give flex to autocomplete wrapper
+        if (inp.parentNode && inp.parentNode.classList.contains("autocomplete-wrapper")) {
+          inp.parentNode.style.flex = "3";
+        }
+
+        // Typing updates
+        inp.addEventListener("input", (e) => {
+          const val = e.target.value;
+          alatList[i] = val;
+          let rowTarif = 0;
+          if (masterData.alat_details) {
+            const found = masterData.alat_details.find(item => item.nama === val);
+            if (found) rowTarif = found.tarif;
+          }
+          priceLabel.textContent = rupiah(rowTarif);
+          recalculateAlatGrandTotal();
+        });
       });
+      
+      const totalDiv = document.createElement("div");
+      totalDiv.id = "alatGrandTotalContainer";
+      totalDiv.style.marginTop = "8px";
+      totalDiv.style.fontWeight = "bold";
+      totalDiv.style.fontSize = "14px";
+      totalDiv.style.color = "var(--primary-700)";
+      el.appendChild(totalDiv);
+      recalculateAlatGrandTotal();
+    }
+
+    function recalculateAlatGrandTotal() {
+      let grandTotal = 0;
+      const inputs = document.getElementsByName("alat[]");
+      inputs.forEach(inp => {
+        const val = inp.value;
+        if (masterData.alat_details) {
+          const found = masterData.alat_details.find(item => item.nama === val);
+          if (found) grandTotal += found.tarif;
+        }
+      });
+      const totalDiv = document.getElementById("alatGrandTotalContainer");
+      if (totalDiv) {
+        totalDiv.textContent = "Total Harga Alat Khusus: " + rupiah(grandTotal);
+      }
     }
 
     document.getElementById("addAlat").onclick = () => { alatList.push(""); renderAlatRows(); };
@@ -534,37 +624,131 @@
     function renderTambahanRows() {
       const el = document.getElementById("tambahanEditor");
       el.innerHTML = "";
+
       tambahanList.forEach((v, i) => {
         const row = document.createElement("div");
         row.className = "dyn-row";
         row.style.marginBottom = "8px";
+        row.style.display = "flex";
+        row.style.gap = "12px";
+        row.style.alignItems = "center";
         
         const inpN = document.createElement("input");
+        inpN.type = "text";
         inpN.name = "tambahanBmhpNama[]";
         inpN.value = v.nama || "";
-        inpN.placeholder = "Nama Item BMHP / Obat";
-        inpN.style.flex = "2";
-        inpN.addEventListener("input", (e) => tambahanList[i].nama = e.target.value);
+        inpN.placeholder = "Ketik & pilih Item BMHP / Obat...";
+        inpN.className = "form-control";
         
         const inpQ = document.createElement("input");
+        inpQ.type = "number";
         inpQ.name = "tambahanBmhpQty[]";
         inpQ.value = v.qty || "1";
         inpQ.placeholder = "Qty";
-        inpQ.style.flex = "0.5";
-        inpQ.addEventListener("input", (e) => tambahanList[i].qty = e.target.value);
-
+        inpQ.style.width = "70px";
+        inpQ.style.flex = "0 0 70px";
+        inpQ.style.textAlign = "center";
+        
+        let selectedTarif = 0;
+        if (masterData.paket_bmhp) {
+          const found = masterData.paket_bmhp.find(item => item.nama === v.nama);
+          if (found) selectedTarif = found.tarif;
+        }
+        
+        const rowTotal = (v.qty || 1) * selectedTarif;
+        
         row.appendChild(inpN);
         row.appendChild(inpQ);
+        
+        const priceLabel = document.createElement("span");
+        priceLabel.style.flex = "1.5";
+        priceLabel.style.fontWeight = "bold";
+        priceLabel.style.color = "var(--slate-600)";
+        priceLabel.style.textAlign = "right";
+        priceLabel.style.whiteSpace = "nowrap";
+        priceLabel.style.minWidth = "220px";
+        priceLabel.textContent = rupiah(selectedTarif) + " x " + (v.qty || 1) + " = " + rupiah(rowTotal);
+        row.appendChild(priceLabel);
         
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "btn btn-sm btn-danger";
         btn.textContent = "Hapus";
+        btn.style.flex = "0 0 auto";
         btn.onclick = () => { tambahanList.splice(i, 1); renderTambahanRows(); };
         row.appendChild(btn);
         
         el.appendChild(row);
+
+        // Setup autocomplete
+        const suggestions = masterData.paket_bmhp ? masterData.paket_bmhp.map(x => x.nama) : [];
+        makeAutocomplete(inpN, suggestions, (selectedName) => {
+          tambahanList[i].nama = selectedName;
+          renderTambahanRows();
+        });
+
+        // Give flex to autocomplete wrapper
+        if (inpN.parentNode && inpN.parentNode.classList.contains("autocomplete-wrapper")) {
+          inpN.parentNode.style.flex = "3";
+        }
+
+        // Typing and Qty changes
+        inpN.addEventListener("input", (e) => {
+          tambahanList[i].nama = e.target.value;
+          updateTambahanRowPrice(i, row, priceLabel);
+        });
+
+        inpQ.addEventListener("input", (e) => {
+          tambahanList[i].qty = Number(e.target.value) || 0;
+          updateTambahanRowPrice(i, row, priceLabel);
+        });
       });
+      
+      const totalDiv = document.createElement("div");
+      totalDiv.id = "tambahanGrandTotalContainer";
+      totalDiv.style.marginTop = "8px";
+      totalDiv.style.fontWeight = "bold";
+      totalDiv.style.fontSize = "14px";
+      totalDiv.style.color = "var(--primary-700)";
+      el.appendChild(totalDiv);
+      recalculateTambahanGrandTotal();
+    }
+
+    function updateTambahanRowPrice(index, rowEl, labelEl) {
+      const inpN = rowEl.querySelector('input[name="tambahanBmhpNama[]"]');
+      const inpQ = rowEl.querySelector('input[name="tambahanBmhpQty[]"]');
+      const nameVal = inpN.value;
+      const qtyVal = Number(inpQ.value) || 0;
+      
+      let rowTarif = 0;
+      if (masterData.paket_bmhp) {
+        const found = masterData.paket_bmhp.find(item => item.nama === nameVal);
+        if (found) rowTarif = found.tarif;
+      }
+      const rowTotal = qtyVal * rowTarif;
+      labelEl.textContent = rupiah(rowTarif) + " x " + qtyVal + " = " + rupiah(rowTotal);
+      recalculateTambahanGrandTotal();
+    }
+
+    function recalculateTambahanGrandTotal() {
+      let grandTotal = 0;
+      const rows = document.getElementById("tambahanEditor").querySelectorAll(".dyn-row");
+      rows.forEach(row => {
+        const inpN = row.querySelector('input[name="tambahanBmhpNama[]"]');
+        const inpQ = row.querySelector('input[name="tambahanBmhpQty[]"]');
+        if (inpN && inpQ) {
+          const nameVal = inpN.value;
+          const qtyVal = Number(inpQ.value) || 0;
+          if (masterData.paket_bmhp) {
+            const found = masterData.paket_bmhp.find(item => item.nama === nameVal);
+            if (found) grandTotal += qtyVal * found.tarif;
+          }
+        }
+      });
+      const totalDiv = document.getElementById("tambahanGrandTotalContainer");
+      if (totalDiv) {
+        totalDiv.textContent = "Total Harga Tambahan Paket: " + rupiah(grandTotal);
+      }
     }
 
     document.getElementById("addTambahan").onclick = () => { tambahanList.push({ nama: "", qty: "1" }); renderTambahanRows(); };

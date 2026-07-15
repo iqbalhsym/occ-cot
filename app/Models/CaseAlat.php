@@ -8,5 +8,10 @@ class CaseAlat extends Model
 {
     public $timestamps = false;
     protected $table = 'case_alat';
-    protected $fillable = ['case_id', 'nama', 'keterangan'];
+    protected $fillable = ['case_id', 'nama', 'keterangan', 'harga'];
+
+    public function masterAlat()
+    {
+        return $this->hasOne(AlatKhusus::class, 'nama', 'nama');
+    }
 }

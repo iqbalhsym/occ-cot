@@ -15,15 +15,15 @@ class UserController extends Controller
         $rolesList = [
             'SuperAdmin' => 'Super Admin',
             'Administrator' => 'Administrator',
-            'Nurse' => 'Nurse',
+            'Nurse' => 'Nurse (Entry Point)',
             'VA' => 'VA (Asuransi)',
-            'Kasir' => 'Kasir (Billing)',
-            'ADRUCOT' => 'ADRU COT (Estimator)',
+            'Kasir' => 'Kasir (Umum)',
+            'ADRUCOT' => 'ADRU COT (Umum)',
             'Farmasi' => 'Farmasi',
             'AdminCOT' => 'Admin COT',
-            'CaseManager' => 'Case Manager (CM)',
-            'CS' => 'Customer Service (CS)',
-            'Viewer' => 'Viewer'
+            'CaseManager' => 'Case Manager',
+            'CS' => 'Customer Service',
+            'Viewer' => 'Viewer (Hanya Lihat)'
         ];
 
         return view('admin.users', compact('users', 'rolesList'));

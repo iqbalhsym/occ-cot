@@ -22,13 +22,13 @@ class CaseController extends Controller
         $lokasiIsCot = ($c->lokasi_tindakan === 'COT');
 
         // Load workflow relations or initialize if missing
-        $va = $c->va ?: $c->va()->create([]);
-        $kasir = $c->kasir ?: $c->kasir()->create([]);
-        $adru = $c->adru ?: $c->adru()->create([]);
-        $farmasi = $c->farmasi ?: $c->farmasi()->create([]);
-        $adminCot = $c->adminCot ?: $c->adminCot()->create([]);
-        $caseManager = $c->caseManager ?: $c->caseManager()->create([]);
-        $cs = $c->cs ?: $c->cs()->create([]);
+        $va = $c->va ?: $c->va()->firstOrCreate([]);
+        $kasir = $c->kasir ?: $c->kasir()->firstOrCreate([]);
+        $adru = $c->adru ?: $c->adru()->firstOrCreate([]);
+        $farmasi = $c->farmasi ?: $c->farmasi()->firstOrCreate([]);
+        $adminCot = $c->adminCot ?: $c->adminCot()->firstOrCreate([]);
+        $caseManager = $c->caseManager ?: $c->caseManager()->firstOrCreate([]);
+        $cs = $c->cs ?: $c->cs()->firstOrCreate([]);
 
         // required and active flags
         $adminCot->required = $lokasiIsCot;
@@ -38,40 +38,50 @@ class CaseController extends Controller
             return;
         }
 
-        // Evaluate stages completion
-        $stage1Done = $penjaminIsAsuransi ? ($va->estimasi_total > 0) : ($kasir->done && $adru->done);
-        $cmGateReady = $stage1Done && $farmasi->done && (!$adminCot->required || $adminCot->prelim_done);
-        
-        $stage2Done = $penjaminIsAsuransi ? ($va->decision === 'Disetujui') : ($kasir->done && $adru->done); // simplified check or status check
+        // Parallel stage completion evaluations
+        $activeUnits = [];
         if ($penjaminIsAsuransi) {
-            $routeDone = $cs->done;
+            if (!$va->done) {
+                $activeUnits[] = 'VA';
+            }
+            if (!$cs->done) {
+                $activeUnits[] = 'CS';
+            }
         } else {
-            $routeDone = $stage2Done;
+            if (!$kasir->done) {
+                $activeUnits[] = 'Kasir';
+            }
+            if (!$adru->done) {
+                $activeUnits[] = 'ADRUCOT';
+            }
         }
-        
-        $allDone = $routeDone && (!$adminCot->required || $adminCot->final_done);
+        if (!$farmasi->done) {
+            $activeUnits[] = 'Farmasi';
+        }
+        if ($adminCot->required && !$adminCot->final_done) {
+            $activeUnits[] = 'AdminCOT';
+        }
+        if (!$caseManager->done) {
+            $activeUnits[] = 'CaseManager';
+        }
+
+        $allDone = empty($activeUnits);
+        $isRejected = ($penjaminIsAsuransi && $va->decision === 'Ditolak') || ($cs->decision === 'Batal');
 
         if (!in_array($c->status, ['Returned', 'Cancelled', 'Completed'])) {
-            if ($caseManager->done && $allDone) {
+            if ($isRejected || $allDone) {
                 $c->status = 'Completed';
             } else {
                 $c->status = 'InProgress';
             }
         }
 
-        // current flow label
-        if (!$caseManager->done) {
-            if (!$cmGateReady) {
-                $c->current_flow = $penjaminIsAsuransi ? 'VA/Farmasi/AdminCOT' : 'Kasir/ADRUCOT/Farmasi/AdminCOT';
-            } else {
-                $c->current_flow = 'CaseManager';
-            }
-        } elseif (!$routeDone) {
-            $c->current_flow = $penjaminIsAsuransi ? 'VA→CS' : 'Kasir/ADRUCOT';
-        } elseif ($adminCot->required && !$adminCot->final_done) {
-            $c->current_flow = 'AdminCOT (Final)';
-        } else {
+        if ($c->status === 'Completed') {
             $c->current_flow = 'Selesai';
+        } elseif ($c->status === 'Cancelled') {
+            $c->current_flow = 'Batal';
+        } else {
+            $c->current_flow = implode('/', $activeUnits) ?: 'Selesai';
         }
 
         $c->save();
@@ -121,16 +131,18 @@ class CaseController extends Controller
 
     public function create()
     {
-        if (Auth::user()->role === 'Viewer') {
-            abort(403, 'Viewer tidak diperbolehkan membuat kasus baru.');
+        $realRole = Auth::user()->role;
+        if (!in_array($realRole, ['Nurse', 'SuperAdmin', 'Administrator'])) {
+            abort(403, 'Hanya Nurse, SuperAdmin, atau Administrator yang diperbolehkan membuat kasus baru.');
         }
         return view('cases.create');
     }
 
     public function store(Request $request)
     {
-        if (Auth::user()->role === 'Viewer') {
-            return response()->json(['success' => false, 'message' => 'Viewer tidak diperbolehkan membuat kasus baru.'], 403);
+        $realRole = Auth::user()->role;
+        if (!in_array($realRole, ['Nurse', 'SuperAdmin', 'Administrator'])) {
+            return response()->json(['success' => false, 'message' => 'Hanya Nurse, SuperAdmin, atau Administrator yang diperbolehkan membuat kasus baru.'], 403);
         }
 
         DB::beginTransaction();
@@ -220,7 +232,11 @@ class CaseController extends Controller
             if ($request->has('alat')) {
                 foreach ($request->alat as $aName) {
                     if (!empty($aName)) {
-                        $c->alat()->create(['nama' => $aName]);
+                        $masterAlat = \App\Models\AlatKhusus::where('nama', $aName)->first();
+                        $c->alat()->create([
+                            'nama' => $aName,
+                            'harga' => $masterAlat ? $masterAlat->tarif : 0
+                        ]);
                     }
                 }
             }
@@ -229,22 +245,25 @@ class CaseController extends Controller
             if ($request->has('tambahanBmhpNama')) {
                 foreach ($request->tambahanBmhpNama as $index => $tbName) {
                     if (!empty($tbName)) {
+                        $masterBmhp = \App\Models\PaketBmhp::where('nama', $tbName)->first();
                         $c->tambahanBmhp()->create([
                             'nama' => $tbName,
-                            'qty' => $request->tambahanBmhpQty[$index] ?? 1
+                            'qty' => $request->tambahanBmhpQty[$index] ?? 1,
+                            'harga' => $masterBmhp ? $masterBmhp->tarif : 0,
+                            'jenis' => 'tambahan'
                         ]);
                     }
                 }
             }
 
             // Initialize all workflow tables
-            $c->va()->create([]);
-            $c->kasir()->create([]);
-            $c->adru()->create([]);
-            $c->farmasi()->create([]);
-            $c->adminCot()->create(['required' => ($c->lokasi_tindakan === 'COT')]);
-            $c->caseManager()->create([]);
-            $c->cs()->create([]);
+            $c->va()->firstOrCreate([]);
+            $c->kasir()->firstOrCreate([]);
+            $c->adru()->firstOrCreate([]);
+            $c->farmasi()->firstOrCreate([]);
+            $c->adminCot()->firstOrCreate(['required' => ($c->lokasi_tindakan === 'COT')]);
+            $c->caseManager()->firstOrCreate([]);
+            $c->cs()->firstOrCreate([]);
 
             $c->addAudit("Case dibuat (Draft)", "Data diinput Nurse berdasarkan Form Penjadwalan Tindakan.", "Nurse");
 
@@ -258,7 +277,7 @@ class CaseController extends Controller
 
     public function show($id)
     {
-        $case = OperationCase::with(['dpjp', 'operators', 'tindakan', 'alat', 'tambahanBmhp', 'audit', 'va', 'kasir', 'adru', 'farmasi', 'adminCot', 'caseManager', 'cs'])->findOrFail($id);
+        $case = OperationCase::with(['dpjp', 'operators', 'tindakan', 'alat.masterAlat', 'tambahanBmhp', 'audit', 'va', 'kasir', 'adru', 'farmasi', 'adminCot', 'caseManager', 'cs'])->findOrFail($id);
         return view('cases.show', compact('case'));
     }
 
@@ -268,6 +287,12 @@ class CaseController extends Controller
             abort(403, 'Viewer tidak diperbolehkan mengedit kasus.');
         }
         $case = OperationCase::with(['dpjp', 'operators', 'tindakan', 'alat', 'tambahanBmhp'])->findOrFail($id);
+        
+        $activeRole = session('role', Auth::user()->role);
+        if ($activeRole === 'Nurse' && !in_array($case->status, ['Draft', 'Returned'])) {
+            abort(403, 'Nurse tidak diperbolehkan mengedit kasus yang sudah dikirim/diajukan.');
+        }
+
         return view('cases.edit', compact('case'));
     }
 
@@ -277,6 +302,11 @@ class CaseController extends Controller
             return response()->json(['success' => false, 'message' => 'Viewer tidak diperbolehkan memperbarui kasus.'], 403);
         }
         $c = OperationCase::findOrFail($id);
+
+        $activeRole = session('role', Auth::user()->role);
+        if ($activeRole === 'Nurse' && !in_array($c->status, ['Draft', 'Returned'])) {
+            return response()->json(['success' => false, 'message' => 'Nurse tidak diperbolehkan memperbarui kasus yang sudah dikirim/diajukan.'], 403);
+        }
 
         DB::beginTransaction();
         try {
@@ -348,7 +378,11 @@ class CaseController extends Controller
             if ($request->has('alat')) {
                 foreach ($request->alat as $aName) {
                     if (!empty($aName)) {
-                        $c->alat()->create(['nama' => $aName]);
+                        $masterAlat = \App\Models\AlatKhusus::where('nama', $aName)->first();
+                        $c->alat()->create([
+                            'nama' => $aName,
+                            'harga' => $masterAlat ? $masterAlat->tarif : 0
+                        ]);
                     }
                 }
             }
@@ -357,9 +391,12 @@ class CaseController extends Controller
             if ($request->has('tambahanBmhpNama')) {
                 foreach ($request->tambahanBmhpNama as $index => $tbName) {
                     if (!empty($tbName)) {
+                        $masterBmhp = \App\Models\PaketBmhp::where('nama', $tbName)->first();
                         $c->tambahanBmhp()->create([
                             'nama' => $tbName,
-                            'qty' => $request->tambahanBmhpQty[$index] ?? 1
+                            'qty' => $request->tambahanBmhpQty[$index] ?? 1,
+                            'harga' => $masterBmhp ? $masterBmhp->tarif : 0,
+                            'jenis' => 'tambahan'
                         ]);
                     }
                 }
@@ -390,6 +427,38 @@ class CaseController extends Controller
 
         $c->addAudit("Submit pengajuan", "Case ID dibuat, sistem broadcast ke unit terkait.", "Nurse");
 
+        // Populate default BMHP package items from seeder database
+        $htmlPath = database_path('seeders/Operation_Command_Center_COT_RSUI_v2.html');
+        if (file_exists($htmlPath)) {
+            $html = file_get_contents($htmlPath);
+            preg_match('/const COT_DB\s*=\s*(\{.*?\});/s', $html, $matches);
+            if (!empty($matches)) {
+                $db = json_decode($matches[1], true);
+                if (isset($db['tindakan'])) {
+                    $tindakanNames = $c->tindakan->pluck('nama')->toArray();
+                    
+                    // Clear existing package BMHP to prevent duplicates
+                    $c->tambahanBmhp()->where('jenis', 'paket')->delete();
+
+                    foreach ($db['tindakan'] as $item) {
+                        foreach ($tindakanNames as $tName) {
+                            if (strcasecmp($item['nama'], $tName) === 0) {
+                                $bmhpItems = $item['bmhp'] ?? [];
+                                foreach ($bmhpItems as $bItem) {
+                                    $c->tambahanBmhp()->create([
+                                        'nama' => $bItem['n'],
+                                        'qty' => $bItem['q'] ?? 1,
+                                        'harga' => $bItem['h'] ?? 0,
+                                        'jenis' => 'paket'
+                                    ]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         // Determine units based on penjamin and lokasi
         $units = [];
         if ($c->penjamin === 'Asuransi') {
@@ -413,28 +482,63 @@ class CaseController extends Controller
     public function cancel(Request $request, $id)
     {
         $c = OperationCase::findOrFail($id);
+
+        $activeRole = session('role', Auth::user()->role);
+        if ($activeRole === 'Nurse' && !in_array($c->status, ['Draft', 'Returned'])) {
+            return response()->json(['success' => false, 'message' => 'Nurse tidak diperbolehkan membatalkan kasus yang sudah dikirim/diajukan.'], 403);
+        }
+
         $c->status = 'Cancelled';
         $c->save();
 
-        $c->addAudit("Case dibatalkan", $request->note ?: 'Kasus dibatalkan oleh Nurse.', 'Nurse');
+        $note = $request->note ?: $request->reason ?: 'Kasus dibatalkan.';
+        $c->addAudit("Case dibatalkan", $note, 'Nurse');
         $this->recomputeState($c);
 
         return response()->json(['success' => true, 'message' => 'Kasus berhasil dibatalkan']);
     }
 
     // Individual role action methods (reflecting role action JS methods)
+    // Individual role action methods (reflecting role action JS methods)
     public function vaAction(Request $request, $id)
     {
         $c = OperationCase::with(['va'])->findOrFail($id);
-        $va = $c->va;
+        if ($c->penjamin === 'Umum') {
+            return response()->json(['success' => false, 'message' => 'Aksi VA hanya diperbolehkan untuk kasus dengan Penjamin Asuransi.'], 403);
+        }
+
+        $va = $c->va ?: $c->va()->firstOrCreate([]);
         $action = $request->action;
+
+        // Handle file uploads if any
+        if ($request->hasFile('files')) {
+            $attachments = $va->attachments ?: [];
+            foreach ($request->file('files') as $file) {
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('attachments'), $filename);
+                $attachments[] = [
+                    'name' => $file->getClientOriginalName(),
+                    'path' => '/attachments/' . $filename
+                ];
+            }
+            $va->attachments = $attachments;
+            $va->save();
+            $c->addAudit("VA melampirkan berkas", implode(', ', array_column($request->file('files'), 'name') ?: []), "VA");
+        }
+
+        // Handle checklist save
+        if ($request->has('checklist')) {
+            $va->checklist = $request->checklist ?: [];
+            $va->save();
+        }
 
         if ($action === 'ajukan1') {
             $va->kelas = $request->kelas ?: $c->kelas_perawatan;
             $va->golongan = $request->golongan ?: $c->golongan;
             $va->estimasi_rincian = $request->rincian ?: [];
             $va->estimasi_total = $request->total ?: 0;
-            $va->done = false; // goes to Case Manager first
+            $va->stage1_done = true;
+            $va->done = false; // CM must approve first
             $va->save();
 
             $c->addAudit(
@@ -443,6 +547,8 @@ class CaseController extends Controller
                 "VA"
             );
         } elseif ($action === 'revisi1') {
+            $va->stage1_done = false;
+            $va->save();
             $c->status = 'Returned';
             $c->save();
             $c->addAudit("VA meminta revisi data ke Nurse", $request->note ?: '', "VA");
@@ -452,17 +558,20 @@ class CaseController extends Controller
             $va->save();
             $c->addAudit("VA mulai verifikasi — pengajuan estimasi ke asuransi", $va->decision_note, "VA");
         } elseif ($action === 'berkasBelumLengkap') {
+            $va->berkas_belum_lengkap = true;
             $va->decision = 'DalamKonfirmasi';
             $va->decision_note = $request->note ?: 'Menunggu kelengkapan berkas.';
             $va->save();
             $c->addAudit("VA menandai berkas belum lengkap", $request->note ?: '', "VA");
         } elseif ($action === 'berkasLengkap') {
+            $va->berkas_belum_lengkap = false;
             $va->decision_note = $request->note ?: 'Berkas dilengkapi.';
             $va->save();
             $c->addAudit("Berkas dilengkapi — kembali ke VA untuk diproses", $request->note ?: '', "Nurse");
         } elseif ($action === 'disetujui') {
             $va->decision = 'Disetujui';
             $va->decision_note = $request->note ?: '';
+            $va->stage2_done = true;
             $va->done = true;
             $va->save();
             $c->addAudit(
@@ -484,27 +593,33 @@ class CaseController extends Controller
     public function kasirAction(Request $request, $id)
     {
         $c = OperationCase::with(['kasir'])->findOrFail($id);
-        $kasir = $c->kasir;
+        if ($c->penjamin !== 'Umum') {
+            return response()->json(['success' => false, 'message' => 'Aksi Kasir hanya diperbolehkan untuk kasus dengan Penjamin Umum.'], 403);
+        }
+
+        $kasir = $c->kasir ?: $c->kasir()->firstOrCreate([]);
         $action = $request->action;
 
         if ($action === 'mulai') {
             $c->addAudit("Kasir mulai proses administrasi pasien umum", "", "Kasir");
         } elseif ($action === 'selesai1') {
-            $kasir->done = true; // stage 1
+            $kasir->stage1_done = true;
+            $kasir->total_estimasi = $request->total_estimasi ?: 0;
             $kasir->note = $request->note ?: '';
             $kasir->save();
-            $c->addAudit("Kasir menyelesaikan administrasi tahap awal", $kasir->note, "Kasir");
+            $c->addAudit("Kasir menyelesaikan estimasi tahap awal ke Case Manager", "Estimasi: Rp " . number_format($kasir->total_estimasi, 0, ',', '.') . ". " . $kasir->note, "Kasir");
         } elseif ($action === 'revisi1') {
-            $kasir->done = false;
+            $kasir->stage1_done = false;
             $kasir->save();
             $c->status = 'Returned';
             $c->save();
             $c->addAudit("Kasir meminta revisi ke Nurse", $request->note ?: '', "Kasir");
         } elseif ($action === 'selesai2') {
-            $kasir->done = true; // stage 2
-            $kasir->note = $request->note ?: '';
+            $kasir->stage2_done = true;
+            $kasir->done = true;
+            $kasir->note2 = $request->note ?: '';
             $kasir->save();
-            $c->addAudit("Kasir menyelesaikan administrasi akhir (pasca approval)", $kasir->note, "Kasir");
+            $c->addAudit("Kasir menyelesaikan administrasi akhir (pasca approval) — diteruskan ke CS", $kasir->note2, "Kasir");
         }
 
         $this->recomputeState($c);
@@ -514,13 +629,17 @@ class CaseController extends Controller
     public function adruAction(Request $request, $id)
     {
         $c = OperationCase::with(['adru'])->findOrFail($id);
-        $adru = $c->adru;
+        if ($c->penjamin !== 'Umum') {
+            return response()->json(['success' => false, 'message' => 'Aksi ADRU COT hanya diperbolehkan untuk kasus dengan Penjamin Umum.'], 403);
+        }
+
+        $adru = $c->adru ?: $c->adru()->firstOrCreate([]);
         $action = $request->action;
 
         if ($action === 'mulai') {
             $c->addAudit("ADRU COT mulai menghitung estimasi biaya", "", "ADRU");
         } elseif ($action === 'ajukan1') {
-            $adru->done = true; // stage1 done
+            $adru->stage1_done = true;
             $adru->estimasi = $request->estimasi ?: '';
             $adru->note = $request->note ?: '';
             $adru->save();
@@ -530,14 +649,15 @@ class CaseController extends Controller
                 "ADRU"
             );
         } elseif ($action === 'revisi1') {
-            $adru->done = false;
+            $adru->stage1_done = false;
             $adru->save();
             $c->status = 'Returned';
             $c->save();
             $c->addAudit("ADRU COT meminta revisi ke Nurse", $request->note ?: '', "ADRU");
         } elseif ($action === 'konfirmasi2') {
-            $adru->done = true; // stage 2 done
-            $adru->note = $request->note ?: '';
+            $adru->stage2_done = true;
+            $adru->done = true;
+            $adru->confirm_note = $request->note ?: '';
             $adru->save();
             $c->addAudit(
                 "ADRU COT: pasien setuju, diteruskan langsung ke Admin COT (tanpa CS)",
@@ -553,7 +673,7 @@ class CaseController extends Controller
     public function farmasiAction(Request $request, $id)
     {
         $c = OperationCase::with(['farmasi'])->findOrFail($id);
-        $farmasi = $c->farmasi;
+        $farmasi = $c->farmasi ?: $c->farmasi()->firstOrCreate([]);
         $action = $request->action;
 
         if ($action === 'mulai') {
@@ -562,7 +682,38 @@ class CaseController extends Controller
             $farmasi->done = true;
             $farmasi->note = $request->note ?: '';
             $farmasi->save();
+
+            // Save edited items
+            if ($request->has('items')) {
+                $c->tambahanBmhp()->delete();
+                foreach ($request->items as $item) {
+                    if (!empty($item['nama'])) {
+                        $c->tambahanBmhp()->create([
+                            'nama' => $item['nama'],
+                            'qty' => $item['qty'] ?? 1,
+                            'harga' => $item['harga'] ?? 0,
+                            'jenis' => $item['jenis'] ?? 'tambahan'
+                        ]);
+                    }
+                }
+            }
+
             $c->addAudit("Farmasi menyetujui paket BMHP/obat", $farmasi->note, "Farmasi");
+        } elseif ($action === 'save_items') {
+            if ($request->has('items')) {
+                $c->tambahanBmhp()->delete();
+                foreach ($request->items as $item) {
+                    if (!empty($item['nama'])) {
+                        $c->tambahanBmhp()->create([
+                            'nama' => $item['nama'],
+                            'qty' => $item['qty'] ?? 1,
+                            'harga' => $item['harga'] ?? 0,
+                            'jenis' => $item['jenis'] ?? 'tambahan'
+                        ]);
+                    }
+                }
+            }
+            $c->addAudit("Farmasi memperbarui daftar BMHP/obat", $request->note ?: '', "Farmasi");
         } elseif ($action === 'revisi') {
             $farmasi->done = false;
             $farmasi->save();
@@ -578,7 +729,7 @@ class CaseController extends Controller
     public function adminCotAction(Request $request, $id)
     {
         $c = OperationCase::with(['adminCot'])->findOrFail($id);
-        $adminCot = $c->adminCot;
+        $adminCot = $c->adminCot ?: $c->adminCot()->firstOrCreate([]);
         $action = $request->action;
 
         if ($action === 'prelim') {
@@ -586,20 +737,53 @@ class CaseController extends Controller
             $adminCot->save();
 
             // Save new instruments if provided
+            $auditAlat = [];
             if ($request->has('alat')) {
                 $c->alat()->delete();
-                foreach ($request->alat as $aName) {
-                    if (!empty($aName)) {
-                        $c->alat()->create(['nama' => $aName]);
+                foreach ($request->alat as $aItem) {
+                    if (is_array($aItem)) {
+                        if (!empty($aItem['nama'])) {
+                            $c->alat()->create([
+                                'nama' => $aItem['nama'],
+                                'harga' => $aItem['harga'] ?? 0
+                            ]);
+                            $auditAlat[] = $aItem['nama'];
+                        }
+                    } else {
+                        if (!empty($aItem)) {
+                            $defaultTarif = 0;
+                            $masterAlat = \App\Models\AlatKhusus::where('nama', $aItem)->first();
+                            if ($masterAlat) {
+                                $defaultTarif = $masterAlat->tarif;
+                            }
+                            $c->alat()->create([
+                                'nama' => $aItem,
+                                'harga' => $defaultTarif
+                            ]);
+                            $auditAlat[] = $aItem;
+                        }
                     }
                 }
             }
 
             $c->addAudit(
                 "Admin COT menentukan kebutuhan alat (awal)",
-                "Alat: " . implode(', ', $request->alat ?? []),
+                "Alat: " . implode(', ', $auditAlat ?? []),
                 "Admin COT"
             );
+        } elseif ($action === 'save_tools') {
+            if ($request->has('alat')) {
+                $c->alat()->delete();
+                foreach ($request->alat as $aItem) {
+                    if (is_array($aItem) && !empty($aItem['nama'])) {
+                        $c->alat()->create([
+                            'nama' => $aItem['nama'],
+                            'harga' => $aItem['harga'] ?? 0
+                        ]);
+                    }
+                }
+            }
+            $c->addAudit("Admin COT memperbarui daftar alat khusus & harga", $request->note ?: '', "Admin COT");
         } elseif ($action === 'final') {
             $adminCot->final_done = true;
             $adminCot->decision = 'Terjadwal';
@@ -618,7 +802,10 @@ class CaseController extends Controller
             $adminCot->decision = 'DalamKonfirmasi';
             $adminCot->decision_note = $request->note ?: '';
             $adminCot->save();
-            $c->addAudit("Admin COT: Dalam Konfirmasi ke operator/unit terkait", $request->note ?: '', "Admin COT");
+        } elseif ($action === 'revisi_nurse') {
+            $c->status = 'Returned';
+            $c->save();
+            $c->addAudit("Admin COT meminta revisi data ke Nurse", $request->note ?: '', "Admin COT");
         } elseif ($action === 'revisi') {
             $adminCot->decision = 'Revisi';
             $adminCot->decision_note = $request->note ?: '';
@@ -662,7 +849,7 @@ class CaseController extends Controller
     public function caseManagerAction(Request $request, $id)
     {
         $c = OperationCase::with(['caseManager'])->findOrFail($id);
-        $cm = $c->caseManager;
+        $cm = $c->caseManager ?: $c->caseManager()->firstOrCreate([]);
         $action = $request->action;
 
         if ($action === 'setuju') {
@@ -728,12 +915,13 @@ class CaseController extends Controller
     public function csAction(Request $request, $id)
     {
         $c = OperationCase::with(['cs'])->findOrFail($id);
-        $cs = $c->cs;
+        $cs = $c->cs ?: $c->cs()->firstOrCreate([]);
         $action = $request->action;
 
         if ($action === 'hubungi') {
             $cs->decision = 'DalamKonfirmasi';
             $cs->decision_note = $request->note ?: 'Menunggu respon pasien.';
+            $cs->follow_up_due = \Carbon\Carbon::now()->addHours(24)->toDateTimeString();
             $cs->save();
             $c->addAudit("CS menghubungi pasien — menunggu respon", $cs->decision_note, "CS");
         } elseif ($action === 'disetujui') {
@@ -759,7 +947,10 @@ class CaseController extends Controller
             $c->caseManager->instruksi = "Keberatan pasien (dari CS): " . ($request->note ?: '');
             $c->caseManager->save();
 
-            $c->addAudit("CS: keberatan pasien — berkas dikembalikan ke Case Manager", $request->note ?: '', "CS");
+        } elseif ($action === 'revisi') {
+            $c->status = 'Returned';
+            $c->save();
+            $c->addAudit("CS meminta revisi data ke Nurse", $request->note ?: '', "CS");
         } elseif ($action === 'batal') {
             $cs->decision = 'Batal';
             $cs->decision_note = $request->note ?: '';

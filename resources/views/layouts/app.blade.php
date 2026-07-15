@@ -30,15 +30,15 @@
       $isViewer    = ($activeRole === 'Viewer');
 
       $rolesList = [
-        ['id' => 'Nurse',       'label' => 'Nurse (Pengaju)'],
-        ['id' => 'VA',          'label' => 'VA (Verifikator Asuransi)'],
-        ['id' => 'Kasir',       'label' => 'Kasir (Billing)'],
-        ['id' => 'ADRUCOT',     'label' => 'ADRU COT (Estimator)'],
-        ['id' => 'Farmasi',     'label' => 'Farmasi (BMHP/Obat)'],
-        ['id' => 'AdminCOT',    'label' => 'Admin COT (Penjadwal & Alat)'],
-        ['id' => 'CaseManager', 'label' => 'Case Manager (CM)'],
-        ['id' => 'CS',          'label' => 'Customer Service (CS)'],
-        ['id' => 'Viewer',      'label' => 'Viewer (Semua Data)'],
+        ['id' => 'Nurse',       'label' => 'Nurse (Entry Point)'],
+        ['id' => 'VA',          'label' => 'VA (Asuransi)'],
+        ['id' => 'Kasir',       'label' => 'Kasir (Umum)'],
+        ['id' => 'ADRUCOT',     'label' => 'ADRU COT (Umum)'],
+        ['id' => 'Farmasi',     'label' => 'Farmasi'],
+        ['id' => 'AdminCOT',    'label' => 'Admin COT'],
+        ['id' => 'CaseManager', 'label' => 'Case Manager'],
+        ['id' => 'CS',          'label' => 'Customer Service'],
+        ['id' => 'Viewer',      'label' => 'Viewer (Hanya Lihat)'],
       ];
 
       // Queue count per active role
@@ -104,10 +104,13 @@
             <span>≡</span><span class="sidebar-label">Semua Case</span>
           </a>
 
-          {{-- User Management — SuperAdmin & Administrator --}}
+          {{-- User & Doctor Management — SuperAdmin & Administrator --}}
           @if($currentUser && in_array($currentUser->role, ['SuperAdmin','Administrator']))
             <a href="{{ route('admin.users') }}" class="nav-item {{ Route::is('admin.users') ? 'active' : '' }}">
               <span>◆</span><span class="sidebar-label">User Management</span>
+            </a>
+            <a href="{{ route('admin.doctors') }}" class="nav-item {{ Route::is('admin.doctors') ? 'active' : '' }}">
+              <span>🩺</span><span class="sidebar-label">Dokter Management</span>
             </a>
           @endif
 

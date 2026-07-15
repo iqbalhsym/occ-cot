@@ -1,330 +1,330 @@
 [
-  {
-    "nama": "Insisi abses (bius umum)",
-    "golongan": "Sedang",
-    "spesialisasi": "Bedah",
-    "paket": "DEBRIDEMENT",
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Laparotomi Eksplorasi",
-    "golongan": "Khusus A",
-    "spesialisasi": "Bedah",
-    "paket": "LAPAROTOMI LAR",
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Aff Double J (per Sistoskopi)",
-    "golongan": "Sedang",
-    "spesialisasi": "Urologi",
-    "paket": null,
-    "paket_anestesi": null,
-    "alat": null
-  },
-  {
-    "nama": "Removal of implants ( one plate/nail/screws)",
-    "golongan": "Besar",
-    "spesialisasi": "Orthopedi",
-    "paket": "ORIF",
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Laparascopy Appendictomi",
-    "golongan": "Khusus B",
-    "spesialisasi": "Bedah",
-    "paket": "LAPAROSKOPI APPENDIKTOMI",
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Laparotomi Appendektomi",
-    "golongan": "Khusus A",
-    "spesialisasi": "Bedah",
-    "paket": "LAPAROTOMI",
-    "paket_anestesi": null,
-    "alat": null
-  },
-  {
-    "nama": "Kuretase",
-    "golongan": "Kecil",
-    "spesialisasi": "Kebidanan & Kandungan",
-    "paket": null,
-    "paket_anestesi": "ANESTESI SPINAL",
-    "alat": null
-  },
-  {
-    "nama": "TUR Prostat (TURP)",
-    "golongan": "Khusus A",
-    "spesialisasi": "Urologi",
-    "paket": "TURP",
-    "paket_anestesi": null,
-    "alat": null
-  },
-  {
-    "nama": "Radical Mastectomy",
-    "golongan": "Khusus A",
-    "spesialisasi": "Bedah",
-    "paket": null,
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Kraniotomi / Trepanasi Konvensional : Operasi lebih dari 4 jam",
-    "golongan": "Khusus C",
-    "spesialisasi": "Bedah Saraf",
-    "paket": "KRANIOTOMI",
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Pasang CDL/CVC/PICC",
-    "golongan": "Kecil",
-    "spesialisasi": "Bedah",
-    "paket": null,
-    "paket_anestesi": null,
-    "alat": null
-  },
-  {
-    "nama": "Endoablation vena sederhana (EVLT/RFA/Venoseal/Clariven",
-    "golongan": "Khusus A",
-    "spesialisasi": "Bedah",
-    "paket": null,
-    "paket_anestesi": "ANESTESI SPINAL",
-    "alat": null
-  },
-  {
-    "nama": "Ekstirpasi FAM Soliter",
-    "golongan": "Sedang",
-    "spesialisasi": "Bedah",
-    "paket": null,
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Open reduction and internal fixation with wire (eg : TBW patella, olecranon) and screws",
-    "golongan": "Khusus A",
-    "spesialisasi": "Orthopedi",
-    "paket": "ORIF",
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Open reduction and internal fixation of comminutive/complex/intraarticular fracture - single bone",
-    "golongan": "Khusus A",
-    "spesialisasi": "Orthopedi",
-    "paket": "ORIF",
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Open reduction and internal fixation simple fracture (plate Screw, Nail) - > 1 bone",
-    "golongan": "Khusus B",
-    "spesialisasi": "Orthopedi",
-    "paket": "ORIF",
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Open Reduction and internal fixation with angled blade plate, DHS, Interlocking nail, Tibial nail",
-    "golongan": "Khusus B",
-    "spesialisasi": "Orthopedi",
-    "paket": "ORIF",
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Haemorrhoid dengan Stapler",
-    "golongan": "Khusus A",
-    "spesialisasi": "Bedah",
-    "paket": "LAPAROTOMI LAR",
-    "paket_anestesi": null,
-    "alat": null
-  },
-  {
-    "nama": "Herniotomi",
-    "golongan": "Besar",
-    "spesialisasi": "Bedah",
-    "paket": "HERNIOTOMI",
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Laparotomi histerektomi total",
-    "golongan": "Besar",
-    "spesialisasi": "Kebidanan & Kandungan",
-    "paket": null,
-    "paket_anestesi": null,
-    "alat": null
-  },
-  {
-    "nama": "Endoscopic decompression",
-    "golongan": "Khusus C",
-    "spesialisasi": "Orthopedi",
-    "paket": null,
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Odontektomi 3 s.d 4 Gigi Kasus Sulit",
-    "golongan": "Khusus B",
-    "spesialisasi": "Bedah Mulut",
-    "paket": null,
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Laparoskopi Cholecystectomy",
-    "golongan": "Khusus B",
-    "spesialisasi": "Bedah",
-    "paket": null,
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Seksio sesarea tanpa penyulit",
-    "golongan": "Sedang",
-    "spesialisasi": "Kebidanan & Kandungan",
-    "paket": "SC",
-    "paket_anestesi": "ANESTESI SPINAL",
-    "alat": null
-  },
-  {
-    "nama": "Seksio sesarea bekas sc dengan penyulit",
-    "golongan": "Besar",
-    "spesialisasi": "Kebidanan & Kandungan",
-    "paket": "SC",
-    "paket_anestesi": "ANESTESI SPINAL",
-    "alat": null
-  },
-  {
-    "nama": "Biopsi Tumor Superfisial",
-    "golongan": "Sedang",
-    "spesialisasi": "Bedah",
-    "paket": null,
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Arthroscopic meniscus repair",
-    "golongan": "Khusus B",
-    "spesialisasi": "Orthopedi",
-    "paket": null,
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Urethrosistoskopi",
-    "golongan": "Sedang",
-    "spesialisasi": "Urologi",
-    "paket": null,
-    "paket_anestesi": null,
-    "alat": null
-  },
-  {
-    "nama": "Debridement (bius umum)",
-    "golongan": "Sedang",
-    "spesialisasi": "Bedah",
-    "paket": "DEBRIDEMENT",
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Histeroskopi operatif",
-    "golongan": "Besar",
-    "spesialisasi": "Kebidanan & Kandungan",
-    "paket": null,
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Fakoemulsifikasi",
-    "golongan": "Besar",
-    "spesialisasi": "Mata",
-    "paket": null,
-    "paket_anestesi": "-",
-    "alat": null
-  },
-  {
-    "nama": "Tonsilektomi",
-    "golongan": "Besar",
-    "spesialisasi": "THT",
-    "paket": "REKONSTRUKSI THT",
-    "paket_anestesi": "ANESTESI GA",
-    "alat": "TONSILEKTOMI"
-  },
-  {
-    "nama": "Adenoidektomi (Jika Menggunakan Endoskopi)",
-    "golongan": "Besar",
-    "spesialisasi": "THT",
-    "paket": "REKONSTRUKSI THT",
-    "paket_anestesi": "ANESTESI GA",
-    "alat": "TONSILEKTOMI"
-  },
-  {
-    "nama": "Eksisi Sederhana",
-    "golongan": "Sedang",
-    "spesialisasi": "Bedah",
-    "paket": "EKSISI",
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Decompression laminectomy for HNP, tumor and spinal stenosis",
-    "golongan": "Khusus C",
-    "spesialisasi": "Orthopedi",
-    "paket": null,
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "⁠Release trigger finger",
-    "golongan": "Besar",
-    "spesialisasi": "Orthopedi",
-    "paket": "RELEASE CTS",
-    "paket_anestesi": "ANESTESI GA",
-    "alat": "C ARM"
-  },
-  {
-    "nama": "Orchidopexy UDT",
-    "golongan": "Khusus A",
-    "spesialisasi": "Urologi",
-    "paket": null,
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Mikroligasi Varikokel Unilateral",
-    "golongan": "Khusus A",
-    "spesialisasi": "Urologi",
-    "paket": null,
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Manipulation and reduction of simple fracture and dislocation with general anaesthesia",
-    "golongan": "Sedang",
-    "spesialisasi": "Orthopedi",
-    "paket": "ORIF",
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Jahit luka (bius umum)",
-    "golongan": "Sedang",
-    "spesialisasi": "Bedah",
-    "paket": "DEBRIDEMENT",
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  },
-  {
-    "nama": "Sirkumsisi",
-    "golongan": "Kecil",
-    "spesialisasi": "Urologi",
-    "paket": null,
-    "paket_anestesi": "ANESTESI GA",
-    "alat": null
-  }
+    {
+        "nama": "Insisi abses (bius umum)",
+        "golongan": "Sedang",
+        "spesialisasi": "Bedah",
+        "paket": "DEBRIDEMENT",
+        "paket_anestesi": "ANESTESI GA",
+        "alat": "-"
+    },
+    {
+        "nama": "Laparotomi Eksplorasi ",
+        "golongan": "Khusus A",
+        "spesialisasi": "Bedah",
+        "paket": "LAPAROTOMI LAR",
+        "paket_anestesi": "ANESTESI GA",
+        "alat": "-"
+    },
+    {
+        "nama": "Aff Double J (per Sistoskopi)",
+        "golongan": "Sedang",
+        "spesialisasi": "Urologi",
+        "paket": null,
+        "paket_anestesi": null,
+        "alat": null
+    },
+    {
+        "nama": "Removal of implants ( one plate/nail/screws) ",
+        "golongan": "Besar",
+        "spesialisasi": "Orthopedi",
+        "paket": "ORIF",
+        "paket_anestesi": "ANESTESI GA",
+        "alat": null
+    },
+    {
+        "nama": "Laparascopy Appendictomi",
+        "golongan": "Khusus B",
+        "spesialisasi": "Bedah",
+        "paket": "LAPAROSKOPI APPENDIKTOMI",
+        "paket_anestesi": "ANESTESI GA",
+        "alat": null
+    },
+    {
+        "nama": "Laparotomi Appendektomi ",
+        "golongan": "Khusus A",
+        "spesialisasi": "Bedah",
+        "paket": "LAPAROTOMI",
+        "paket_anestesi": null,
+        "alat": "-"
+    },
+    {
+        "nama": "Kuretase",
+        "golongan": "Kecil",
+        "spesialisasi": "Kebidanan & Kandungan",
+        "paket": null,
+        "paket_anestesi": "ANESTESI SPINAL",
+        "alat": "-"
+    },
+    {
+        "nama": "TUR Prostat (TURP)",
+        "golongan": "Khusus A",
+        "spesialisasi": "Urologi",
+        "paket": "TURP",
+        "paket_anestesi": null,
+        "alat": null
+    },
+    {
+        "nama": "Radical Mastectomy",
+        "golongan": "Khusus A",
+        "spesialisasi": "Bedah",
+        "paket": null,
+        "paket_anestesi": "ANESTESI GA",
+        "alat": null
+    },
+    {
+        "nama": "Kraniotomi / Trepanasi Konvensional : Operasi lebih dari 4 jam",
+        "golongan": "Khusus C",
+        "spesialisasi": "Bedah Saraf",
+        "paket": "KRANIOTOMI",
+        "paket_anestesi": "ANESTESI GA",
+        "alat": null
+    },
+    {
+        "nama": "Pasang CDL/CVC/PICC",
+        "golongan": "Kecil",
+        "spesialisasi": "Bedah",
+        "paket": null,
+        "paket_anestesi": null,
+        "alat": null
+    },
+    {
+        "nama": "Endoablation vena sederhana (EVLT/RFA/Venoseal/Clariven",
+        "golongan": "Khusus A",
+        "spesialisasi": "Bedah",
+        "paket": null,
+        "paket_anestesi": "ANESTESI SPINAL",
+        "alat": null
+    },
+    {
+        "nama": "Ekstirpasi FAM Soliter ",
+        "golongan": "Sedang",
+        "spesialisasi": "Bedah",
+        "paket": null,
+        "paket_anestesi": "ANESTESI GA",
+        "alat": "-"
+    },
+    {
+        "nama": "Open reduction and internal fixation with wire (eg : TBW patella, olecranon) and screws ",
+        "golongan": "Khusus A",
+        "spesialisasi": "Orthopedi",
+        "paket": "ORIF",
+        "paket_anestesi": "ANESTESI GA",
+        "alat": null
+    },
+    {
+        "nama": "Open reduction and internal fixation of comminutive/complex/intraarticular fracture - single bone ",
+        "golongan": "Khusus A",
+        "spesialisasi": "Orthopedi",
+        "paket": "ORIF",
+        "paket_anestesi": "ANESTESI GA",
+        "alat": null
+    },
+    {
+        "nama": "Open reduction and internal fixation simple fracture (plate Screw, Nail) - > 1 bone ",
+        "golongan": "Khusus B",
+        "spesialisasi": "Orthopedi",
+        "paket": "ORIF",
+        "paket_anestesi": "ANESTESI GA",
+        "alat": null
+    },
+    {
+        "nama": "Open Reduction and internal fixation with angled blade plate, DHS, Interlocking nail, Tibial nail ",
+        "golongan": "Khusus B",
+        "spesialisasi": "Orthopedi",
+        "paket": "ORIF",
+        "paket_anestesi": "ANESTESI GA",
+        "alat": null
+    },
+    {
+        "nama": "Haemorrhoid dengan Stapler ",
+        "golongan": "Khusus A",
+        "spesialisasi": "Bedah",
+        "paket": "LAPAROTOMI LAR",
+        "paket_anestesi": null,
+        "alat": null
+    },
+    {
+        "nama": "Herniotomi",
+        "golongan": "Besar",
+        "spesialisasi": "Bedah",
+        "paket": "HERNIOTOMI",
+        "paket_anestesi": "ANESTESI GA",
+        "alat": "-"
+    },
+    {
+        "nama": "Laparotomi histerektomi total",
+        "golongan": "Besar",
+        "spesialisasi": "Kebidanan & Kandungan",
+        "paket": null,
+        "paket_anestesi": null,
+        "alat": null
+    },
+    {
+        "nama": "Endoscopic decompression",
+        "golongan": "Khusus C",
+        "spesialisasi": "Orthopedi",
+        "paket": null,
+        "paket_anestesi": "ANESTESI GA",
+        "alat": null
+    },
+    {
+        "nama": "Odontektomi 3 s.d 4 Gigi Kasus Sulit",
+        "golongan": "Khusus B",
+        "spesialisasi": "Bedah Mulut",
+        "paket": null,
+        "paket_anestesi": "ANESTESI GA",
+        "alat": null
+    },
+    {
+        "nama": "Laparoskopi Cholecystectomy ",
+        "golongan": "Khusus B",
+        "spesialisasi": "Bedah",
+        "paket": null,
+        "paket_anestesi": "ANESTESI GA",
+        "alat": null
+    },
+    {
+        "nama": "Seksio sesarea tanpa penyulit",
+        "golongan": "Sedang",
+        "spesialisasi": "Kebidanan & Kandungan",
+        "paket": "SC",
+        "paket_anestesi": "ANESTESI SPINAL",
+        "alat": "-"
+    },
+    {
+        "nama": "Seksio sesarea bekas sc dengan penyulit ",
+        "golongan": "Besar",
+        "spesialisasi": "Kebidanan & Kandungan",
+        "paket": "SC",
+        "paket_anestesi": "ANESTESI SPINAL",
+        "alat": "-"
+    },
+    {
+        "nama": "Biopsi Tumor Superfisial ",
+        "golongan": "Sedang",
+        "spesialisasi": "Bedah",
+        "paket": null,
+        "paket_anestesi": "ANESTESI GA",
+        "alat": "-"
+    },
+    {
+        "nama": "Arthroscopic meniscus repair ",
+        "golongan": "Khusus B",
+        "spesialisasi": "Orthopedi",
+        "paket": null,
+        "paket_anestesi": "ANESTESI GA",
+        "alat": null
+    },
+    {
+        "nama": "Urethrosistoskopi",
+        "golongan": "Sedang",
+        "spesialisasi": "Urologi",
+        "paket": null,
+        "paket_anestesi": null,
+        "alat": null
+    },
+    {
+        "nama": "Debridement (bius umum) ",
+        "golongan": "Sedang",
+        "spesialisasi": "Bedah",
+        "paket": "DEBRIDEMENT",
+        "paket_anestesi": "ANESTESI GA",
+        "alat": "-"
+    },
+    {
+        "nama": "Histeroskopi operatif",
+        "golongan": "Besar",
+        "spesialisasi": "Kebidanan & Kandungan",
+        "paket": null,
+        "paket_anestesi": "ANESTESI GA",
+        "alat": null
+    },
+    {
+        "nama": "Fakoemulsifikasi",
+        "golongan": "Besar",
+        "spesialisasi": "Mata",
+        "paket": null,
+        "paket_anestesi": "-",
+        "alat": null
+    },
+    {
+        "nama": "Tonsilektomi",
+        "golongan": "Besar",
+        "spesialisasi": "THT",
+        "paket": "REKONSTRUKSI THT",
+        "paket_anestesi": "ANESTESI GA",
+        "alat": "TONSILEKTOMI"
+    },
+    {
+        "nama": "Adenoidektomi (Jika Menggunakan Endoskopi)",
+        "golongan": "Besar",
+        "spesialisasi": "THT",
+        "paket": "REKONSTRUKSI THT",
+        "paket_anestesi": "ANESTESI GA",
+        "alat": "TONSILEKTOMI"
+    },
+    {
+        "nama": "Eksisi Sederhana ",
+        "golongan": "Sedang",
+        "spesialisasi": "Bedah",
+        "paket": "EKSISI",
+        "paket_anestesi": "ANESTESI GA",
+        "alat": "-"
+    },
+    {
+        "nama": "Decompression laminectomy for HNP, tumor and spinal stenosis",
+        "golongan": "Khusus C",
+        "spesialisasi": "Orthopedi",
+        "paket": null,
+        "paket_anestesi": "ANESTESI GA",
+        "alat": null
+    },
+    {
+        "nama": "\u2060Release trigger finger ",
+        "golongan": "Besar",
+        "spesialisasi": "Orthopedi",
+        "paket": "RELEASE CTS",
+        "paket_anestesi": "ANESTESI GA",
+        "alat": "C ARM"
+    },
+    {
+        "nama": "Orchidopexy UDT ",
+        "golongan": "Khusus A",
+        "spesialisasi": "Urologi",
+        "paket": null,
+        "paket_anestesi": "ANESTESI GA",
+        "alat": null
+    },
+    {
+        "nama": "Mikroligasi Varikokel Unilateral",
+        "golongan": "Khusus A",
+        "spesialisasi": "Urologi",
+        "paket": null,
+        "paket_anestesi": "ANESTESI GA",
+        "alat": null
+    },
+    {
+        "nama": "Manipulation and reduction of simple fracture and dislocation with general anaesthesia ",
+        "golongan": "Sedang",
+        "spesialisasi": "Orthopedi",
+        "paket": "ORIF",
+        "paket_anestesi": "ANESTESI GA",
+        "alat": null
+    },
+    {
+        "nama": "Jahit luka (bius umum)",
+        "golongan": "Sedang",
+        "spesialisasi": "Bedah",
+        "paket": "DEBRIDEMENT",
+        "paket_anestesi": "ANESTESI GA",
+        "alat": "-"
+    },
+    {
+        "nama": "Sirkumsisi",
+        "golongan": "Kecil",
+        "spesialisasi": "Urologi",
+        "paket": null,
+        "paket_anestesi": "ANESTESI GA",
+        "alat": "-"
+    }
 ]

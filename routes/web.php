@@ -7,6 +7,7 @@ use App\Http\Controllers\PasienController;
 use App\Http\Controllers\TindakanController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DoctorController;
 
 // Guest Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -49,6 +50,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/api/patients/{rm}', [PasienController::class, 'lookup'])->name('api.patients.lookup');
     Route::get('/api/master-data', [TindakanController::class, 'getMasterData'])->name('api.master-data');
     Route::get('/api/tindakan/lookup', [TindakanController::class, 'lookupTindakan'])->name('api.tindakan.lookup');
+    Route::get('/api/alat/lookup', [TindakanController::class, 'lookupAlat'])->name('api.alat.lookup');
     Route::post('/set-role', function(\Illuminate\Http\Request $request) {
         session(['role' => $request->role]);
         return response()->json(['success' => true]);
@@ -58,5 +60,10 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['role:SuperAdmin,Administrator'])->group(function () {
         Route::get('/users', [UserController::class, 'index'])->name('admin.users');
         Route::post('/users/{id}/role', [UserController::class, 'updateRole'])->name('admin.users.update-role');
+        
+        Route::get('/admin/doctors', [DoctorController::class, 'index'])->name('admin.doctors');
+        Route::post('/admin/doctors', [DoctorController::class, 'store'])->name('admin.doctors.store');
+        Route::put('/admin/doctors/{id}', [DoctorController::class, 'update'])->name('admin.doctors.update');
+        Route::delete('/admin/doctors/{id}', [DoctorController::class, 'destroy'])->name('admin.doctors.destroy');
     });
 });

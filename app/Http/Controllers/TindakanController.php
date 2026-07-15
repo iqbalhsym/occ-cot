@@ -60,12 +60,18 @@ class TindakanController extends Controller
         $allTindakan = array_unique(array_merge($tindakanList, $tindakanGolonganList));
         sort($allTindakan);
 
+        $alatList = AlatKhusus::select('nama', 'tarif')->orderBy('nama')->get()->toArray();
+        $paketBmhpList = PaketBmhp::select('nama', 'tarif')->orderBy('nama')->get()->toArray();
+
         return response()->json([
             'lokasi' => $lokasi,
             'penjamin' => $penjamin,
             'spesialisasi' => $spesialisasi,
             'tindakan' => array_values($allTindakan),
-            'alat' => $alat
+            'alat' => $alat,
+            'alat_details' => $alatList,
+            'paket_bmhp' => $paketBmhpList,
+            'doctors' => \App\Models\Doctor::select('nama', 'nama_gelar')->orderBy('nama')->get()->toArray()
         ]);
     }
 
@@ -139,5 +145,19 @@ class TindakanController extends Controller
             'hargaBPJS' => $hargaBpjs,
             'bmhp' => $bmhp
         ]);
+    }
+
+    public function lookupAlat(Request $request)
+    {
+        $nama = $request->query('nama');
+        $alat = AlatKhusus::where('nama', $nama)->first();
+        if ($alat) {
+            return response()->json([
+                'success' => true,
+                'nama' => $alat->nama,
+                'tarif' => $alat->tarif
+            ]);
+        }
+        return response()->json(['success' => false]);
     }
 }

@@ -1,654 +1,654 @@
 [
-  {
-    "nama": "ALAT / INSTRUMEN - ALIGATOR FORCEP",
-    "tarif": 1265000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - ANESTETIC MACHINE",
-    "tarif": 1132000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - ANESTHETIC GAS O2 (per jam)",
-    "tarif": 37000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - BLANKET WARMER",
-    "tarif": 279000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - BOOR HIGH SPEED",
-    "tarif": 4934000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - CARM",
-    "tarif": 966000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - CO2 (per jam)",
-    "tarif": 10000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - CPAP (per perawatan)",
-    "tarif": 186000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - CPAP (per hari)",
-    "tarif": 456000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - CTG MONITORING (per 30 menit)",
-    "tarif": 165000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - CYTOSCOPY",
-    "tarif": 1173000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - DC SHOCK (per hari)",
-    "tarif": 345000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - DRILL ORTHOPEDY",
-    "tarif": 1840000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - DYNAMAP",
-    "tarif": 150000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - ELECTRO CAUTER",
-    "tarif": 401000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - ENTONOX (per jam)",
-    "tarif": 38000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - EQUIPMENT B-PAP MACHINE",
-    "tarif": 279000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - EQUIPMENT CAPNOGRAPH",
-    "tarif": 61000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - EQUIPMENT CONTINUOUS GLUCOSE MONITORING SYSTEM",
-    "tarif": 190000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - EQUIPMENT ESWL",
-    "tarif": 3450000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - EQUIPMENT LASER PROSTATE",
-    "tarif": 4175000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - EQUIPMENT LASER URS",
-    "tarif": 2096000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - EQUIPMENT LIGASURE",
-    "tarif": 2070000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - EQUIPMENT PCNL",
-    "tarif": 5267000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - EQUIPMENT ROTABLATOR",
-    "tarif": 10534000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - EQUIPMENT RPG (RETROGRADE PYELOGRAPHY)",
-    "tarif": 570000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - EQUIPMENT TELEMETRY MONITOR (per hari)",
-    "tarif": 460000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - ERCP",
-    "tarif": 6768000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - ETHYL CHLORIDE SPRAY (per pemakaian)",
-    "tarif": 65000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - GENERAL ANAESTHETIC",
-    "tarif": 805000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - GENERATOR PACEMAKER TEMPORARY (per hari)",
-    "tarif": 138000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - GUIDED USG (per 15 menit)",
-    "tarif": 92000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - HARMONIC SCALPEL",
-    "tarif": 2351000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - HEART LUNG MACHINE",
-    "tarif": 4507000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - IABP (per hari)",
-    "tarif": 499000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - INCUBATOR - DRAGGER (per hari)",
-    "tarif": 444000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - INFANT VENTILATOR (per hari)",
-    "tarif": 973000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - INFANT WARMER (per hari)",
-    "tarif": 259000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - INFUSION PUMP (per hari)",
-    "tarif": 69000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - JAUNDICE METER (per hari)",
-    "tarif": 97000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - LAPAROSCOPIC SET",
-    "tarif": 1656000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - LASER HEMORRHOID",
-    "tarif": 638000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - LOCAL ANESTHESI DENGAN SEDASI",
-    "tarif": 225000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - MATA BOR",
-    "tarif": 759000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - MICROSCOPE",
-    "tarif": 1852000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - MICROSCOPE NEURO",
-    "tarif": 5933000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - MOLCELATOR",
-    "tarif": 2875000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - MONITORING PROCEDURE I",
-    "tarif": 474000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - N2O (per jam)",
-    "tarif": 10000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - NEBULIZER",
-    "tarif": 183000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - NEOPUFF",
-    "tarif": 333000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - OXYGEN BLENDER",
-    "tarif": 654000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - OXYMETER",
-    "tarif": 61000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - PATIENT MONITOR (per jam)",
-    "tarif": 92000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - PHACO EMULSIFICATION",
-    "tarif": 1500000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - REGIONAL ANAESTHETIC",
-    "tarif": 329000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SACHE (UROLOGY)",
-    "tarif": 1104000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SEWA ALAT ABLASI CONVENTIONAL",
-    "tarif": 34500000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SEWA ALAT EPSL",
-    "tarif": 12075000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SEWA ANESTETIC MONITOR",
-    "tarif": 380000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - MATRAS DECUBITUS BED (per hari)",
-    "tarif": 97000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SURGICAL SAW",
-    "tarif": 432000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SYRINGE PUMP (per hari)",
-    "tarif": 69000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - TURP (Trans Urethral Resection Of Prostat)",
-    "tarif": 2044000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - URETERORENOSCOPY (URS)",
-    "tarif": 2942000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - VENTILATOR (per hari)",
-    "tarif": 380000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN RENTAL MONITORING - PROCEDURE II",
-    "tarif": 624000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - FOTOTERAPI SINGLE (per hari)",
-    "tarif": 250000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - FOTOTERAPI DOUBLE (per hari)",
-    "tarif": 500000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SEPTORINOPLASTY",
-    "tarif": 1980000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - ENDOSCOPY OT (TOWER LAPAROSKOPI)",
-    "tarif": 5175000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - OPERASI UPPER ENDO (URS) (S)",
-    "tarif": 2340000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - OPERASI LOWER ENDO (TURP/SACHSE/LITORIPSI BATU BULI/CYSTOSCOPY) (S)",
-    "tarif": 1950000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - USG ENDOUROLOGI (S)",
-    "tarif": 2600000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - PCNL (S)",
-    "tarif": 3900000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - PCNL DENGAN NEPHROSTOMY (S)",
-    "tarif": 5850000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - NEEDLE BIOPSY ENDOUROLOGI (S)",
-    "tarif": 780000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SEWA ALAT PLASMAFORESIS TERAPEUTIK",
-    "tarif": 7500000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SET MIKRO UROLOGI (SD)",
-    "tarif": 1800000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - ALAT BUSI (SD)",
-    "tarif": 1800000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - BOR (SD)",
-    "tarif": 1800000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SCREWDRIVER MINI (SD)",
-    "tarif": 1800000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - INSTRUMEN WIRE (SD)",
-    "tarif": 1800000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - LOUP (SD)",
-    "tarif": 780000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SET MIKRO ORTHOPEDI (SD)",
-    "tarif": 1800000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - CAMBINE SPINE (SD)",
-    "tarif": 780000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SET MIKRO THT (SD)",
-    "tarif": 1200000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - ALAT THT (SD)",
-    "tarif": 1200000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - ALAT FESS (SD)",
-    "tarif": 1920000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - ALAT MASTOIDEKTOMI (SD)",
-    "tarif": 1920000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - ALAT TONSILEKTOMI (SD)",
-    "tarif": 2400000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - HIGH SPEED DRILL (SD)",
-    "tarif": 3600000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SET MIKRO BEDAH PLASTIK (SD)",
-    "tarif": 1800000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - GAGANG HUMBY (SD)",
-    "tarif": 1200000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - LOUPE (SD)",
-    "tarif": 780000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SUCTION BIOPSY (SD)",
-    "tarif": 1200000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - STIMULATOR ANUS (SD)",
-    "tarif": 1200000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - BIPOLAR ENDOSCOPIC SPINE SYSTEM / BESS (S)",
-    "tarif": 33000000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SAW ACCULAN 4 STERNUM",
-    "tarif": 750000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - COLIBRI II",
-    "tarif": 2700000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - LOWER SET UROLOGY",
-    "tarif": 500000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - FESS SET",
-    "tarif": 450000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - BALLON EXPANDER (SD)",
-    "tarif": 3600000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - STIMULATOR NERVE (SD)",
-    "tarif": 2400000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SKULL CLAMP (SD)",
-    "tarif": 6000000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SEPTOPLASTY (SD)",
-    "tarif": 2400000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - TYMPANOPLASTY (SD)",
-    "tarif": 2400000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - OTOPLASTY (SD)",
-    "tarif": 2400000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SET MATA (SD)",
-    "tarif": 420000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - ENDODONTIC SCALER PORTABLE + DISPOSABLE SCALER TIP + MTA (SD)",
-    "tarif": 1800000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - CUSA ABLATION (S)",
-    "tarif": 10656000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - ALAT SHAVER (S)",
-    "tarif": 5280000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - PARTIAL UNIT ARTHROSCOPY (S)",
-    "tarif": 2664000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - FULL UNIT ARTHROSCOPY (S)",
-    "tarif": 9057600
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - LASER HOLMIUM (S)",
-    "tarif": 7992000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - BIPOLAR ENDOSCOPY SPINE (S)",
-    "tarif": 9324000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SEWA ALAT AMBULATORY BLOOD PRESSURE MONITORING / ABPM (S) per hari",
-    "tarif": 1200000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SEWA ALAT MODERN WIRELESS ECG MONITORING PATCH (S) per 3 hari",
-    "tarif": 6100000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SEWA ALAT MODERN WIRELESS ECG MONITORING PATCH (S) PER 7 HARI",
-    "tarif": 8500000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SET BASIC ARTHROSCOPY LENGKAP (TOWER, TUBING, ABLATOR, SHAVER) SMITH & NEPHEW",
-    "tarif": 3100000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - TOTAL KNEE INSTRUMEN (ACL/PCL & MENISCUS) SMITH & NEPHEW",
-    "tarif": 1640000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - HIFI SUTURE WITH DOUBLE ARMED MENISCAL MEEDLES CONMED",
-    "tarif": 170000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SET BASIC SPINE",
-    "tarif": 720000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - KERISON  SPINE INSTRUMEN",
-    "tarif": 400000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - STORZ URETHERO - URS 6.5 FR",
-    "tarif": 780000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - STORZ URETHERO - ADULT PCN 26 FR 25 CM",
-    "tarif": 900000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - QUANTA SYSTEM LITHO SURGICAL LASER SYSTEM",
-    "tarif": 2190000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - HEMOKRON",
-    "tarif": 360000
-  },
-  {
-    "nama": "ALAT / INSTRUMENT - PEDIATRIC THORACOTOMY SET",
-    "tarif": 444000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - OPHTALMIC OPERATING MICROSCOPE",
-    "tarif": 361000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - PENDANT FOR SURGERY",
-    "tarif": 353000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - PENDANT FOR ANAESTHESI",
-    "tarif": 345000
-  },
-  {
-    "nama": "ALAT / INSTRUMENT - CENTRAL MONITOR",
-    "tarif": 334000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - INSTRUMENT SET FOR CRANIOTOMY",
-    "tarif": 310000
-  },
-  {
-    "nama": "ALAT / INSTRUMENT - VACUUM PUMP DELIVERY SYSTEM",
-    "tarif": 292000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - INSTRUMENT SET MICRO NEUROSURGERY",
-    "tarif": 290000
-  },
-  {
-    "nama": "ALAT / INSTRUMENT - ELECTROSURGICAL UNIT",
-    "tarif": 194000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - PEDIATRIC LAPAROTOMY SET",
-    "tarif": 183000
-  },
-  {
-    "nama": "ALAT / INSTRUMENT - INSTRUMENT SET MAJOR",
-    "tarif": 166000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - ADULT PUMP SURGERY SET",
-    "tarif": 126000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - INSTRUMENT SET PLASTIC SURGERY",
-    "tarif": 120000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - PEDIATRIC PUMP SURGERY SET",
-    "tarif": 108000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - COMPLETE CORONARY KIT",
-    "tarif": 2100000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - RADIO FREQUENCY",
-    "tarif": 7140000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SET KATARAK (SD)",
-    "tarif": 1725000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - HYSTEROSCOPE",
-    "tarif": 505000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - PEDIATRIC MICRO SURGERY SET",
-    "tarif": 90000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - DERMATOME ELECTRIC",
-    "tarif": 646000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SECTIO CAESARIA SET",
-    "tarif": 94000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - INSTRUMENT SET PLASTIC SURGERY",
-    "tarif": 120000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - APHERESIS",
-    "tarif": 2400000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - SET GLAUKOMA (SD)",
-    "tarif": 1725000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - PEDIATRIC TORAKEOTOMY SET",
-    "tarif": 444000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - CATARAC INSTRUMENT SET",
-    "tarif": 87000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - CATHLAB TERAPI < 2 JAM",
-    "tarif": 7475000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - CABG SET",
-    "tarif": 74000
-  },
-  {
-    "nama": "ALAT/INSTRUMEN – LASER DENTAL YOSHIDA",
-    "tarif": 300000
-  },
-  {
-    "nama": "ALAT/INSTRUMEN – BREATHRONE II (HALITOMETER)",
-    "tarif": 300000
-  },
-  {
-    "nama": "ALAT/INSTRUMEN – SCALER PORTABLE",
-    "tarif": 500000
-  },
-  {
-    "nama": "ALAT/INSTRUMEN – KIT CROWN IMPLAN",
-    "tarif": 1500000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - HARMONIC HANDPIECE GRAY",
-    "tarif": 2000000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - HFNC",
-    "tarif": 250000
-  },
-  {
-    "nama": "ALAT / INSTRUMEN - VENTILATOR NON-INVASIF (NIV)",
-    "tarif": 700000
-  }
+    {
+        "nama": "ALAT / INSTRUMEN - ALIGATOR FORCEP",
+        "tarif": 1265000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - ANESTETIC MACHINE",
+        "tarif": 1132000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - ANESTHETIC GAS O2 (per jam)",
+        "tarif": 37000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - BLANKET WARMER",
+        "tarif": 279000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - BOOR HIGH SPEED",
+        "tarif": 4934000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - CARM",
+        "tarif": 966000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - CO2 (per jam)",
+        "tarif": 10000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - CPAP (per perawatan)",
+        "tarif": 186000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - CPAP (per hari)",
+        "tarif": 456000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - CTG MONITORING (per 30 menit)",
+        "tarif": 165000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - CYTOSCOPY",
+        "tarif": 1173000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - DC SHOCK (per hari)",
+        "tarif": 345000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - DRILL ORTHOPEDY",
+        "tarif": 1840000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - DYNAMAP",
+        "tarif": 150000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - ELECTRO CAUTER",
+        "tarif": 401000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - ENTONOX (per jam)",
+        "tarif": 38000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - EQUIPMENT B-PAP MACHINE",
+        "tarif": 279000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - EQUIPMENT CAPNOGRAPH",
+        "tarif": 61000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - EQUIPMENT CONTINUOUS GLUCOSE MONITORING SYSTEM",
+        "tarif": 190000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - EQUIPMENT ESWL ",
+        "tarif": 3450000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - EQUIPMENT LASER PROSTATE",
+        "tarif": 4175000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - EQUIPMENT LASER URS",
+        "tarif": 2096000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - EQUIPMENT LIGASURE",
+        "tarif": 2070000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - EQUIPMENT PCNL",
+        "tarif": 5267000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - EQUIPMENT ROTABLATOR",
+        "tarif": 10534000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - EQUIPMENT RPG (RETROGRADE PYELOGRAPHY)",
+        "tarif": 570000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - EQUIPMENT TELEMETRY MONITOR (per hari)",
+        "tarif": 460000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - ERCP",
+        "tarif": 6768000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - ETHYL CHLORIDE SPRAY (per pemakaian)",
+        "tarif": 65000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - GENERAL ANAESTHETIC",
+        "tarif": 805000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - GENERATOR PACEMAKER TEMPORARY (per hari)",
+        "tarif": 138000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - GUIDED USG (per 15 menit)",
+        "tarif": 92000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - HARMONIC SCALPEL ",
+        "tarif": 2351000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - HEART LUNG MACHINE",
+        "tarif": 4507000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - IABP (per hari)",
+        "tarif": 499000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - INCUBATOR - DRAGGER (per hari)",
+        "tarif": 444000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - INFANT VENTILATOR (per hari)",
+        "tarif": 973000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - INFANT WARMER (per hari)",
+        "tarif": 259000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - INFUSION PUMP (per hari)",
+        "tarif": 69000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - JAUNDICE METER (per hari)",
+        "tarif": 97000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - LAPAROSCOPIC SET ",
+        "tarif": 1656000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - LASER HEMORRHOID",
+        "tarif": 638000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - LOCAL ANESTHESI DENGAN SEDASI ",
+        "tarif": 225000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - MATA BOR",
+        "tarif": 759000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - MICROSCOPE",
+        "tarif": 1852000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - MICROSCOPE NEURO",
+        "tarif": 5933000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - MOLCELATOR",
+        "tarif": 2875000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - MONITORING PROCEDURE I",
+        "tarif": 474000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - N2O (per jam)",
+        "tarif": 10000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - NEBULIZER ",
+        "tarif": 183000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - NEOPUFF",
+        "tarif": 333000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - OXYGEN BLENDER",
+        "tarif": 654000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - OXYMETER",
+        "tarif": 61000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - PATIENT MONITOR (per jam)",
+        "tarif": 92000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - PHACO EMULSIFICATION",
+        "tarif": 1500000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - REGIONAL ANAESTHETIC",
+        "tarif": 329000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SACHE (UROLOGY)",
+        "tarif": 1104000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SEWA ALAT ABLASI CONVENTIONAL",
+        "tarif": 34500000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SEWA ALAT EPSL",
+        "tarif": 12075000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SEWA ANESTETIC MONITOR",
+        "tarif": 380000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - MATRAS DECUBITUS BED (per hari)",
+        "tarif": 97000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SURGICAL SAW",
+        "tarif": 432000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SYRINGE PUMP (per hari)",
+        "tarif": 69000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - TURP (Trans Urethral Resection Of Prostat)",
+        "tarif": 2044000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - URETERORENOSCOPY (URS)",
+        "tarif": 2942000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - VENTILATOR (per hari)",
+        "tarif": 380000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN RENTAL MONITORING - PROCEDURE II",
+        "tarif": 624000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - FOTOTERAPI SINGLE (per hari)",
+        "tarif": 250000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - FOTOTERAPI DOUBLE (per hari)",
+        "tarif": 500000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SEPTORINOPLASTY",
+        "tarif": 1980000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - ENDOSCOPY OT (TOWER LAPAROSKOPI)",
+        "tarif": 5175000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - OPERASI UPPER ENDO (URS) (S)",
+        "tarif": 2340000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - OPERASI LOWER ENDO (TURP/SACHSE/LITORIPSI BATU BULI/CYSTOSCOPY) (S)",
+        "tarif": 1950000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - USG ENDOUROLOGI (S)",
+        "tarif": 2600000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - PCNL (S)",
+        "tarif": 3900000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - PCNL DENGAN NEPHROSTOMY (S)",
+        "tarif": 5850000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - NEEDLE BIOPSY ENDOUROLOGI (S)",
+        "tarif": 780000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SEWA ALAT PLASMAFORESIS TERAPEUTIK",
+        "tarif": 7500000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SET MIKRO UROLOGI (SD)",
+        "tarif": 1800000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - ALAT BUSI (SD)",
+        "tarif": 1800000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - BOR (SD)",
+        "tarif": 1800000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SCREWDRIVER MINI (SD)",
+        "tarif": 1800000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - INSTRUMEN WIRE (SD)",
+        "tarif": 1800000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - LOUP (SD)",
+        "tarif": 780000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SET MIKRO ORTHOPEDI (SD)",
+        "tarif": 1800000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - CAMBINE SPINE (SD)",
+        "tarif": 780000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SET MIKRO THT (SD)",
+        "tarif": 1200000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - ALAT THT (SD)",
+        "tarif": 1200000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - ALAT FESS (SD)",
+        "tarif": 1920000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - ALAT MASTOIDEKTOMI (SD)",
+        "tarif": 1920000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - ALAT TONSILEKTOMI (SD)",
+        "tarif": 2400000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - HIGH SPEED DRILL (SD)",
+        "tarif": 3600000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SET MIKRO BEDAH PLASTIK (SD)",
+        "tarif": 1800000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - GAGANG HUMBY (SD)",
+        "tarif": 1200000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - LOUPE (SD)",
+        "tarif": 780000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SUCTION BIOPSY (SD)",
+        "tarif": 1200000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - STIMULATOR ANUS (SD)",
+        "tarif": 1200000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - BIPOLAR ENDOSCOPIC SPINE SYSTEM / BESS (S)",
+        "tarif": 33000000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SAW ACCULAN 4 STERNUM",
+        "tarif": 750000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - COLIBRI II",
+        "tarif": 2700000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - LOWER SET UROLOGY",
+        "tarif": 500000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - FESS SET",
+        "tarif": 450000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - BALLON EXPANDER (SD)",
+        "tarif": 3600000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - STIMULATOR NERVE (SD)",
+        "tarif": 2400000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SKULL CLAMP (SD)",
+        "tarif": 6000000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SEPTOPLASTY (SD)",
+        "tarif": 2400000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - TYMPANOPLASTY (SD)",
+        "tarif": 2400000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - OTOPLASTY (SD)",
+        "tarif": 2400000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SET MATA (SD)",
+        "tarif": 420000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - ENDODONTIC SCALER PORTABLE + DISPOSABLE SCALER TIP + MTA (SD)",
+        "tarif": 1800000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - CUSA ABLATION (S)",
+        "tarif": 10656000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - ALAT SHAVER (S)",
+        "tarif": 5280000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - PARTIAL UNIT ARTHROSCOPY (S)",
+        "tarif": 2664000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - FULL UNIT ARTHROSCOPY (S)",
+        "tarif": 9057600.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - LASER HOLMIUM (S)",
+        "tarif": 7992000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - BIPOLAR ENDOSCOPY SPINE (S)",
+        "tarif": 9324000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SEWA ALAT AMBULATORY BLOOD PRESSURE MONITORING / ABPM (S) per hari ",
+        "tarif": 1200000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SEWA ALAT MODERN WIRELESS ECG MONITORING PATCH (S) per 3 hari ",
+        "tarif": 6100000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SEWA ALAT MODERN WIRELESS ECG MONITORING PATCH (S) PER 7 HARI",
+        "tarif": 8500000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SET BASIC ARTHROSCOPY LENGKAP (TOWER, TUBING, ABLATOR, SHAVER) SMITH & NEPHEW",
+        "tarif": 3100000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - TOTAL KNEE INSTRUMEN (ACL/PCL & MENISCUS) SMITH & NEPHEW",
+        "tarif": 1640000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - HIFI SUTURE WITH DOUBLE ARMED MENISCAL MEEDLES CONMED",
+        "tarif": 170000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SET BASIC SPINE",
+        "tarif": 720000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - KERISON  SPINE INSTRUMEN",
+        "tarif": 400000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - STORZ URETHERO - URS 6.5 FR",
+        "tarif": 780000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - STORZ URETHERO - ADULT PCN 26 FR 25 CM",
+        "tarif": 900000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - QUANTA SYSTEM LITHO SURGICAL LASER SYSTEM ",
+        "tarif": 2190000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - HEMOKRON",
+        "tarif": 360000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMENT - PEDIATRIC THORACOTOMY SET ",
+        "tarif": 444000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - OPHTALMIC OPERATING MICROSCOPE",
+        "tarif": 361000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - PENDANT FOR SURGERY",
+        "tarif": 353000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - PENDANT FOR ANAESTHESI",
+        "tarif": 345000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMENT - CENTRAL MONITOR ",
+        "tarif": 334000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - INSTRUMENT SET FOR CRANIOTOMY",
+        "tarif": 310000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMENT - VACUUM PUMP DELIVERY SYSTEM ",
+        "tarif": 292000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - INSTRUMENT SET MICRO NEUROSURGERY",
+        "tarif": 290000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMENT - ELECTROSURGICAL UNIT ",
+        "tarif": 194000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - PEDIATRIC LAPAROTOMY SET",
+        "tarif": 183000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMENT - INSTRUMENT SET MAJOR ",
+        "tarif": 166000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - ADULT PUMP SURGERY SET",
+        "tarif": 126000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - INSTRUMENT SET PLASTIC SURGERY",
+        "tarif": 120000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - PEDIATRIC PUMP SURGERY SET",
+        "tarif": 108000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - COMPLETE CORONARY KIT",
+        "tarif": 2100000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - RADIO FREQUENCY",
+        "tarif": 7140000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SET KATARAK (SD)",
+        "tarif": 1725000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - HYSTEROSCOPE",
+        "tarif": 505000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - PEDIATRIC MICRO SURGERY SET",
+        "tarif": 90000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - DERMATOME ELECTRIC",
+        "tarif": 646000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SECTIO CAESARIA SET",
+        "tarif": 94000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - INSTRUMENT SET PLASTIC SURGERY",
+        "tarif": 120000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - APHERESIS",
+        "tarif": 2400000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - SET GLAUKOMA (SD)",
+        "tarif": 1725000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - PEDIATRIC TORAKEOTOMY SET",
+        "tarif": 444000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - CATARAC INSTRUMENT SET",
+        "tarif": 87000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - CATHLAB TERAPI < 2 JAM",
+        "tarif": 7475000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - CABG SET",
+        "tarif": 74000.0
+    },
+    {
+        "nama": "ALAT/INSTRUMEN \u2013 LASER DENTAL YOSHIDA",
+        "tarif": 300000.0
+    },
+    {
+        "nama": "ALAT/INSTRUMEN \u2013 BREATHRONE II (HALITOMETER)",
+        "tarif": 300000.0
+    },
+    {
+        "nama": "ALAT/INSTRUMEN \u2013 SCALER PORTABLE",
+        "tarif": 500000.0
+    },
+    {
+        "nama": "ALAT/INSTRUMEN \u2013 KIT CROWN IMPLAN",
+        "tarif": 1500000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - HARMONIC HANDPIECE GRAY",
+        "tarif": 2000000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - HFNC",
+        "tarif": 250000.0
+    },
+    {
+        "nama": "ALAT / INSTRUMEN - VENTILATOR NON-INVASIF (NIV)",
+        "tarif": 700000.0
+    }
 ]

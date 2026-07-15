@@ -1,0 +1,2922 @@
+[
+  {
+    "nama": "Dwi Ariawan",
+    "nama_gelar": "Dr. Dwi Ariawan, drg., Sp.B.M.M., Subsp.C.O.M(K)",
+    "spesialis": "Dokter Gigi Spesialis Bedah Mulut",
+    "ksm": "Dokter Gigi Spesialis Bedah Mulut",
+    "konsultan": "Konsultan Oral & Maxillofacial Cleft",
+    "status": "SPESIALIS GIGI PART TIME"
+  },
+  {
+    "nama": "Vera Julia",
+    "nama_gelar": "Dr. Vera Julia, drg., Sp.B.M.M., Subsp.T.M.T.M.J. (K)",
+    "spesialis": "Dokter Gigi Spesialis Bedah Mulut",
+    "ksm": "Dokter Gigi Spesialis Bedah Mulut",
+    "konsultan": "Konsultan Maxillofacial Trauma & Temporomandibular Joint Disorders Surgery",
+    "status": "SPESIALIS GIGI PART TIME"
+  },
+  {
+    "nama": "Nissia Ananda",
+    "nama_gelar": "Dr. Nissia Ananda, drg., Sp.B.M.M",
+    "spesialis": "Dokter Gigi Spesialis Bedah Mulut",
+    "ksm": "Dokter Gigi Spesialis Bedah Mulut",
+    "konsultan": "-",
+    "status": "SPESIALIS GIGI FULL TIME"
+  },
+  {
+    "nama": "Cinthia Mauliadina Azhary",
+    "nama_gelar": "drg. Cinthia Muliadina Azhary, Sp.BMM",
+    "spesialis": "Dokter Gigi Spesialis Bedah Mulut",
+    "ksm": "Dokter Gigi Spesialis Bedah Mulut",
+    "konsultan": "-",
+    "status": "SPESIALIS GIGI PART TIME"
+  },
+  {
+    "nama": "Mohammad Farid Ratman",
+    "nama_gelar": "drg. Mohammad Farid Ratman, Sp.BMM, Subsp.COM(K), Ph.D",
+    "spesialis": "Dokter Gigi Spesialis Bedah Mulut",
+    "ksm": "Dokter Gigi Spesialis Bedah Mulut",
+    "konsultan": "Konsultan Oral & Maxillofacial Cleft",
+    "status": "SPESIALIS GIGI PART TIME"
+  },
+  {
+    "nama": "Mochammad Fahlevi Rizal",
+    "nama_gelar": "Dr. drg. Mochamad Fahlevi Rizal, Sp.KGA, K-PKOA",
+    "spesialis": "Dokter Gigi Spesialis Kedokteran Gigi Anak",
+    "ksm": "Dokter Gigi Spesialis Kedokteran Gigi Anak",
+    "konsultan": "Konsultan Penyakit dan Kelainan Oral Anak",
+    "status": "SPESIALIS GIGI PART TIME"
+  },
+  {
+    "nama": "Annisa Khairani",
+    "nama_gelar": "drg. Annisa Khairani, Sp.KGA, K-PKOA",
+    "spesialis": "Dokter Gigi Spesialis Kedokteran Gigi Anak",
+    "ksm": "Dokter Gigi Spesialis Kedokteran Gigi Anak",
+    "konsultan": "Konsultan Penyakit dan Kelainan Oral Anak",
+    "status": "SPESIALIS GIGI PART TIME"
+  },
+  {
+    "nama": "Amrita Widyagarini",
+    "nama_gelar": "drg. Amrita Widyagarini, Sp.KGA, K-AIBK, Ph.D",
+    "spesialis": "Dokter Gigi Spesialis Kedokteran Gigi Anak",
+    "ksm": "Dokter Gigi Spesialis Kedokteran Gigi Anak",
+    "konsultan": "Konsultan Anak dan Individu Berkebutuhan Khusus",
+    "status": "SPESIALIS GIGI PART TIME"
+  },
+  {
+    "nama": "Astri Kusumaningrum",
+    "nama_gelar": "drg. Astri Kusumaningrum, Sp.KGA",
+    "spesialis": "Dokter Gigi Spesialis Kedokteran Gigi Anak",
+    "ksm": "Dokter Gigi Spesialis Kedokteran Gigi Anak",
+    "konsultan": "-",
+    "status": "SPESIALIS GIGI PART TIME"
+  },
+  {
+    "nama": "Iffi Aprillia",
+    "nama_gelar": "drg. Iffi Aprillia, Sp.KG(K)",
+    "spesialis": "Dokter Gigi Spesialis Konservasi Gigi",
+    "ksm": "Dokter Gigi Spesialis Konservasi Gigi",
+    "konsultan": "Konservasi Restorasi",
+    "status": "SPESIALIS GIGI PART TIME"
+  },
+  {
+    "nama": "Sylva Dinie Alinda",
+    "nama_gelar": "drg. Sylva Dinie Alinda, MARS, Sp.KG, Subsp, KE(K)",
+    "spesialis": "Dokter Gigi Spesialis Konservasi Gigi",
+    "ksm": "Dokter Gigi Spesialis Konservasi Gigi",
+    "konsultan": "Konsultan Konservasi Endodontik",
+    "status": "SPESIALIS GIGI PART TIME"
+  },
+  {
+    "nama": "Andria Kuswadi",
+    "nama_gelar": "drg. Andria Kuswadi, Sp.KG",
+    "spesialis": "Dokter Gigi Spesialis Konservasi Gigi",
+    "ksm": "Dokter Gigi Spesialis Konservasi Gigi",
+    "konsultan": "-",
+    "status": "SPESIALIS GIGI FULL TIME"
+  },
+  {
+    "nama": "Hana Tania Rahmaputri",
+    "nama_gelar": "drg. Hana Tania Rahmaputri, Sp.KG",
+    "spesialis": "Dokter Gigi Spesialis Konservasi Gigi",
+    "ksm": "Dokter Gigi Spesialis Konservasi Gigi",
+    "konsultan": "-",
+    "status": "SPESIALIS GIGI FULL TIME"
+  },
+  {
+    "nama": "Romilda Rosseti",
+    "nama_gelar": "drg. Romilda Rosseti, Sp.KG",
+    "spesialis": "Dokter Gigi Spesialis Konservasi Gigi",
+    "ksm": "Dokter Gigi Spesialis Konservasi Gigi",
+    "konsultan": "",
+    "status": "SPESIALIS GIGI PART TIME"
+  },
+  {
+    "nama": "Muhammad Sulaiman Kusumah Adiwirya",
+    "nama_gelar": "drg. Muhammad Sulaiman Kusumah Adiwirya, MM, Sp. Ort(K)",
+    "spesialis": "Dokter Gigi Spesialis Ortodonsia",
+    "ksm": "Dokter Gigi Spesialis Ortodonsia",
+    "konsultan": "Konsultan Disharmoni Dentrokraniofasial Perawatan Khusus (DDPK)",
+    "status": "SPESIALIS GIGI PART TIME"
+  },
+  {
+    "nama": "Haru Setyo Anggani",
+    "nama_gelar": "Prof. Dr. drg. Haru Setyo Anggani, Sp.Ort (K)",
+    "spesialis": "Dokter Gigi Spesialis Ortodonsia",
+    "ksm": "Dokter Gigi Spesialis Ortodonsia",
+    "konsultan": "Konsultan Disharmoni Dentrokraniofasial Perawatan Khusus (DDPK)",
+    "status": "SPESIALIS GIGI PART TIME"
+  },
+  {
+    "nama": "Rona Laras Narindra",
+    "nama_gelar": "drg. Rona Laras Narindra, Sp.Ort",
+    "spesialis": "Dokter Gigi Spesialis Ortodonsia",
+    "ksm": "Dokter Gigi Spesialis Ortodonsia",
+    "konsultan": "-",
+    "status": "SPESIALIS GIGI FULL TIME"
+  },
+  {
+    "nama": "Indriasti Indah Wardhany",
+    "nama_gelar": "Dr. drg. Indriasti Indah Wardhany, Sp. PM, Subsp.Inf (K)",
+    "spesialis": "Dokter Gigi Spesialis Penyakit Mulut",
+    "ksm": "Dokter Gigi Spesialis Penyakit Mulut",
+    "konsultan": "Konsultan Penyakit Infeksi",
+    "status": "SPESIALIS GIGI PART TIME"
+  },
+  {
+    "nama": "Febrina Rahmayanti",
+    "nama_gelar": "Prof. Dr. Febrina Rahmayanti, drg, Sp.PM., Subsp.Inf.Im",
+    "spesialis": "Dokter Gigi Spesialis Penyakit Mulut",
+    "ksm": "Dokter Gigi Spesialis Penyakit Mulut",
+    "konsultan": "Konsultan",
+    "status": "SPESIALIS GIGI PART TIME"
+  },
+  {
+    "nama": "Anandina Irmagita",
+    "nama_gelar": "Dr. drg. Anandina Irmagita, Sp. PM, Subsp.NonInf (K)",
+    "spesialis": "Dokter Gigi Spesialis Penyakit Mulut",
+    "ksm": "Dokter Gigi Spesialis Penyakit Mulut",
+    "konsultan": "Konsultan Penyakit Non Infeksi",
+    "status": "SPESIALIS GIGI PART TIME"
+  },
+  {
+    "nama": "Benso Sulijaya Suyono",
+    "nama_gelar": "drg. Benso Sulijaya Suyono, Sp. Perio(K), PhD",
+    "spesialis": "Dokter Gigi Spesialis Periodonsia",
+    "ksm": "Dokter Gigi Spesialis Periodonsia",
+    "konsultan": "Konsultan Periodontal Rekonstruksi dan Dental Implan",
+    "status": "SPESIALIS GIGI PART TIME"
+  },
+  {
+    "nama": "Fathia Agzarine Deandra",
+    "nama_gelar": "drg. Fathia Agzarine Deandra, Sp.Perio",
+    "spesialis": "Dokter Gigi Spesialis Periodonsia",
+    "ksm": "Dokter Gigi Spesialis Periodonsia",
+    "konsultan": "-",
+    "status": "SPESIALIS GIGI PART TIME"
+  },
+  {
+    "nama": "Ariyanti Rezeki",
+    "nama_gelar": "drg. Ariyanti Rezeki, Sp. Pros, Subsp OGST (K)",
+    "spesialis": "Dokter Gigi Spesialis Prostodonsia",
+    "ksm": "Dokter Gigi Spesialis Prostodonsia",
+    "konsultan": "Konsultan Nyeri Orofasial dan Gangguan Sendi Temporomandibula",
+    "status": "SPESIALIS GIGI PART TIME"
+  },
+  {
+    "nama": "M Lindawati S Kusdhany",
+    "nama_gelar": "Prof. Dr. drg. M Lindawati S Kusdhany, Sp.Pros, Subsp.PKIKG",
+    "spesialis": "Dokter Gigi Spesialis Prostodonsia",
+    "ksm": "Dokter Gigi Spesialis Prostodonsia",
+    "konsultan": "Konsultan Prostodonsia Kompleks dan Implan Kedokteran Gigi",
+    "status": "SPESIALIS GIGI PART TIME"
+  },
+  {
+    "nama": "Muslita Indrasari",
+    "nama_gelar": "Dr. Muslita Indrasari, drg., M.Kes., Sp.Pros(K)",
+    "spesialis": "Dokter Gigi Spesialis Prostodonsia",
+    "ksm": "Dokter Gigi Spesialis Prostodonsia",
+    "konsultan": "Konsultan",
+    "status": "SPESIALIS GIGI PART TIME"
+  },
+  {
+    "nama": "Menik Priaminiarti",
+    "nama_gelar": "Dr. drg. Menik Priaminiarti, Sp.RKG(K)",
+    "spesialis": "Dokter Gigi Spesialis Radiologi Kedokteran Gigi",
+    "ksm": "Dokter Gigi Spesialis Radiologi Kedokteran Gigi",
+    "konsultan": "Konsultan Radiodiagnostik Pencitraan",
+    "status": "SPESIALIS GIGI PART TIME"
+  },
+  {
+    "nama": "Aloysius Putut Wijanarko",
+    "nama_gelar": "drg. Aloysius Putut Wijanarko, MSc, Sp.RKG",
+    "spesialis": "Dokter Gigi Spesialis Radiologi Kedokteran Gigi",
+    "ksm": "Dokter Gigi Spesialis Radiologi Kedokteran Gigi",
+    "konsultan": "-",
+    "status": "SPESIALIS GIGI PART TIME"
+  },
+  {
+    "nama": "I Nyoman Guswan",
+    "nama_gelar": "drg. I Nyoman Guswan, MARS",
+    "spesialis": "Dokter Gigi Umum",
+    "ksm": "Dokter Gigi Umum",
+    "konsultan": "-",
+    "status": "Dokter Gigi GP Full-Time"
+  },
+  {
+    "nama": "Saly Salim Saleh Alatas",
+    "nama_gelar": "drg. Saly Salim Saleh Alatas, MARS",
+    "spesialis": "Dokter Gigi Umum",
+    "ksm": "Dokter Gigi Umum",
+    "konsultan": "-",
+    "status": "Dokter Gigi GP Full-Time"
+  },
+  {
+    "nama": "Ayudewi Komala Indriastuti",
+    "nama_gelar": "drg. Ayudewi Komala Indriastuti, MARS",
+    "spesialis": "Dokter Gigi Umum",
+    "ksm": "Dokter Gigi Umum",
+    "konsultan": "-",
+    "status": "Dokter Gigi GP Full-Time"
+  },
+  {
+    "nama": "Deasy Rosalina",
+    "nama_gelar": "drg. Deasy Rosalina, MMedSc",
+    "spesialis": "Dokter Gigi Umum",
+    "ksm": "Dokter Gigi Umum",
+    "konsultan": "-",
+    "status": "Dokter Gigi GP Part-Time"
+  },
+  {
+    "nama": "Vita Vianti",
+    "nama_gelar": "drg. Vita Vianti, M.Kes",
+    "spesialis": "Dokter Gigi Umum",
+    "ksm": "Dokter Gigi Umum",
+    "konsultan": "-",
+    "status": "Dokter Gigi GP Part-Time"
+  },
+  {
+    "nama": "Desandra Puspita Nugraha",
+    "nama_gelar": "drg. Desandra Puspita Nugraha",
+    "spesialis": "Dokter Gigi Umum",
+    "ksm": "Dokter Gigi Umum",
+    "konsultan": "-",
+    "status": "Dokter Gigi GP Part-Time"
+  },
+  {
+    "nama": "Sri Wahdini",
+    "nama_gelar": "dr. Sri Wahdini, Sp.Ak(K), M.Biomed",
+    "spesialis": "Dokter Spesialis Akupunktur",
+    "ksm": "Dokter Spesialis Akupunktur",
+    "konsultan": "Konsultan Akupunktur Geriatri",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Susi Andriani",
+    "nama_gelar": "dr. Susi Andriani, Sp.Ak(K)",
+    "spesialis": "Dokter Spesialis Akupunktur",
+    "ksm": "Dokter Spesialis Akupunktur",
+    "konsultan": "Konsultan Analgesia dan Anestesia",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Wahyuningsih Djaali",
+    "nama_gelar": "dr. Wahyuningsih Djaali, M.Biomed., Sp.Ak",
+    "spesialis": "Dokter Spesialis Akupunktur",
+    "ksm": "Dokter Spesialis Akupunktur",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Annisa Rahmania Yulman",
+    "nama_gelar": "dr. Annisa Rahmania Yulman, Sp.A, Subsp.GH(K)",
+    "spesialis": "Dokter Spesialis Anak",
+    "ksm": "Dokter Spesialis Anak",
+    "konsultan": "Konsultan Gastroenterology dan Hepatology",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Cynthia Centauri",
+    "nama_gelar": "dr. Cynthia Centauri Sp.A, Subsp.Resp.(K)",
+    "spesialis": "Dokter Spesialis Anak",
+    "ksm": "Dokter Spesialis Anak",
+    "konsultan": "Konsultan Respirologi Anak",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Ludi Dhyani Rahmartani",
+    "nama_gelar": "dr. Ludi Dhyani Rahmartani, Sp.A(K)",
+    "spesialis": "Dokter Spesialis Anak",
+    "ksm": "Dokter Spesialis Anak",
+    "konsultan": "Konsultan Hematologi Onkologi Anak",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Murti Andriastuti",
+    "nama_gelar": "Prof. Dr. dr. Murti Andriastuti, Sp.A(K)",
+    "spesialis": "Dokter Spesialis Anak",
+    "ksm": "Dokter Spesialis Anak",
+    "konsultan": "Konsultan Hematologi Onkologi Anak",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Nina Dwi Putri",
+    "nama_gelar": "dr. Nina Dwi Putri, Sp.A(K)",
+    "spesialis": "Dokter Spesialis Anak",
+    "ksm": "Dokter Spesialis Anak",
+    "konsultan": "Konsultan Infeksi dan Pediatrik Tropis",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Putri Maharani Tristanita Marsubrin",
+    "nama_gelar": "Dr. dr. Putri Maharani Tristanita Marsubrin, Sp.A(K)",
+    "spesialis": "Dokter Spesialis Anak",
+    "ksm": "Dokter Spesialis Anak",
+    "konsultan": "Konsultan Neonatologi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Yoga Devaera",
+    "nama_gelar": "dr. Yoga Devaera, Sp.A(K)",
+    "spesialis": "Dokter Spesialis Anak",
+    "ksm": "Dokter Spesialis Anak",
+    "konsultan": "Konsultan Nutrisi dan Penyakit Metabolik",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Irene Yuniar",
+    "nama_gelar": "Dr. dr. Irene Yuniar, Sp.A(K)",
+    "spesialis": "Dokter Spesialis Anak",
+    "ksm": "Dokter Spesialis Anak",
+    "konsultan": "Konsultan Pediatri Gawat Darurat",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Srisadono Fauzi Adiprabowo",
+    "nama_gelar": "dr. Srisadono Fauzi Adiprabowo, Sp.A",
+    "spesialis": "Dokter Spesialis Anak",
+    "ksm": "Dokter Spesialis Anak",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Muhammad Arvianda Kevin Kurnia",
+    "nama_gelar": "dr. Muhammad Arvianda Kevin Kurnia, Sp.A",
+    "spesialis": "Dokter Spesialis Anak",
+    "ksm": "Dokter Spesialis Anak",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Andina Nirmala Pahalawati",
+    "nama_gelar": "dr. Andina Nirmala Pahalawati Sp. A",
+    "spesialis": "Dokter Spesialis Anak",
+    "ksm": "Dokter Spesialis Anak",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Rilie Armeilia",
+    "nama_gelar": "dr. Rilie Armeilia, Sp.A",
+    "spesialis": "Dokter Spesialis Anak",
+    "ksm": "Dokter Spesialis Anak",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Fatimah Sania",
+    "nama_gelar": "dr. Fatimah Sania, Sp.A",
+    "spesialis": "Dokter Spesialis Anak",
+    "ksm": "Dokter Spesialis Anak",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Shofa Nisrina Luthfiyani",
+    "nama_gelar": "dr. Shofa Nisrina Luthfiyani, Sp.A",
+    "spesialis": "Dokter Spesialis Anak",
+    "ksm": "Dokter Spesialis Anak",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "RR Amanda Soebadi",
+    "nama_gelar": "dr. R R Amanda Soebadi, Sp.A(K)Mmed ClinNeurophysiol",
+    "spesialis": "Dokter Spesialis Anak",
+    "ksm": "Dokter Spesialis Anak",
+    "konsultan": "Kosultan Neurologi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Bernie Endyarni",
+    "nama_gelar": "Dr. dr. Bernie Endyarni Medise, Sp.A (K), MPH",
+    "spesialis": "Dokter Spesialis Anak",
+    "ksm": "Dokter Spesialis Anak",
+    "konsultan": "Konsultasn Tumbuh Kembang Pediatrik Sosial",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Frida Soesanti",
+    "nama_gelar": "dr. Frida Soesanti, Sp.A(K), M.Sc., Ph.D.",
+    "spesialis": "Dokter Spesialis Anak",
+    "ksm": "Dokter Spesialis Anak",
+    "konsultan": "Konsultan",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Eka Laksmi Hidayati",
+    "nama_gelar": "Dr. dr. Eka Laksmi Hidayati, Sp.A(K)",
+    "spesialis": "Dokter Spesialis Anak",
+    "ksm": "Dokter Spesialis Anak",
+    "konsultan": "Kosultan Nefrologi Anak",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Piprim Basarah Yanuarso",
+    "nama_gelar": "Dr. dr. Piprim Basarah Yanuarso, Sp.A(K)",
+    "spesialis": "Dokter Spesialis Anak",
+    "ksm": "Dokter Spesialis Anak",
+    "konsultan": "konsultan kardiologi anak",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Ria Margiana",
+    "nama_gelar": "Dr. dr. Ria Margiana, M.Biomed, Sp.And",
+    "spesialis": "Dokter Spesialis Andrologi",
+    "ksm": "Dokter Spesialis Andrologi",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Amelia Martira",
+    "nama_gelar": "dr. Amelia Martira, Sp.An, SH",
+    "spesialis": "Dokter Spesialis Anestesi",
+    "ksm": "Dokter Spesialis Anestesi",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Fildza Sasri Peddyandhari",
+    "nama_gelar": "dr. Fildza Sasri Peddyandhari, Sp.An",
+    "spesialis": "Dokter Spesialis Anestesi",
+    "ksm": "Dokter Spesialis Anestesi",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Aino Nindya Auerkari",
+    "nama_gelar": "dr. Aino Nindya Auerkari, Sp.An-KIC",
+    "spesialis": "Dokter Spesialis Anestesi",
+    "ksm": "Dokter Spesialis Anestesi",
+    "konsultan": "Konsultan Intensive Care",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Anggara Gilang Dwiputra",
+    "nama_gelar": "dr. Anggara Gilang Dwiputra, Sp.An",
+    "spesialis": "Dokter Spesialis Anestesi",
+    "ksm": "Dokter Spesialis Anestesi",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Faradila Ramadian Triananda",
+    "nama_gelar": "dr. Faradila Ramadian Triananda, Sp.An",
+    "spesialis": "Dokter Spesialis Anestesi",
+    "ksm": "Dokter Spesialis Anestesi",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Noor Hafidz",
+    "nama_gelar": "dr. Noor Hafidz, Sp.An",
+    "spesialis": "Dokter Spesialis Anestesi",
+    "ksm": "Dokter Spesialis Anestesi",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Andi Ade Wijaya Ramlan",
+    "nama_gelar": "Dr. dr. Andi Ade Wijaya Ramlan, Sp.An-KAP",
+    "spesialis": "Dokter Spesialis Anestesi",
+    "ksm": "Dokter Spesialis Anestesi",
+    "konsultan": "Konsultan Anestesi Pediatrik",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Dita Aditianingsih",
+    "nama_gelar": "Dr. dr. Dita Aditianingsih, Sp.An-KIC",
+    "spesialis": "Dokter Spesialis Anestesi",
+    "ksm": "Dokter Spesialis Anestesi",
+    "konsultan": "Konsultan Intensive Care",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Komang Ayu Ferdiana",
+    "nama_gelar": "dr. Komang Ayu Ferdiana, Sp.An",
+    "spesialis": "Dokter Spesialis Anestesi",
+    "ksm": "Dokter Spesialis Anestesi",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Jane Elvina Sentosa",
+    "nama_gelar": "dr. Jane Elvina Sentosa, Sp.An",
+    "spesialis": "Dokter Spesialis Anestesi",
+    "ksm": "Dokter Spesialis Anestesi",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Andy Omega",
+    "nama_gelar": "dr. Andy Omega, Sp.An",
+    "spesialis": "Dokter Spesialis Anestesi",
+    "ksm": "Dokter Spesialis Anestesi",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Alvian Reza Muhammad",
+    "nama_gelar": "dr. Alvian Reza Muhammad, Sp.An-TI",
+    "spesialis": "Dokter Spesialis Anestesi",
+    "ksm": "Dokter Spesialis Anestesi",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Luther Holan Parasian N",
+    "nama_gelar": "dr. Luther Holan Parasian N, Sp.An-TI",
+    "spesialis": "Dokter Spesialis Anestesi",
+    "ksm": "Dokter Spesialis Anestesi",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Andaru Noor Fauzi",
+    "nama_gelar": "dr. Andaru Noor Fauzi, Sp.An-TI",
+    "spesialis": "Dokter Spesialis Anestesi",
+    "ksm": "Dokter Spesialis Anestesi",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Ratna Farida Soenarto",
+    "nama_gelar": "Dr. dr. Ratna Farida Soenarto, Sp.An-KAKV",
+    "spesialis": "Dokter Spesialis Anestesi",
+    "ksm": "Dokter Spesialis Anestesi",
+    "konsultan": "Konsultan KKV",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Raihan Arlan Arnanda",
+    "nama_gelar": "dr. Raihan Arlan Arnanda, BMedSci, Sp. An-TI",
+    "spesialis": "Dokter Spesialis Anestesi",
+    "ksm": "Dokter Spesialis Anestesi",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Moch Yasin Friansyah",
+    "nama_gelar": "dr. Moch Yasin Friansyah, Sp.An-TI",
+    "spesialis": "Dokter Spesialis Anestesi",
+    "ksm": "Dokter Spesialis Anestesi",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Nyityasmono Tri Nugroho",
+    "nama_gelar": "Dr. med. dr. Nyityasmono Tri Nugroho, Sp.B, Subsp.BVE(K)",
+    "spesialis": "Dokter Spesialis Bedah",
+    "ksm": "Dokter Spesialis Bedah",
+    "konsultan": "Konsultan Bedah Vaskular dan Endovaskular",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Aris Ramdhani",
+    "nama_gelar": "dr. Aris Ramdhani, Sp.B",
+    "spesialis": "Dokter Spesialis Bedah",
+    "ksm": "Dokter Spesialis Bedah",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Tri Hening Rahayatri",
+    "nama_gelar": "Dr. dr. Tri Hening Rahayatri, Sp.B, Sp.BA",
+    "spesialis": "Dokter Spesialis Bedah",
+    "ksm": "Dokter Spesialis Bedah",
+    "konsultan": "Konsultan Bedah Anak",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Rizky Amaliah",
+    "nama_gelar": "dr. Rizky Amaliah, Sp.B(K)BPed",
+    "spesialis": "Dokter Spesialis Bedah",
+    "ksm": "Dokter Spesialis Bedah",
+    "konsultan": "Konsultan Bedah Anak",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Yasser Jayawinata",
+    "nama_gelar": "dr. Yasser Jayawinata, Sp.B, FICS",
+    "spesialis": "Dokter Spesialis Bedah",
+    "ksm": "Dokter Spesialis Bedah",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Alldila Hendy Prihanda Suryaningprang",
+    "nama_gelar": "dr. Alldila Hendy PS, SpB, Subsp.BD(K), FICS",
+    "spesialis": "Dokter Spesialis Bedah",
+    "ksm": "Dokter Spesialis Bedah",
+    "konsultan": "Konsultan Bedah Digestif",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Koespriyandito",
+    "nama_gelar": "dr. Koespriyandito, Sp.B",
+    "spesialis": "Dokter Spesialis Bedah",
+    "ksm": "Dokter Spesialis Bedah",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Annisa Syafitri",
+    "nama_gelar": "dr. Annisa Syafitri, Sp.B.Subsp.Onk.(K)",
+    "spesialis": "Dokter Spesialis Bedah",
+    "ksm": "Dokter Spesialis Bedah",
+    "konsultan": "Konsultan Bedah Onkologi",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Nandita Melati Putri",
+    "nama_gelar": "dr. Nandita Melati Putri, Sp.BP-RE(K)",
+    "spesialis": "Dokter Spesialis Bedah Plastik",
+    "ksm": "Dokter Spesialis Bedah Plastik",
+    "konsultan": "Konsultan Bidang Luka Bakar",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Fajar Satria Rahmaditya",
+    "nama_gelar": "dr. Fajar Satria Rahmaditya, Sp.B, Subsp.BVE(K)",
+    "spesialis": "Dokter Spesialis Bedah",
+    "ksm": "Dokter Spesialis Bedah",
+    "konsultan": "Konsultan Bedah Vaskular dan Endovaskular",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Farisa Bela Dina Pinem",
+    "nama_gelar": "dr. Farisa Bela Dina Pinem, Sp.B",
+    "spesialis": "Dokter Spesialis Bedah",
+    "ksm": "Dokter Spesialis Bedah",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Indri Aulia",
+    "nama_gelar": "dr. Indri Aulia, Sp.BP-RE(K), M.Pd.Ked",
+    "spesialis": "Dokter Spesialis Bedah Plastik",
+    "ksm": "Dokter Spesialis Bedah Plastik",
+    "konsultan": "Konsultan Genitalia Eksterna",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Narottama Tunjung Hariwangsa",
+    "nama_gelar": "dr. Narottama Tunjung Hariwangsa, Sp.BP-RE",
+    "spesialis": "Dokter Spesialis Bedah Plastik",
+    "ksm": "Dokter Spesialis Bedah Plastik",
+    "konsultan": "Konsultas Luka Bakar Luka",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Ruth Fitri Margareta Lumbuun",
+    "nama_gelar": "dr. Ruth Fitri Margareta Lumbuun, Sp.BP-RE., Subsp.E.L.(K)",
+    "spesialis": "Dokter Spesialis Bedah Plastik",
+    "ksm": "Dokter Spesialis Bedah Plastik",
+    "konsultan": "Konsultan Bedah Estetik Lanjut",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Mohamad Rachadian Ramadan",
+    "nama_gelar": "dr. Mohamad Rachadian Ramadan. B.Med.Sc., Sp.B.P.R.E., Subsp.M.O.(K), MRBS",
+    "spesialis": "Dokter Spesialis Bedah Plastik",
+    "ksm": "Dokter Spesialis Bedah Plastik",
+    "konsultan": "Konsultan Bedah Mikro & Onkoplasti",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "M. Arza Putra",
+    "nama_gelar": "Dr. dr. M. Arza Putra, Sp.BTKV.Subsp.JD(K)",
+    "spesialis": "Dokter Spesialis Bedah Toraks dan Kardiovaskular",
+    "ksm": "Dokter Spesialis Bedah Toraks dan Kardiovaskular",
+    "konsultan": "Konsultan Bedah Jantung Dewasa",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Tommy Dharmawan",
+    "nama_gelar": "dr. Tommy Dharmawan, Sp.B.T.KV., Subsp.JD(K), Ph.D.",
+    "spesialis": "Dokter Spesialis Bedah Toraks dan Kardiovaskular",
+    "ksm": "Dokter Spesialis Bedah Toraks dan Kardiovaskular",
+    "konsultan": "Konsultan Bedah Jantung Dewasa",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "David Tandian",
+    "nama_gelar": "dr. David Tandian, Sp.BS(K)",
+    "spesialis": "Dokter Spesialis Bedah Saraf",
+    "ksm": "Dokter Spesialis Bedah Saraf",
+    "konsultan": "Konsultan Neurofungsional, Neuroonkologi, dan Neuropediatrik",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "dr. Kevin Gunawan, Sp.BS",
+    "nama_gelar": "dr. Kevin Gunawan, Sp.BS",
+    "spesialis": "Dokter Spesialis Bedah Saraf",
+    "ksm": "Dokter Spesialis Bedah Saraf",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Alphadenti Harlyjoy",
+    "nama_gelar": "dr. Alphadenti Harlyjoy, Sp.BS",
+    "spesialis": "Dokter Spesialis Bedah Saraf",
+    "ksm": "Dokter Spesialis Bedah Saraf",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Samsul Ashari",
+    "nama_gelar": "dr. Samsul Ashari, Sp.BS(K)",
+    "spesialis": "Dokter Spesialis Bedah Saraf",
+    "ksm": "Dokter Spesialis Bedah Saraf",
+    "konsultan": "Konsultan Bedah Saraf Pediatrik (Anak)",
+    "status": ""
+  },
+  {
+    "nama": "Anggi Gayatri",
+    "nama_gelar": "Dr. dr. Anggi Gayatri, Sp.FK",
+    "spesialis": "Dokter Spesialis Farmakologi Klinik",
+    "ksm": "Dokter Spesialis Farmakologi Klinik",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Mario Abet Nego",
+    "nama_gelar": "dr. Mario Abet Nego, Sp.FK",
+    "spesialis": "Dokter Spesialis Farmakologi Klinik",
+    "ksm": "Dokter Spesialis Farmakologi Klinik",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Oktavinda Safitry",
+    "nama_gelar": "dr. Oktavinda Safitry , Sp.F.M.,M.Pd.Ked",
+    "spesialis": "Dokter Spesialis Forensik",
+    "ksm": "Dokter Spesialis Forensik",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Made Ayu Mira Wiryaningsih",
+    "nama_gelar": "dr. Made Ayu Mira Wiryaningsih, Sp.FM",
+    "spesialis": "Dokter Spesialis Forensik",
+    "ksm": "Dokter Spesialis Forensik",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Suripto",
+    "nama_gelar": "dr. Suripto, Sp.FM",
+    "spesialis": "Dokter Spesialis Forensik",
+    "ksm": "Dokter Spesialis Forensik",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Wahyu Ika Wardhani",
+    "nama_gelar": "dr. Wahyu Ika Wardhani, M.Biomed, M.Gizi, Sp.GK(K)",
+    "spesialis": "Dokter Spesialis Gizi Klinik",
+    "ksm": "Dokter Spesialis Gizi Klinik",
+    "konsultan": "Konsultan Nutrisi pada Kelainan Metabolisme Gizi",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Anna Maurina Singal",
+    "nama_gelar": "dr. Anna Maurina Singal, S.IKom., M.Gizi., Sp.GK(K)",
+    "spesialis": "Dokter Spesialis Gizi Klinik",
+    "ksm": "Dokter Spesialis Gizi Klinik",
+    "konsultan": "Konsultan Nutrisi Penyakit Kritis",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Yohannessa Wulandari",
+    "nama_gelar": "dr. Yohannessa Wulandari, M.Gizi, Sp.GK(K)",
+    "spesialis": "Dokter Spesialis Gizi Klinik",
+    "ksm": "Dokter Spesialis Gizi Klinik",
+    "konsultan": "Konsultan Nutrisi Penyakit Kritis",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Wiji Lestari",
+    "nama_gelar": "dr. Wiji Lestari, M.Gizi, Sp.GK(K)",
+    "spesialis": "Dokter Spesialis Gizi Klinik",
+    "ksm": "Dokter Spesialis Gizi Klinik",
+    "konsultan": "Konsultan Nutrisi Penyakit Kritis",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Anggita Citra Resmi",
+    "nama_gelar": "dr. Anggita Citra Resmi, Sp.GK",
+    "spesialis": "Dokter Spesialis Gizi Klinik",
+    "ksm": "Dokter Spesialis Gizi Klinik",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Prima Almazini",
+    "nama_gelar": "dr. Prima Almazini, Sp.JP, Subsp. Eko.(K)",
+    "spesialis": "Dokter Spesialis Jantung dan Pembuluh Darah",
+    "ksm": "Dokter Spesialis Jantung dan Pembuluh Darah",
+    "konsultan": "Konsultan Ekokardiografi",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Hary Sakti Muliawan",
+    "nama_gelar": "dr. Hary Sakti Muliawan, PhD., Sp.JP, Subsp.P.R.Kv.(K)",
+    "spesialis": "Dokter Spesialis Jantung dan Pembuluh Darah",
+    "ksm": "Dokter Spesialis Jantung dan Pembuluh Darah",
+    "konsultan": "Konsultan Prevensi dan Rehabilitasi Kardiovaskular",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Dian Zamroni",
+    "nama_gelar": "dr. Dian Zamroni, Sp.JP(K), Subsp.IKKV(K), KI(K)",
+    "spesialis": "Dokter Spesialis Jantung dan Pembuluh Darah",
+    "ksm": "Dokter Spesialis Jantung dan Pembuluh Darah",
+    "konsultan": "Konsultan Kardiologi Intervensi dan Konsultan Perawatan Intensif dan Kegawatan Kardiovaskular",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Siska Suridanda Danny",
+    "nama_gelar": "dr. Siska Suridanda Danny, Sp.JP, Subsp. IKKV(K), Subsp. KI(K)",
+    "spesialis": "Dokter Spesialis Jantung dan Pembuluh Darah",
+    "ksm": "Dokter Spesialis Jantung dan Pembuluh Darah",
+    "konsultan": "Konsultan Kardiologi Intervensi dan Konsultan Perawatan Intensif dan Kegawatan Kardiovaskular",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Sony Hilal Wicaksono",
+    "nama_gelar": "dr. Sony Hilal Wicaksono, Sp.JP, Subsp. PKV(K)",
+    "spesialis": "Dokter Spesialis Jantung dan Pembuluh Darah",
+    "ksm": "Dokter Spesialis Jantung dan Pembuluh Darah",
+    "konsultan": "Konsultan Pencitraan Kardiovaskular",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Hermawan",
+    "nama_gelar": "dr. Hermawan, Sp.JP, Subsp. Ar.(K), FIHA",
+    "spesialis": "Dokter Spesialis Jantung dan Pembuluh Darah",
+    "ksm": "Dokter Spesialis Jantung dan Pembuluh Darah",
+    "konsultan": "Konsultan Aritmia",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Adelin Dhivi Kemalasari",
+    "nama_gelar": "dr. Adelin Dhivi Kemalasari, Sp.JP",
+    "spesialis": "Dokter Spesialis Jantung dan Pembuluh Darah",
+    "ksm": "Dokter Spesialis Jantung dan Pembuluh Darah",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Bhayu Hanggadhi Nugroho",
+    "nama_gelar": "dr. Bhayu Hanggadhi Nugroho, Sp.JP, FIHA",
+    "spesialis": "Dokter Spesialis Jantung dan Pembuluh Darah",
+    "ksm": "Dokter Spesialis Jantung dan Pembuluh Darah",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Evans Tofano Bobian",
+    "nama_gelar": "dr. Evans Tofano Bobian, Sp.JP",
+    "spesialis": "Dokter Spesialis Jantung dan Pembuluh Darah",
+    "ksm": "Dokter Spesialis Jantung dan Pembuluh Darah",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Berlian Idriansyah Idris",
+    "nama_gelar": "dr. Berlian Idriansyah Idris, Sp.JP(K), MPH, D.Sc",
+    "spesialis": "Dokter Spesialis Jantung dan Pembuluh Darah",
+    "ksm": "Dokter Spesialis Jantung dan Pembuluh Darah",
+    "konsultan": "Konsultan Kardiologi Intervensi dan Konsultan Perawatan Intensif dan Kegawatan Kardiovaskular",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Mila Maidarti",
+    "nama_gelar": "dr. Mila Maidarti, Sp.OG(K), PhD",
+    "spesialis": "Dokter Spesialis Kebidanan dan Kandungan",
+    "ksm": "Dokter Spesialis Kebidanan dan Kandungan",
+    "konsultan": "Konsultan Fertilitas Endrokinologi Reproduksi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Cepi Teguh Pramayadi",
+    "nama_gelar": "dr. Cepi Teguh Pramayadi, Sp.OG(K)FER, MARS",
+    "spesialis": "Dokter Spesialis Kebidanan dan Kandungan",
+    "ksm": "Dokter Spesialis Kebidanan dan Kandungan",
+    "konsultan": "Konsultan Fertilitas Endrokinologi Reproduksi",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Mohammad Adya Firmansha Dilmy",
+    "nama_gelar": "dr. Mohammad Adya Firmansha Dilmy, Sp.OG(K)",
+    "spesialis": "Dokter Spesialis Kebidanan dan Kandungan",
+    "ksm": "Dokter Spesialis Kebidanan dan Kandungan",
+    "konsultan": "Konsultan Fetomaternal",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Rima Irwinda",
+    "nama_gelar": "Dr. dr. Rima Irwinda, Sp.OG(K)",
+    "spesialis": "Dokter Spesialis Kebidanan dan Kandungan",
+    "ksm": "Dokter Spesialis Kebidanan dan Kandungan",
+    "konsultan": "Konsultan Fetomaternal",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Allan Taufiq Rivai",
+    "nama_gelar": "dr. Allan Taufiq Rivai, Sp.OG(K)",
+    "spesialis": "Dokter Spesialis Kebidanan dan Kandungan",
+    "ksm": "Dokter Spesialis Kebidanan dan Kandungan",
+    "konsultan": "Konsultan Fetomaternal",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Achmad Kemal Harzif",
+    "nama_gelar": "dr. Achmad Kemal Harzif, Sp.OG(K)",
+    "spesialis": "Dokter Spesialis Kebidanan dan Kandungan",
+    "ksm": "Dokter Spesialis Kebidanan dan Kandungan",
+    "konsultan": "Konsultan Fertilitas Endrokinologi Reproduksi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Tyas Priyatini",
+    "nama_gelar": "Dr. dr. Tyas Priyatini, Sp.OG(K)",
+    "spesialis": "Dokter Spesialis Kebidanan dan Kandungan",
+    "ksm": "Dokter Spesialis Kebidanan dan Kandungan",
+    "konsultan": "Konsultan Uroginekologi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Siti Azizah",
+    "nama_gelar": "dr. Siti Azizah, Sp.OG, Subsp.Onk(K)",
+    "spesialis": "Dokter Spesialis Kebidanan dan Kandungan",
+    "ksm": "Dokter Spesialis Kebidanan dan Kandungan",
+    "konsultan": "Konsultan Onkologi Ginekologi",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Natasya Prameswari",
+    "nama_gelar": "dr. Natasya Prameswari, Sp.OG",
+    "spesialis": "Dokter Spesialis Kebidanan dan Kandungan",
+    "ksm": "Dokter Spesialis Kebidanan dan Kandungan",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Irene Sinta Febriana",
+    "nama_gelar": "dr. Irene Sinta Febriana, Sp.OG",
+    "spesialis": "Dokter Spesialis Kebidanan dan Kandungan",
+    "ksm": "Dokter Spesialis Kebidanan dan Kandungan",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Julianto Witjaksono",
+    "nama_gelar": "Dr. dr. Julianto Witjaksono, Sp.OG, K-FER",
+    "spesialis": "Dokter Spesialis Kebidanan dan Kandungan",
+    "ksm": "Dokter Spesialis Kebidanan dan Kandungan",
+    "konsultan": "Konsultan Fertilitas Endrokinologi Reproduksi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Sarah Miriam Ratna Pratamasari",
+    "nama_gelar": "dr. Sarah Miriam Ratna Pratamasari, Sp.OG",
+    "spesialis": "Dokter Spesialis Kebidanan dan Kandungan",
+    "ksm": "Dokter Spesialis Kebidanan dan Kandungan",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Dewita Nilasari",
+    "nama_gelar": "dr. Dewita Nilasari, Sp.OG",
+    "spesialis": "Dokter Spesialis Kebidanan dan Kandungan",
+    "ksm": "Dokter Spesialis Kebidanan dan Kandungan",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Aulia Zesario",
+    "nama_gelar": "dr. Aulia Zesario, Sp.OG",
+    "spesialis": "Dokter Spesialis Kebidanan dan Kandungan",
+    "ksm": "Dokter Spesialis Kebidanan dan Kandungan",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Budi Iman Santoso",
+    "nama_gelar": "Prof. Dr. dr. Budi Iman Santoso, Sp.OG (K), MPH",
+    "spesialis": "Dokter Spesialis Kebidanan dan Kandungan",
+    "ksm": "Dokter Spesialis Kebidanan dan Kandungan",
+    "konsultan": "Konsultan Uroginekologi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Fernandi",
+    "nama_gelar": "Dr. dr. Fernandi, Sp.OG, Subsp.Urogin.Re",
+    "spesialis": "Dokter Spesialis Kebidanan dan Kandungan",
+    "ksm": "Dokter Spesialis Kebidanan dan Kandungan",
+    "konsultan": "Konsultan Uroginekologi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Vita Silvana",
+    "nama_gelar": "dr. Vita Silvana, Sp.OG(K)FER",
+    "spesialis": "Dokter Spesialis Kebidanan dan Kandungan",
+    "ksm": "Dokter Spesialis Kebidanan dan Kandungan",
+    "konsultan": "Konsultan Fertilitas Endrokinologi Reproduksi",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Herbert Situmorang",
+    "nama_gelar": "Dr. dr. Herbert Situmorang, Sp.OG(K)",
+    "spesialis": "Dokter Spesialis Kebidanan dan Kandungan",
+    "ksm": "Dokter Spesialis Kebidanan dan Kandungan",
+    "konsultan": "Konsultan Fertilitas Endrokinologi Reproduksi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Lestari Mustika Rini",
+    "nama_gelar": "dr. Lestari Mustika Rini, Sp.OG",
+    "spesialis": "Dokter Spesialis Kebidanan dan Kandungan",
+    "ksm": "Dokter Spesialis Kebidanan dan Kandungan",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Fransiska Meliana Kaligis",
+    "nama_gelar": "Dr. dr. Fransiska Meliana Kaligis, Sp.KJ(K)",
+    "spesialis": "Dokter Spesialis Kedokteran Jiwa",
+    "ksm": "Dokter Spesialis Kedokteran Jiwa",
+    "konsultan": "Konsultan Psikiatri Anak dan Remaja",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Petrin Redayani Lukman",
+    "nama_gelar": "Dr. dr. Petrin Redayani Lukman, Sp.KJ, Subsp. P.K. (K), M.Pd.Ked.",
+    "spesialis": "Dokter Spesialis Kedokteran Jiwa",
+    "ksm": "Dokter Spesialis Kedokteran Jiwa",
+    "konsultan": "Konsultan Psikoterapi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Rayinda Raumanen Mamahit",
+    "nama_gelar": "dr. Rayinda Raumanen Mamahit, Sp.KJ",
+    "spesialis": "Dokter Spesialis Kedokteran Jiwa",
+    "ksm": "Dokter Spesialis Kedokteran Jiwa",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Jubilate Edward Iruanto Tambun",
+    "nama_gelar": "dr. Jubilate Edward Iruanto Tambun, Sp.KJ",
+    "spesialis": "Dokter Spesialis Kedokteran Jiwa",
+    "ksm": "Dokter Spesialis Kedokteran Jiwa",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Danti Filiadini",
+    "nama_gelar": "dr. Danti Filiadini, Sp.KJ",
+    "spesialis": "Dokter Spesialis Kedokteran Jiwa",
+    "ksm": "Dokter Spesialis Kedokteran Jiwa",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Dimas Wirawan Wicaksono",
+    "nama_gelar": "dr. Dimas Wirawan Wicaksono, Sp.KJ",
+    "spesialis": "Dokter Spesialis Kedokteran Jiwa",
+    "ksm": "Dokter Spesialis Kedokteran Jiwa",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Profitasari Kusumaningrum",
+    "nama_gelar": "dr. Profitasari Kusumaningrum, Sp.KJ, Subsp.Ger.(K)",
+    "spesialis": "Dokter Spesialis Kedokteran Jiwa",
+    "ksm": "Dokter Spesialis Kedokteran Jiwa",
+    "konsultan": "Konsultas Psikiatri Geriatri",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Feranindhya Agiananda",
+    "nama_gelar": "Dr. dr. Feranindhya Agiananda, Sp.KJ, Subsp.KL.(K)",
+    "spesialis": "Dokter Spesialis Kedokteran Jiwa",
+    "ksm": "Dokter Spesialis Kedokteran Jiwa",
+    "konsultan": "Konsultan Psikiatri Konsultasi dan Liaison",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Belinda Julivia Murtani",
+    "nama_gelar": "dr. Belinda Julivia Murtani, Sp.K.J., MRes",
+    "spesialis": "Dokter Spesialis Kedokteran Jiwa",
+    "ksm": "Dokter Spesialis Kedokteran Jiwa",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Artasya Karnasih",
+    "nama_gelar": "dr. Artasya Karnasih, Sp.K.J.",
+    "spesialis": "Dokter Spesialis Kedokteran Jiwa",
+    "ksm": "Dokter Spesialis Kedokteran Jiwa",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Retno Asti Werdhani",
+    "nama_gelar": "Prof. Dr. dr. Retno Asti Werdhani, M.Epid, Sp.KKLP",
+    "spesialis": "Dokter Spesialis Kedokteran Keluarga Layanan Primer",
+    "ksm": "Dokter Spesialis Kedokteran Keluarga Layanan Primer",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Trevino Aristarkus Pakasi",
+    "nama_gelar": "dr. Trevino Aristarkus Pakasi, FS, MS, Sp.KKLP, PhD",
+    "spesialis": "Dokter Spesialis Kedokteran Keluarga Layanan Primer",
+    "ksm": "Dokter Spesialis Kedokteran Keluarga Layanan Primer",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Dhanasari Vidiawati",
+    "nama_gelar": "Dr. dr. Dhanasari Vidiawati, M.Sc., CM-FM., Sp.KKLP",
+    "spesialis": "Dokter Spesialis Kedokteran Keluarga Layanan Primer",
+    "ksm": "Dokter Spesialis Kedokteran Keluarga Layanan Primer",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Herqutanto",
+    "nama_gelar": "Dr. dr. Herqutanto, MPH., MARS., Sp.KKLP",
+    "spesialis": "Dokter Spesialis Kedokteran Keluarga Layanan Primer",
+    "ksm": "Dokter Spesialis Kedokteran Keluarga Layanan Primer",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Listya Tresnanti Mirtha",
+    "nama_gelar": "Dr. dr. Listya Tresnanti Mirtha, Sp.KO., Subsp(APK), MARS",
+    "spesialis": "Dokter Spesialis Kedokteran Olahraga",
+    "ksm": "Dokter Spesialis Kedokteran Olahraga",
+    "konsultan": "Konsultan Asuhan Pasien dan Komunitas",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Syougie",
+    "nama_gelar": "suripto",
+    "spesialis": "Dokter Spesialis Kedokteran Penerbangan",
+    "ksm": "Dokter Spesialis Kedokteran Penerbangan",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Rinadewi Astriningrum",
+    "nama_gelar": "dr. Rinadewi Astriningrum, Sp.KK(K)",
+    "spesialis": "Dokter Spesialis Kulit dan Kelamin",
+    "ksm": "Dokter Spesialis Kulit dan Kelamin",
+    "konsultan": "Konsultan Dermatologi Anak",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Irma Bernadette S. Sitohang",
+    "nama_gelar": "Prof. Dr. dr. Irma Bernadette S. Sitohang, Sp.KK(K), FinsDV, FAADV",
+    "spesialis": "Dokter Spesialis Kulit dan Kelamin",
+    "ksm": "Dokter Spesialis Kulit dan Kelamin",
+    "konsultan": "Konsultan Dermatologi Kosmetik",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Ika Anggraini",
+    "nama_gelar": "dr. Ika Anggraini, Sp.DV",
+    "spesialis": "Dokter Spesialis Kulit dan Kelamin",
+    "ksm": "Dokter Spesialis Kulit dan Kelamin",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Mufqi Handaru Priyanto",
+    "nama_gelar": "dr. Mufqi Handaru Priyanto, Sp.DV",
+    "spesialis": "Dokter Spesialis Kulit dan Kelamin",
+    "ksm": "Dokter Spesialis Kulit dan Kelamin",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Sandra Widaty",
+    "nama_gelar": "Prof. Dr. dr. Sandra Widaty, Sp.D.V.E, Subsp.D.T, FINSDV, FAADV",
+    "spesialis": "Dokter Spesialis Kulit dan Kelamin",
+    "ksm": "Dokter Spesialis Kulit dan Kelamin",
+    "konsultan": "Konsultan Dermatologi Infeksi Tropis",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Ayutika Saraswati Adisasmito",
+    "nama_gelar": "dr. Ayutika Saraswati Adisasmito, MRes., Sp.DVE",
+    "spesialis": "Dokter Spesialis Kulit dan Kelamin",
+    "ksm": "Dokter Spesialis Kulit dan Kelamin",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Syska Widyawati",
+    "nama_gelar": "dr. Syska Widyawati, Sp.M(K), M.Pd.Ked",
+    "spesialis": "Dokter Spesialis Mata",
+    "ksm": "Dokter Spesialis Mata",
+    "konsultan": "Konsultan Kornea dan Bedah Reaktif",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Ardiella Yunard",
+    "nama_gelar": "dr. Ardiella Yunard, Sp.M(K)",
+    "spesialis": "Dokter Spesialis Mata",
+    "ksm": "Dokter Spesialis Mata",
+    "konsultan": "Konsultan Glaukoma",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Anissa Nindhyatriayu Witjaksono",
+    "nama_gelar": "dr. Anissa Nindhyatriayu Witjaksono, BMedSc(Hons), Sp.M",
+    "spesialis": "Dokter Spesialis Mata",
+    "ksm": "Dokter Spesialis Mata",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Mutmainah",
+    "nama_gelar": "dr. Mutmainah, Sp.M(K)",
+    "spesialis": "Dokter Spesialis Mata",
+    "ksm": "Dokter Spesialis Mata",
+    "konsultan": "Konsultan Onkologi, Orbit, dan Okuloplastik",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Gisela Haza Anissa",
+    "nama_gelar": "dr. Gisela Haza Anissa, Sp.M",
+    "spesialis": "Dokter Spesialis Mata",
+    "ksm": "Dokter Spesialis Mata",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Nizma Permaisuari",
+    "nama_gelar": "dr. Nizma Permaisuari, Sp.M",
+    "spesialis": "Dokter Spesialis Mata",
+    "ksm": "Dokter Spesialis Mata",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Randy Sarayar",
+    "nama_gelar": "dr. Randy Sarayar, Sp.M",
+    "spesialis": "Dokter Spesialis Mata",
+    "ksm": "Dokter Spesialis Mata",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Rina La Distia Nora",
+    "nama_gelar": "dr. Rina La Distia Nora, Sp.M(K), Ph.D",
+    "spesialis": "Dokter Spesialis Mata",
+    "ksm": "Dokter Spesialis Mata",
+    "konsultan": "Konsultan Infeksi dan Imunologi Mata.",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Syntia Nusanti",
+    "nama_gelar": "Dr. dr. Syntia Nusanti, Sp.M(K), M.Pd.Ked",
+    "spesialis": "Dokter Spesialis Mata",
+    "ksm": "Dokter Spesialis Mata",
+    "konsultan": "Konsultan Neurooftalmologi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Ikhwanuliman Putera",
+    "nama_gelar": "dr. Ikhwanuliman Putera, Sp.M, Ph.D",
+    "spesialis": "Dokter Spesialis Ilmu Kesehatan Mata",
+    "ksm": "Dokter Spesialis Ilmu Kesehatan Mata",
+    "konsultan": "-",
+    "status": "Dokter Gigi GP Full-Time"
+  },
+  {
+    "nama": "R. Fera Ibrahim",
+    "nama_gelar": "Prof. dr. R. Fera Ibrahim, M.Sc, Ph.D, Sp.MK(K)",
+    "spesialis": "Dokter Spesialis Mikrobiologi Klinik",
+    "ksm": "Dokter Spesialis Mikrobiologi Klinik",
+    "konsultan": "Konsultan Virologi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Budiman Bela",
+    "nama_gelar": "Dr. dr. Budiman Bela, Sp.MK(K)",
+    "spesialis": "Dokter Spesialis Mikrobiologi Klinik",
+    "ksm": "Dokter Spesialis Mikrobiologi Klinik",
+    "konsultan": "Konsultan",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Dimas Seto Prasetyo",
+    "nama_gelar": "dr. Dimas Seto Prasetyo, Sp.MK(K)",
+    "spesialis": "Dokter Spesialis Mikrobiologi Klinik",
+    "ksm": "Dokter Spesialis Mikrobiologi Klinik",
+    "konsultan": "Konsultan Bakteriologi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Ardiana Kusumaningrum",
+    "nama_gelar": "dr. Ardiana Kusumaningrum, Sp.MK(K)",
+    "spesialis": "Dokter Spesialis Mikrobiologi Klinik",
+    "ksm": "Dokter Spesialis Mikrobiologi Klinik",
+    "konsultan": "Konsultan Bakteriologi",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Dewi Yunia Fitriani",
+    "nama_gelar": "dr. Dewi Yunia Fitriani, Sp.Ok",
+    "spesialis": "Dokter Spesialis Okupasi",
+    "ksm": "Dokter Spesialis Okupasi",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Rakhmi Savitri",
+    "nama_gelar": "dr. Rakhmi Savitri, MKK., Sp.Ok",
+    "spesialis": "Dokter Spesialis Okupasi",
+    "ksm": "Dokter Spesialis Okupasi",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Muhammad Deryl Ivansyah",
+    "nama_gelar": "dr. Muhammad Deryl Ivansyah, Sp.OT(K)",
+    "spesialis": "Dokter Spesialis Orthopaedi dan Traumatologi",
+    "ksm": "Dokter Spesialis Orthopaedi dan Traumatologi",
+    "konsultan": "Konsultan Pediatric Orthopaedic",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Adisa Yusuf Reksoprodjo",
+    "nama_gelar": "dr. Adisa Yusuf Reksoprodjo, Sp.OT(K)",
+    "spesialis": "Dokter Spesialis Orthopaedi dan Traumatologi",
+    "ksm": "Dokter Spesialis Orthopaedi dan Traumatologi",
+    "konsultan": "Konsultan Sports Injury and Arthroscopy",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Muhammad Rizqi Adhi Primaputra",
+    "nama_gelar": "dr. Muhammad Rizqi Adhi Primaputra, Sp.OT(K)",
+    "spesialis": "Dokter Spesialis Orthopaedi dan Traumatologi",
+    "ksm": "Dokter Spesialis Orthopaedi dan Traumatologi",
+    "konsultan": "Konsultan Orthopaedic Oncology",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Andra Hendriarto",
+    "nama_gelar": "dr. Andra Hendriarto, Sp.OT(K)",
+    "spesialis": "Dokter Spesialis Orthopaedi dan Traumatologi",
+    "ksm": "Dokter Spesialis Orthopaedi dan Traumatologi",
+    "konsultan": "Konsultan Orthopaedic Spine",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Prima Enky Merthana",
+    "nama_gelar": "dr. Prima Enky Merthana, Sp.OT",
+    "spesialis": "Dokter Spesialis Orthopaedi dan Traumatologi",
+    "ksm": "Dokter Spesialis Orthopaedi dan Traumatologi",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Latsarizul Alfariq Senja Belantara",
+    "nama_gelar": "dr. Latsarizul Alfariq Senja Belantara, Sp. OT",
+    "spesialis": "Dokter Spesialis Orthopaedi dan Traumatologi",
+    "ksm": "Dokter Spesialis Orthopaedi dan Traumatologi",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Elfikri Asril",
+    "nama_gelar": "dr. Elfikri Asril, Sp. OT",
+    "spesialis": "Dokter Spesialis Orthopaedi dan Traumatologi",
+    "ksm": "Dokter Spesialis Orthopaedi dan Traumatologi",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Rahyussalim",
+    "nama_gelar": "Dr. dr. Rahyussalim, Sp.OT., K-Spine",
+    "spesialis": "Dokter Spesialis Orthopaedi dan Traumatologi",
+    "ksm": "Dokter Spesialis Orthopaedi dan Traumatologi",
+    "konsultan": "Konsultan Orthopaedic Spine",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Rio Wikanjaya",
+    "nama_gelar": "dr. Rio Wikanjaya, Sp.OT",
+    "spesialis": "Dokter Spesialis Orthopaedi dan Traumatologi",
+    "ksm": "Dokter Spesialis Orthopaedi dan Traumatologi",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Anissa Feby Canintika",
+    "nama_gelar": "dr. Anissa Feby Canintika, Sp.OT",
+    "spesialis": "Dokter Spesialis Orthopaedi dan Traumatologi",
+    "ksm": "Dokter Spesialis Orthopaedi dan Traumatologi",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Ika Puspa Sari",
+    "nama_gelar": "dr. Ika Puspa Sari, M.Biomed, Ph.D, Sp.ParK",
+    "spesialis": "Dokter Spesialis Parasitologi Klinik",
+    "ksm": "Dokter Spesialis Parasitologi Klinik",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Robiatul Adawiyah",
+    "nama_gelar": "Dr. dr. Robiatul Adawiyah, M.Biomed, Sp.ParK(K)",
+    "spesialis": "Dokter Spesialis Parasitologi Klinik",
+    "ksm": "Dokter Spesialis Parasitologi Klinik",
+    "konsultan": "Konsultan Mikosis",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Gatut Priyonugroho",
+    "nama_gelar": "dr. Gatut Priyonugroho, Sp.P(K)-Onk., FISR",
+    "spesialis": "Dokter Spesialis Paru",
+    "ksm": "Dokter Spesialis Paru",
+    "konsultan": "Konsultan Onkologi Toraks",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Anna Rozaliyani",
+    "nama_gelar": "Prof. Dr. dr. Anna Rozaliyani, M.Biomed, Sp.P(K)",
+    "spesialis": "Dokter Spesialis Paru",
+    "ksm": "Dokter Spesialis Paru",
+    "konsultan": "Konsultan Infeksi Paru",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Hario Baskoro",
+    "nama_gelar": "dr. Hario Baskoro, PhD, Sp.P(K)",
+    "spesialis": "Dokter Spesialis Paru",
+    "ksm": "Dokter Spesialis Paru",
+    "konsultan": "Konsultan Pulmonologi Intervensi dan Kegawatdaruratan Napas",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Dianiati Kusumo Sutoyo",
+    "nama_gelar": "dr. Dianiati Kusumo Sutoyo, Sp.P(K)",
+    "spesialis": "Dokter Spesialis Paru",
+    "ksm": "Dokter Spesialis Paru",
+    "konsultan": "Konsultan Imunologi Paru",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Raden Rara Diah Handayani",
+    "nama_gelar": "Dr. dr. Raden Rara Diah Handayani, Sp.P(K)",
+    "spesialis": "Dokter Spesialis Paru",
+    "ksm": "Dokter Spesialis Paru",
+    "konsultan": "Konsultan Infeksi Paru",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Jamal Zaini",
+    "nama_gelar": "dr. Jamal Zaini, Sp.P(K), Ph.D",
+    "spesialis": "Dokter Spesialis Paru",
+    "ksm": "Dokter Spesialis Paru",
+    "konsultan": "Konsultan Onkologi Toraks",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Irandi Putra Pratomo",
+    "nama_gelar": "dr. Irandi Putra Pratomo, Ph.D, Sp.P(K), FAPSR, FISQua",
+    "spesialis": "Dokter Spesialis Paru",
+    "ksm": "Dokter Spesialis Paru",
+    "konsultan": "Konsultan Pulmonologi Intervensi dan Kegawatdaruratan Napas",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Rania Imaniar",
+    "nama_gelar": "dr. Rania Imaniar, Sp.P(K)",
+    "spesialis": "Dokter Spesialis Paru",
+    "ksm": "Dokter Spesialis Paru",
+    "konsultan": "Konsultan Infeksi Paru",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Aditya Wirawan",
+    "nama_gelar": "dr. Aditya Wirawan, PhD, Sp.P(K)",
+    "spesialis": "Dokter Spesialis Paru",
+    "ksm": "Dokter Spesialis Paru",
+    "konsultan": "Konsultan Asma dan PPOK",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Yayi Dwina Billianti Susanto",
+    "nama_gelar": "Dr. dr. Yayi Dwina Billianti Susanto, M.Biomed, Sp.PA., Subsp.KVRM(K), Subsp.URL(K)",
+    "spesialis": "Dokter Spesialis Patologi Anatomi",
+    "ksm": "Dokter Spesialis Patologi Anatomi",
+    "konsultan": "Konsultan Patologi Saluran Nafas, Kardiovaskuler, dan Mediastinum",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Maria Angela Putri Maharani",
+    "nama_gelar": "dr. Maria Angela Putri Maharani, Sp.PA",
+    "spesialis": "Dokter Spesialis Patologi Anatomi",
+    "ksm": "Dokter Spesialis Patologi Anatomi",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Timotius Benedict Djitro",
+    "nama_gelar": "dr. Timotius Benedict Djitro, Sp.PA",
+    "spesialis": "Dokter Spesialis Patologi Anatomi",
+    "ksm": "Dokter Spesialis Patologi Anatomi",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Ening Krisnuhoni Sudarmodjo",
+    "nama_gelar": "dr. Ening Krisnuhoni Sudarmodjo, MS, Sp.PA(K)",
+    "spesialis": "Dokter Spesialis Patologi Anatomi",
+    "ksm": "Dokter Spesialis Patologi Anatomi",
+    "konsultan": "Konsultan Digestif Hepatobilier",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Meilania Saraswati",
+    "nama_gelar": "Dr. dr. Meilania Saraswati, M.Pd.Ked, Sp.PA., Subsp.URL(K), Subsp.KVRM(K)",
+    "spesialis": "Dokter Spesialis Patologi Anatomi",
+    "ksm": "Dokter Spesialis Patologi Anatomi",
+    "konsultan": "Konsultan Uropatologi Reproduksi Laki-laki dan Konsultan Kardiovaskular Respirasi dan Mediastinum",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Ilva Widyaningtyas Savitri",
+    "nama_gelar": "dr. Ilva Widyaningtyas Savitri, Sp.P.A.",
+    "spesialis": "Dokter Spesialis Patologi Anatomi",
+    "ksm": "Dokter Spesialis Patologi Anatomi",
+    "konsultan": "",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Vika Ardianto Laksono",
+    "nama_gelar": "dr. Vika Ardianto Laksono, BMedSci(Hons), Sp.P.A.",
+    "spesialis": "Dokter Spesialis Patologi Anatomi",
+    "ksm": "Dokter Spesialis Patologi Anatomi",
+    "konsultan": "",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Yusra",
+    "nama_gelar": "dr. Yusra, Sp.PK(K), Ph.D",
+    "spesialis": "Dokter Spesialis Patologi Klinik",
+    "ksm": "Dokter Spesialis Patologi Klinik",
+    "konsultan": "Konsultan Gastroenterohepatologi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Sri Suryo Adiyanti",
+    "nama_gelar": "dr. Sri Suryo Adiyanti, M.Kes, Sp.PK(K)",
+    "spesialis": "Dokter Spesialis Patologi Klinik",
+    "ksm": "Dokter Spesialis Patologi Klinik",
+    "konsultan": "Konsultan Kardioserebrovaskular",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Yudhistira",
+    "nama_gelar": "dr. Yudhistira, BMedSc, Sp.PK",
+    "spesialis": "Dokter Spesialis Patologi Klinik",
+    "ksm": "Dokter Spesialis Patologi Klinik",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Tammy Nurhardini",
+    "nama_gelar": "dr. Tammy Nurhardini, Sp.PK",
+    "spesialis": "Dokter Spesialis Patologi Klinik",
+    "ksm": "Dokter Spesialis Patologi Klinik",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Astuti Giantini",
+    "nama_gelar": "Dr. dr. Astuti Giantini, Sp.PK(K), MPH",
+    "spesialis": "Dokter Spesialis Patologi Klinik",
+    "ksm": "Dokter Spesialis Patologi Klinik",
+    "konsultan": "Konsultan Kardioserebrovaskular",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Siti Kurnia Eka Rusmiarti",
+    "nama_gelar": "dr. Siti Kurnia Eka Rusmiarti, Sp.PK",
+    "spesialis": "Dokter Spesialis Patologi Klinik",
+    "ksm": "Dokter Spesialis Patologi Klinik",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Muhammad Hafiz Aini",
+    "nama_gelar": "dr. Muhammad Hafiz Aini, Sp.P.D, Subsp.G.H. (K)",
+    "spesialis": "Dokter Spesialis Penyakit Dalam",
+    "ksm": "Dokter Spesialis Penyakit Dalam",
+    "konsultan": "Konsultan Gastroenterologi dan Hepatologi",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Mita Hafsah Saraswati",
+    "nama_gelar": "dr. Mita Hafsah Saraswati, Sp.PD",
+    "spesialis": "Dokter Spesialis Penyakit Dalam",
+    "ksm": "Dokter Spesialis Penyakit Dalam",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Muhammad Ikhsan",
+    "nama_gelar": "dr. Muhammad Ikhsan, Sp.PD-KKV, FINASIM",
+    "spesialis": "Dokter Spesialis Penyakit Dalam",
+    "ksm": "Dokter Spesialis Penyakit Dalam",
+    "konsultan": "Konsultan Kardiovaskular",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Alvina Widhani",
+    "nama_gelar": "Dr. dr. Alvina Widhani, Sp.PD, KAI",
+    "spesialis": "Dokter Spesialis Penyakit Dalam",
+    "ksm": "Dokter Spesialis Penyakit Dalam",
+    "konsultan": "Konsultan Alergi Imunologi Klinik",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Rahmat Cahyanur",
+    "nama_gelar": "Dr. dr. Rahmat Cahyanur, Sp.PD-KHOM",
+    "spesialis": "Dokter Spesialis Penyakit Dalam",
+    "ksm": "Dokter Spesialis Penyakit Dalam",
+    "konsultan": "Konsultan Hematologi Onkologi Medik",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Adityo Susilo",
+    "nama_gelar": "Dr. dr. Adityo Susilo, Sp.PD-KPTI",
+    "spesialis": "Dokter Spesialis Penyakit Dalam",
+    "ksm": "Dokter Spesialis Penyakit Dalam",
+    "konsultan": "Konsultan Penyakit Tropik Infeksi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Faisal Parlindungan",
+    "nama_gelar": "dr. Faisal Parlindungan, Sp.PD-KR",
+    "spesialis": "Dokter Spesialis Penyakit Dalam",
+    "ksm": "Dokter Spesialis Penyakit Dalam",
+    "konsultan": "Konsultan Reumatologi",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Anindia Larasati",
+    "nama_gelar": "dr. Anindia Larasati, Sp.PD, FINASIM",
+    "spesialis": "Dokter Spesialis Penyakit Dalam",
+    "ksm": "Dokter Spesialis Penyakit Dalam",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Livy Bonita Pratisthita",
+    "nama_gelar": "dr. Livy Bonita Pratisthita, Sp.PD, Subsp.EMD(K)",
+    "spesialis": "Dokter Spesialis Penyakit Dalam",
+    "ksm": "Dokter Spesialis Penyakit Dalam",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Pradana Soewondo",
+    "nama_gelar": "Prof. Dr. dr. Pradana Soewondo, Sp.PD-KEMD",
+    "spesialis": "Dokter Spesialis Penyakit Dalam",
+    "ksm": "Dokter Spesialis Penyakit Dalam",
+    "konsultan": "Konsultan Endokrinologi Metabolik & Diabetes",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Esthika Dewiasty",
+    "nama_gelar": "dr. Esthika Dewiasty, Sp.PD-KGer., MPH",
+    "spesialis": "Dokter Spesialis Penyakit Dalam",
+    "ksm": "Dokter Spesialis Penyakit Dalam",
+    "konsultan": "Konsultan Geriatri",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Muhammad Firhat Idrus",
+    "nama_gelar": "dr. Muhammad Firhat Idrus, Sp.PD(K)",
+    "spesialis": "Dokter Spesialis Penyakit Dalam",
+    "ksm": "Dokter Spesialis Penyakit Dalam",
+    "konsultan": "Konsultan Gastroenterohepatologi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Anshari Saifuddin Hasibuan",
+    "nama_gelar": "dr. Anshari Saifuddin Hasibuan, Sp.PD., K-AI",
+    "spesialis": "Dokter Spesialis Penyakit Dalam",
+    "ksm": "Dokter Spesialis Penyakit Dalam",
+    "konsultan": "Konsultan Alergi Imunologi Klinik",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Nafrialdi",
+    "nama_gelar": "Prof. dr. Nafrialdi, Sp.PD., PhD",
+    "spesialis": "Dokter Spesialis Penyakit Dalam",
+    "ksm": "Dokter Spesialis Penyakit Dalam",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Diah Martina",
+    "nama_gelar": "dr. Diah Martina, Sp.PD., PhD",
+    "spesialis": "Dokter Spesialis Penyakit Dalam",
+    "ksm": "Dokter Spesialis Penyakit Dalam",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Dede Moeswir",
+    "nama_gelar": "dr. Dede Moeswir, Sp.PD-KKV, FINASIM, FAPSC, FSCAI",
+    "spesialis": "Dokter Spesialis Penyakit Dalam",
+    "ksm": "Dokter Spesialis Penyakit Dalam",
+    "konsultan": "Konsultan Kardiovaskular",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Dicky Levenus Tahapary",
+    "nama_gelar": "dr. Dicky Levenus Tahapary, Sp.PD-KEMD, PhD",
+    "spesialis": "Dokter Spesialis Penyakit Dalam",
+    "ksm": "Dokter Spesialis Penyakit Dalam",
+    "konsultan": "Konsultan Endokrinologi Metabolik & Diabetes",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Arief Pattiiha",
+    "nama_gelar": "dr. Arief Pattiiha, Sp.PD-KKV, FINASIM",
+    "spesialis": "Dokter Spesialis Penyakit Dalam",
+    "ksm": "Dokter Spesialis Penyakit Dalam",
+    "konsultan": "Konsultan Kardiovaskular",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Firda Annisa",
+    "nama_gelar": "dr. Firda Annisa, Sp.PD",
+    "spesialis": "Dokter Spesialis Penyakit Dalam",
+    "ksm": "Dokter Spesialis Penyakit Dalam",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Fatih Anfasa",
+    "nama_gelar": "dr. Fatih Anfasa, Sp.PD., M.Sc., Ph.D",
+    "spesialis": "Dokter Spesialis Penyakit Dalam",
+    "ksm": "Dokter Spesialis Penyakit Dalam",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Ivan Banjuradja",
+    "nama_gelar": "dr. Ivan Banjuradja, Sp.PD",
+    "spesialis": "Dokter Spesialis Penyakit Dalam",
+    "ksm": "Dokter Spesialis Penyakit Dalam",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Pringgodigdo Nugroho",
+    "nama_gelar": "Dr. dr. Pringgodigdo Nugroho, Sp.PD-KGH",
+    "spesialis": "Dokter Spesialis Penyakit Dalam",
+    "ksm": "Dokter Spesialis Penyakit Dalam",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Annisa Puspitasari Nachrowi",
+    "nama_gelar": "dr. Annisa Puspitasari Nachrowi, Sp.PD-KKV",
+    "spesialis": "Dokter Spesialis Penyakit Dalam",
+    "ksm": "Dokter Spesialis Penyakit Dalam",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Trifonia Pingkan Siregar",
+    "nama_gelar": "dr. Trifonia Pingkan Siregar, Sp.Rad(K)",
+    "spesialis": "Dokter Spesialis Radiologi",
+    "ksm": "Dokter Spesialis Radiologi",
+    "konsultan": "Konsultan Abdomen",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Heltara Ramandhika",
+    "nama_gelar": "dr. Heltara Ramandika, Sp.Rad(K)",
+    "spesialis": "Dokter Spesialis Radiologi",
+    "ksm": "Dokter Spesialis Radiologi",
+    "konsultan": "Konsultan Radiologi Intervensi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Reyhan Eddy Yunus",
+    "nama_gelar": "dr. Reyhan Eddy Yunus, Sp.Rad(K), MSc",
+    "spesialis": "Dokter Spesialis Radiologi",
+    "ksm": "Dokter Spesialis Radiologi",
+    "konsultan": "Konsultan Neuroradiologi Kepala Leher",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Thariqah Salamah",
+    "nama_gelar": "dr. Thariqah Salamah, Sp.Rad(K)",
+    "spesialis": "Dokter Spesialis Radiologi",
+    "ksm": "Dokter Spesialis Radiologi",
+    "konsultan": "Konsultan Muskuloskeletal Pediatrik & Muskuloskeletal Tumor",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Muhammad Faris Afif",
+    "nama_gelar": "dr. Muhammad Faris Afif, Sp.Rad",
+    "spesialis": "Dokter Spesialis Radiologi",
+    "ksm": "Dokter Spesialis Radiologi",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Lina Saleh Al Huraiby",
+    "nama_gelar": "dr. Lina Saleh Al Huraiby, Sp.Rad",
+    "spesialis": "Dokter Spesialis Radiologi",
+    "ksm": "Dokter Spesialis Radiologi",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Larasati Kusuma Putri",
+    "nama_gelar": "dr. Larasati Kusuma Putri, Sp.Rad",
+    "spesialis": "Dokter Spesialis Radiologi",
+    "ksm": "Dokter Spesialis Radiologi",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Demas Nico Maringan Manurung",
+    "nama_gelar": "dr. Demas Nico Maringan Manurung, Sp.Rad",
+    "spesialis": "Dokter Spesialis Radiologi",
+    "ksm": "Dokter Spesialis Radiologi",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Mariska Regina Rannu",
+    "nama_gelar": "dr. Mariska Regina Rannu, Sp.Rad.",
+    "spesialis": "Dokter Spesialis Radiologi",
+    "ksm": "Dokter Spesialis Radiologi",
+    "konsultan": "",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Dheeva Noorshintaningsih",
+    "nama_gelar": "dr. Dheeva Noorshintaningsih, Sp.Rad.",
+    "spesialis": "Dokter Spesialis Radiologi",
+    "ksm": "Dokter Spesialis Radiologi",
+    "konsultan": "",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Widjaja Laksmi Kusumaningsih",
+    "nama_gelar": "Prof. Dr. dr. Widjaja Laksmi Kusumaningsih, Sp.KFR-K, MSc",
+    "spesialis": "Dokter Spesialis Rehabilitasi Medik",
+    "ksm": "Dokter Spesialis Rehabilitasi Medik",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Tresia Fransiska Ulianna Tambunan",
+    "nama_gelar": "Dr. dr. Tresia Fransiska Ulianna Tambunan, Sp.KFR., K.R. (K)",
+    "spesialis": "Dokter Spesialis Rehabilitasi Medik",
+    "ksm": "Dokter Spesialis Rehabilitasi Medik",
+    "konsultan": "Konsultan Rehabilitasi Kardiorespirasi",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Amien Suharti",
+    "nama_gelar": "dr. Amien Suharti, Sp.KFR, FIPM(USG)",
+    "spesialis": "Dokter Spesialis Rehabilitasi Medik",
+    "ksm": "Dokter Spesialis Rehabilitasi Medik",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Evi Rachmawati Nur Hidayati",
+    "nama_gelar": "dr. Evi Rachmawati NH, Sp.KFR, PhD, FIPM(USG)",
+    "spesialis": "Dokter Spesialis Rehabilitasi Medik",
+    "ksm": "Dokter Spesialis Rehabilitasi Medik",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Rita Kumalasari",
+    "nama_gelar": "dr. Rita Kumalasari, MARS., Sp.KFR",
+    "spesialis": "Dokter Spesialis Rehabilitasi Medik",
+    "ksm": "Dokter Spesialis Rehabilitasi Medik",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Putri Paramita Sakti",
+    "nama_gelar": "dr. Putri Paramita Sakti, Sp.KFR",
+    "spesialis": "Dokter Spesialis Rehabilitasi Medik",
+    "ksm": "Dokter Spesialis Rehabilitasi Medik",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Bintang Pratiwi",
+    "nama_gelar": "dr. Bintang Pratiwi, Sp.KFR",
+    "spesialis": "Dokter Spesialis Rehabilitasi Medik",
+    "ksm": "Dokter Spesialis Rehabilitasi Medik",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Pukovisa Prawiroharjo",
+    "nama_gelar": "dr. Pukovisa Prawiroharjo, SH, SpN, Subsp. NGD (K), PhD",
+    "spesialis": "Dokter Spesialis Saraf",
+    "ksm": "Dokter Spesialis Saraf",
+    "konsultan": "Konsultan Neurobehavior",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Ni Nengah Rida Ariarini",
+    "nama_gelar": "dr. Ni Nengah Rida Ariarini, Sp.N(K)",
+    "spesialis": "Dokter Spesialis Saraf",
+    "ksm": "Dokter Spesialis Saraf",
+    "konsultan": "Konsultan Neurootologi / Vertigo",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Ramdinal Aviesena Zairinal",
+    "nama_gelar": "dr. Ramdinal Aviesena Zairinal, Sp.N(K)",
+    "spesialis": "Dokter Spesialis Saraf",
+    "ksm": "Dokter Spesialis Saraf",
+    "konsultan": "Konsultan Neurokritikal dan Intensif",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Dinda Diafiri",
+    "nama_gelar": "dr. Dinda Diafiri, Sp.S(K)",
+    "spesialis": "Dokter Spesialis Saraf",
+    "ksm": "Dokter Spesialis Saraf",
+    "konsultan": "Konsultan Neurovaskular",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Dyah Tunjungsari",
+    "nama_gelar": "dr. Dyah Tunjungsari, Sp.S(K)",
+    "spesialis": "Dokter Spesialis Saraf",
+    "ksm": "Dokter Spesialis Saraf",
+    "konsultan": "Konsultan",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Winnugroho Wiratman",
+    "nama_gelar": "dr. Winnugroho Wiratman, Sp.S(K)., PhD",
+    "spesialis": "Dokter Spesialis Saraf",
+    "ksm": "Dokter Spesialis Saraf",
+    "konsultan": "Konsultan Neurofisiologi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Riwanti Estiasari",
+    "nama_gelar": "Dr. dr. Riwanti Estiasari, Sp.S(K)",
+    "spesialis": "Dokter Spesialis Saraf",
+    "ksm": "Dokter Spesialis Saraf",
+    "konsultan": "Konsultan Neuroinfeksi dan Imunologi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Amanda Tiksnadi",
+    "nama_gelar": "dr. Amanda Tiksnadi, Sp.S(K)",
+    "spesialis": "Dokter Spesialis Saraf",
+    "ksm": "Dokter Spesialis Saraf",
+    "konsultan": "Konsultan Neurorestorasi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Rakhmad Hidayat",
+    "nama_gelar": "Prof. Dr. dr. Rakhmad Hidayat, Sp.N, Subsp.NIIOO(K)., MARS",
+    "spesialis": "Dokter Spesialis Saraf",
+    "ksm": "Dokter Spesialis Saraf",
+    "konsultan": "Konsultan Neurovaskular",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Nurul Fadli",
+    "nama_gelar": "dr. Nurul Fadli, Sp.N",
+    "spesialis": "Dokter Spesialis Saraf",
+    "ksm": "Dokter Spesialis Saraf",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Adrian Ridski Harsono",
+    "nama_gelar": "dr. Adrian Ridski Harsono, Sp.N",
+    "spesialis": "Dokter Spesialis Saraf",
+    "ksm": "Dokter Spesialis Saraf",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Widi Widowati",
+    "nama_gelar": "dr. Widi Widowati, Sp.N, Subsp.NRE(K)",
+    "spesialis": "Dokter Spesialis Saraf",
+    "ksm": "Dokter Spesialis Saraf",
+    "konsultan": "Konsultan Neurorestorasi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Tiara Aninditha",
+    "nama_gelar": "Dr. dr. Tiara Aninditha, Sp.S(K)",
+    "spesialis": "Dokter Spesialis Saraf",
+    "ksm": "Dokter Spesialis Saraf",
+    "konsultan": "Konsultan Neuroonkologi dan Nyeri Kepala",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "David Pangeran",
+    "nama_gelar": "dr. David Pangeran, Sp.N",
+    "spesialis": "Dokter Spesialis Saraf",
+    "ksm": "Dokter Spesialis Saraf",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Sophie Yolanda",
+    "nama_gelar": "dr. Sophie Yolanda, M. Biomed, Sp.N",
+    "spesialis": "Dokter Spesialis Saraf",
+    "ksm": "Dokter Spesialis Saraf",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Fitri Abdat",
+    "nama_gelar": "dr. Fitri Abdat, Sp.N",
+    "spesialis": "Dokter Spesialis Saraf",
+    "ksm": "Dokter Spesialis Saraf",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Putri Widya Andini",
+    "nama_gelar": "dr. Putri Widya Andini, Sp.N, M.Sc",
+    "spesialis": "Dokter Spesialis Saraf",
+    "ksm": "Dokter Spesialis Saraf",
+    "konsultan": "",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Dumasari Siregar",
+    "nama_gelar": "dr. Dumasari Siregar, Sp.THT-KL",
+    "spesialis": "Dokter Spesialis THT-KL",
+    "ksm": "Dokter Spesialis THT-KL",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Dewi Puspito Sari",
+    "nama_gelar": "dr. Dewi Puspito Sari, MARS, Sp.THT-KL",
+    "spesialis": "Dokter Spesialis THT-KL",
+    "ksm": "Dokter Spesialis THT-KL",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Niken Lestari Poerbonegoro",
+    "nama_gelar": "dr. Niken Lestari Poerbonegoro, Sp.THT-KL(K)",
+    "spesialis": "Dokter Spesialis THT-KL",
+    "ksm": "Dokter Spesialis THT-KL",
+    "konsultan": "Konsultan Alergi Imunologi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Fikri Mirza Putranto",
+    "nama_gelar": "Dr. dr. Fikri Mirza Putranto, Sp.THT-KL(K)",
+    "spesialis": "Dokter Spesialis THT-KL",
+    "ksm": "Dokter Spesialis THT-KL",
+    "konsultan": "Konsultan Neurotologi",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Mirta Hediyati Reksodiputro",
+    "nama_gelar": "Prof. Dr. dr. Mirta Hediyati Reksodiputro, Sp.THT-KL(K)",
+    "spesialis": "Dokter Spesialis THT-KL",
+    "ksm": "Dokter Spesialis THT-KL",
+    "konsultan": "Konsultan Maksilofasial-Plastik Rekonstruksi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Raden Ayu Anatriera Sumarsono",
+    "nama_gelar": "dr. Raden Ayu Anatriera Sumarsono, MPH, Sp.THT-KL, FICS",
+    "spesialis": "Dokter Spesialis THT-KL",
+    "ksm": "Dokter Spesialis THT-KL",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Febriani Endiyarti",
+    "nama_gelar": "dr. Febriani Endiyarti, SpTHT-KL(K)",
+    "spesialis": "Dokter Spesialis THT-KL",
+    "ksm": "Dokter Spesialis THT-KL",
+    "konsultan": "Konsultan Rinologi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Anita Amalia Sari",
+    "nama_gelar": "dr. Anita Amalia Sari, Sp.THT-BKL",
+    "spesialis": "Dokter Spesialis THT-KL",
+    "ksm": "Dokter Spesialis THT-KL",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Lupita Adina Reksodiputro",
+    "nama_gelar": "dr. Lupita Adina Reksodiputro, Sp.T.H.T.B.K.L.",
+    "spesialis": "Dokter Spesialis THT-KL",
+    "ksm": "Dokter Spesialis THT-KL",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Dyandra Parikesit",
+    "nama_gelar": "dr. Dyandra Parikesit, BMedSc., Sp.U, FICS",
+    "spesialis": "Dokter Spesialis Urologi",
+    "ksm": "Dokter Spesialis Urologi",
+    "konsultan": "-",
+    "status": "SPESIALIS FULL TIME"
+  },
+  {
+    "nama": "Putu Angga Risky Raharja",
+    "nama_gelar": "dr. Putu Angga Risky Raharja, Sp.U, FICS",
+    "spesialis": "Dokter Spesialis Urologi",
+    "ksm": "Dokter Spesialis Urologi",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Adhitama Alam Soeroto",
+    "nama_gelar": "dr. Adhitama Alam Soeroto, Sp.U",
+    "spesialis": "Dokter Spesialis Urologi",
+    "ksm": "Dokter Spesialis Urologi",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Saras Serani Sesari",
+    "nama_gelar": "dr. Saras Serani Sesari, Sp.U",
+    "spesialis": "Dokter Spesialis Urologi",
+    "ksm": "Dokter Spesialis Urologi",
+    "konsultan": "-",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Heydi Marizky Lisman",
+    "nama_gelar": "dr. Heydi Marizky Lisman",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Rakhmi Sukmadewanti",
+    "nama_gelar": "dr. Rakhmi Sukmadewanti",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Maryam Jamilah",
+    "nama_gelar": "dr. Maryam Jamilah, M.M.R",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Anggreini Haniva",
+    "nama_gelar": "dr. Anggreini Haniva",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Herlin Oktaviyani",
+    "nama_gelar": "dr. Herlin Oktaviyani",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Nur Annisa Laras Fikria",
+    "nama_gelar": "dr. Nur Annisa Laras Fikria",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Ria Amiliah Putri",
+    "nama_gelar": "dr. Ria Amiliah Putri",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Meudia Syahidah",
+    "nama_gelar": "dr. Meudia Syahidah",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Stefina Veronika",
+    "nama_gelar": "dr. Stefina Veronika",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Yasmin Shabira Wityaningsih",
+    "nama_gelar": "dr. Yasmin Shabira Wityaningsih",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Gemia Clarisa Fathi",
+    "nama_gelar": "dr. Gemia Clarisa Fathi, MARS",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Diennisa Shafira Mursalin",
+    "nama_gelar": "dr. Diennisa Shafira Mursalin",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Sri Wahyuni",
+    "nama_gelar": "dr. Sri Wahyuni",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Afifa Sausan Shadrina",
+    "nama_gelar": "dr. Afifa Sausan Shadrina",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Mochammad Aldo",
+    "nama_gelar": "dr. Mochammad Aldo",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Andini Yuliana",
+    "nama_gelar": "dr. Andini Yuliana",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Hazia Hanifa Bilqis",
+    "nama_gelar": "dr. Hazia Hanifa Bilqis",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Alika Mutiara Moy",
+    "nama_gelar": "dr. Alika Mutiara Moy",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Erfi Prafiantini",
+    "nama_gelar": "dr. Erfi Prafiantini, M.Kes",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Part-Time"
+  },
+  {
+    "nama": "Muhammad Farisy Abror",
+    "nama_gelar": "dr. Muhammad Farisy Abror",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Susanto",
+    "nama_gelar": "dr. Susanto",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Arif Ramadhan Tansir",
+    "nama_gelar": "dr. Arif Ramadhan Tansir",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Lisana Shidqi",
+    "nama_gelar": "dr. Lisana Shidqi",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Farhah Millata Hanifa",
+    "nama_gelar": "dr. Farhah Millata Hanifa",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Assifa Swasti Anindita",
+    "nama_gelar": "dr. Assifa Swasti Anindita, MARS",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Putri Beauty Oktovia",
+    "nama_gelar": "dr. Putri Beauty Oktovia",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Niko Kurniawan Saputro",
+    "nama_gelar": "dr. Niko Kurniawan Saputro",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Fadila Aswitalia",
+    "nama_gelar": "dr. Fadila Aswitalia",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Lubna Qatrunada",
+    "nama_gelar": "dr. Lubna Qatrunada",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Muna Rusydi Sabhani",
+    "nama_gelar": "dr. Muna Rusydi Sabhani",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Christopher Vande",
+    "nama_gelar": "dr. Christopher Vande",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Riza Mawaddatar Rohmah",
+    "nama_gelar": "dr. Riza Mawaddatar Rohmah",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Ratih Masita Devy",
+    "nama_gelar": "dr. Ratih Masita Devy",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Karla Duha",
+    "nama_gelar": "dr. Karla Duha",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Mery Friyanti Pandiangan",
+    "nama_gelar": "dr. Mery Friyanti Pandiangan",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Mustika Ratna Prasanti",
+    "nama_gelar": "dr. Mustika Ratna Prasanti",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Rino Iswandi",
+    "nama_gelar": "dr. Rino Iswandi",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Mala Azitha",
+    "nama_gelar": "dr. Mala Azitha",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Fiqi Yusrina",
+    "nama_gelar": "dr. Fiqi Yusrina",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Dhiya Athaullah Nurfateen Ashadi",
+    "nama_gelar": "dr. Dhiya Athaullah Nurfateen Ashadi",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Michael Wiyandi Sudjalmo",
+    "nama_gelar": "dr. Michael Wiyandi Sudjalmo",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Nafissa Amanda Safinati Yani",
+    "nama_gelar": "dr. Nafissa Amanda Safinati Yani",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Imelda Beatric",
+    "nama_gelar": "dr. Imelda Beatric",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Putu Tasya Pradnya Pratistita",
+    "nama_gelar": "dr. Putu Tasya Pradnya Pratistita",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Rumaisha Hasnah Ibrahim",
+    "nama_gelar": "dr. Rumaisha Hasnah Ibrahim",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Tasyaa Fillahihasanah",
+    "nama_gelar": "dr. Tasyaa Fillahihasanah",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Zahra Annisa",
+    "nama_gelar": "dr. Zahra Annisa",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Fairuzia Fiyanti Putri",
+    "nama_gelar": "dr. Fairuzia Fiyanti Putri",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Farida Farah Adibah",
+    "nama_gelar": "dr. Farida Farah Adibah",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Refael Alfa Budiman",
+    "nama_gelar": "dr. Refael Alfa Budiman",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Ega Wirayoda",
+    "nama_gelar": "dr. Ega Wirayoda, BMedSc(Hons)",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Part-Time"
+  },
+  {
+    "nama": "Aldo Owen Senlia",
+    "nama_gelar": "dr. Aldo Owen Senlia",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Atikah Rahmadhani",
+    "nama_gelar": "dr. Atikah Rahmadhani",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Dhisa Zainita Habsari",
+    "nama_gelar": "dr. Dhisa Zainita Habsari",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Dinda Mawar Cita Puspita",
+    "nama_gelar": "dr. Dinda Mawar Cita Puspita",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Nadhifa Sekar Amalia",
+    "nama_gelar": "dr. Nadhifa Sekar Amalia",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Vanessa Olivia Gunawan",
+    "nama_gelar": "dr. Vanessa Olivia Gunawan",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Mohamad Hanifsyah Odang",
+    "nama_gelar": "dr. Mohamad Hanifsyah Odang",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Annisa Salsabila",
+    "nama_gelar": "dr. Annisa Salsabila",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Savira Chrisna Dewi",
+    "nama_gelar": "dr. Savira Chrisna Dewi",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "El Varel Baby Berlianzsa",
+    "nama_gelar": "dr. El Varel Baby Berlianzsa",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Zahra Aruma Puspita",
+    "nama_gelar": "dr. Zahra Aruma Puspita",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Amaliya Mata'ul Hayah",
+    "nama_gelar": "dr. Amaliya Mata'ul Hayah",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Siti Noor Aqilla Maharani",
+    "nama_gelar": "dr. Siti Noor Aqilla Maharani",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Natasya Claresta Viano",
+    "nama_gelar": "dr. Natasya Claresta Viano, M.A.R.S.",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Yehezkiel Alexander Eduard George",
+    "nama_gelar": "dr. Yehezkiel Alexander Eduard George",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Shafira Paramadhina",
+    "nama_gelar": "dr. Shafira Paramadhina",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Zahira Zanira",
+    "nama_gelar": "dr. Zahira Zanira",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Rani Permata",
+    "nama_gelar": "dr. Rani Permata",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Najila Ramadhina",
+    "nama_gelar": "dr. Najila Ramadhina",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Salindri Dara Rizkita",
+    "nama_gelar": "dr. Salindri Dara Rizkita",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Rachelya Nurfirdausi Islamah",
+    "nama_gelar": "dr. Rachelya Nurfirdausi Islamah",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Arfi Rabbani",
+    "nama_gelar": "dr. Arfi Rabbani, BMedSc",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Gde Ngurah Irfan Bhaskara",
+    "nama_gelar": "dr. Gde Ngurah Irfan Bhaskara, BMedSc",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Albertus Raditya Danendra",
+    "nama_gelar": "dr. Albertus Raditya Danendra, M.M.",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Salsabila Riesputi Khairunnisa",
+    "nama_gelar": "dr. Salsabila Riesputi Khairunnisa",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "-",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Viedya Wildan",
+    "nama_gelar": "dr. Viedya Wildan",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Ashiela Nahda Kemala",
+    "nama_gelar": "dr. Ashiela Nahda Kemala",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Ashria Tiara Agustina",
+    "nama_gelar": "dr. Ashria Tiara Agustina",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "",
+    "status": "Dokter GP Full-Time"
+  },
+  {
+    "nama": "Mariska Regina Rannu",
+    "nama_gelar": "dr. Mariska Regina Rannu, Sp.Rad.",
+    "spesialis": "Dokter Spesialis Radiologi",
+    "ksm": "Dokter Spesialis Radiologi",
+    "konsultan": "",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Dheeva Noorshintaningsih",
+    "nama_gelar": "dr. Dheeva Noorshintaningsih, Sp.Rad.",
+    "spesialis": "Dokter Spesialis Radiologi",
+    "ksm": "Dokter Spesialis Radiologi",
+    "konsultan": "",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Muslita Indrasari",
+    "nama_gelar": "Prof. Dr. drg. Muslita Indrasari, M.Kes., Sp.Pros(K)",
+    "spesialis": "Dokter Gigi Spesialis Prostodonsia",
+    "ksm": "Dokter Gigi Spesialis Prostodonsia",
+    "konsultan": "Konsultan Prostodonsia Komponen Implan dan Kerangka Gigi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Dwina Prawitasari",
+    "nama_gelar": "dr. Dwina Prawitasari, Sp.KKLP",
+    "spesialis": "Dokter Spesialis Kedokteran Keluarga Layanan Primer",
+    "ksm": "Dokter Spesialis Kedokteran Keluarga Layanan Primer",
+    "konsultan": "",
+    "status": "Dokter Gigi GP Full-Time"
+  },
+  {
+    "nama": "Donny Eka Putra",
+    "nama_gelar": "dr. Donny Eka Putra, Sp.U.,(K)",
+    "spesialis": "Dokter Spesialis Urologi",
+    "ksm": "Dokter Spesialis Urologi",
+    "konsultan": "Konsultan Trauma dan Rekonstruktif Urogenita",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Dina Muktiarti",
+    "nama_gelar": "Dr. dr. Dina Muktiarti, Sp.A, Subsp. AI(K)",
+    "spesialis": "Dokter Spesialis Anak",
+    "ksm": "Dokter Spesialis Anak",
+    "konsultan": "Konsultan Alergi Imunologi",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Ivory Permata Putri",
+    "nama_gelar": "dr. Ivory Permata Putri",
+    "spesialis": "Dokter Umum",
+    "ksm": "Dokter Umum",
+    "konsultan": "",
+    "status": "Dokter GP - Magang"
+  },
+  {
+    "nama": "Avian Andika",
+    "nama_gelar": "dr. Avian Andika, Sp.A",
+    "spesialis": "Dokter Spesialis Anak",
+    "ksm": "Dokter Spesialis Anak",
+    "konsultan": "",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Leonardo Alfonsius Paulus Lalenoh",
+    "nama_gelar": "dr. Leonardo Alfonsius Paulus Lalenoh, Sp.K.J., M.Sc.",
+    "spesialis": "Dokter Spesialis Kedokteran Jiwa",
+    "ksm": "Dokter Spesialis Kedokteran Jiwa",
+    "konsultan": "",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "Arif Prasetya",
+    "nama_gelar": "dr. Arif Prasetya, MKK., Sp.Ok.",
+    "spesialis": "Dokter Spesialis Okupasi",
+    "ksm": "Dokter Spesialis Okupasi",
+    "konsultan": "",
+    "status": "SPESIALIS PART TIME"
+  },
+  {
+    "nama": "TOTAL",
+    "nama_gelar": "362",
+    "spesialis": "",
+    "ksm": "",
+    "konsultan": "",
+    "status": ""
+  }
+]

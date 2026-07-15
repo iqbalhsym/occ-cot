@@ -45,6 +45,7 @@ class PasienSeeder extends Seeder
             ]
         ];
 
+        DB::table('pasien')->truncate();
         DB::table('pasien')->insert($patients);
     }
 }

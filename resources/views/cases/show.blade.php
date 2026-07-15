@@ -10,16 +10,34 @@
     $isViewer = ($activeRole === 'Viewer');
     // Make $rolesList available locally for action panel header
     $rolesList = [
-      ['id' => 'Nurse',      'label' => 'Nurse (Pengaju)'],
-      ['id' => 'VA',         'label' => 'VA (Verifikator Asuransi)'],
-      ['id' => 'Kasir',      'label' => 'Kasir (Billing)'],
-      ['id' => 'ADRUCOT',    'label' => 'ADRU COT (Estimator)'],
-      ['id' => 'Farmasi',    'label' => 'Farmasi (BMHP/Obat)'],
-      ['id' => 'AdminCOT',   'label' => 'Admin COT (Penjadwal & Alat)'],
-      ['id' => 'CaseManager','label' => 'Case Manager (CM)'],
-      ['id' => 'CS',         'label' => 'Customer Service (CS)'],
-      ['id' => 'Viewer',     'label' => 'Viewer (Semua Data)'],
+      ['id' => 'Nurse',      'label' => 'Nurse (Entry Point)'],
+      ['id' => 'VA',         'label' => 'VA (Asuransi)'],
+      ['id' => 'Kasir',      'label' => 'Kasir (Umum)'],
+      ['id' => 'ADRUCOT',    'label' => 'ADRU COT (Umum)'],
+      ['id' => 'Farmasi',    'label' => 'Farmasi'],
+      ['id' => 'AdminCOT',   'label' => 'Admin COT'],
+      ['id' => 'CaseManager','label' => 'Case Manager'],
+      ['id' => 'CS',         'label' => 'Customer Service'],
+      ['id' => 'Viewer',     'label' => 'Viewer (Hanya Lihat)'],
     ];
+
+    // Calculate total prices for tools and BMHP
+    $totalAlat = 0;
+    foreach($case->alat as $a) {
+        $totalAlat += ($a->harga > 0 ? $a->harga : ($a->masterAlat ? $a->masterAlat->tarif : 0));
+    }
+    
+    $totalBmhpPaket = 0;
+    $totalBmhpTambahan = 0;
+    foreach($case->tambahanBmhp as $t) {
+        $subTotal = ($t->qty ?: 1) * ($t->harga ?: 0);
+        if ($t->jenis === 'paket') {
+            $totalBmhpPaket += $subTotal;
+        } else {
+            $totalBmhpTambahan += $subTotal;
+        }
+    }
+    $totalBmhp = $totalBmhpPaket + $totalBmhpTambahan;
     
     // Evaluate workflow stages matching JS stepStatusFor function
     // stepper statuses: done, active, next, skip, warning, returned
@@ -79,7 +97,7 @@
     if ($case->status === 'Draft') {
         $statusMap['CM'] = 'next';
     } else {
-        $stage1Done = $vaActive ? ($case->va->estimasi_total > 0) : ($case->kasir->done && $case->adru->done);
+        $stage1Done = $vaActive ? ($case->va->stage1_done) : ($case->kasir->stage1_done && $case->adru->stage1_done);
         $cmGateReady = $stage1Done && $case->farmasi->done && (!$adminCotRequired || $case->adminCot->prelim_done);
         if ($case->caseManager->done) {
             $statusMap['CM'] = 'done';
@@ -267,6 +285,23 @@
               @endif
             </dd>
           </div>
+          <div>
+            <dt>Estimasi Grand Total Biaya</dt>
+            <dd>
+              @php
+                $jasaMedis = 0;
+                if ($case->va && $case->va->estimasi_total > 0) {
+                    $jasaMedis = $case->va->estimasi_total;
+                } elseif ($case->adru && is_numeric(str_replace(['Rp', '.', ','], '', $case->adru->estimasi))) {
+                    $jasaMedis = (float)str_replace(['Rp', '.', ','], '', $case->adru->estimasi);
+                } elseif ($case->kasir && $case->kasir->total_estimasi > 0) {
+                    $jasaMedis = $case->kasir->total_estimasi;
+                }
+                $grandTotal = $jasaMedis + $totalAlat + $totalBmhp;
+              @endphp
+              <strong style="color:var(--primary-600); font-size:16px;">Rp {{ number_format($grandTotal, 0, ',', '.') }}</strong>
+            </dd>
+          </div>
         </dl>
 
         @if($case->va && $case->va->estimasi_total > 0)
@@ -286,23 +321,54 @@
             <a href="{{ route('cases.download-estimasi', $case->id) }}" target="_blank" class="btn btn-sm">🖨️ Print Estimasi Biaya</a>
           </div>
         @endif
+        @if($case->va && $case->va->attachments && count($case->va->attachments) > 0)
+          <div class="section-lbl" style="margin-top:18px;">Lampiran Berkas Asuransi (VA)</div>
+          <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap;">
+            @foreach($case->va->attachments as $att)
+              <a href="{{ $att['path'] }}" download="{{ $att['name'] }}" class="chip" style="background:#E0F2FE; color:#0369A1; font-weight:600; text-decoration:none;">
+                📄 {{ $att['name'] }}
+              </a>
+            @endforeach
+          </div>
+        @endif
 
-        <div class="section-lbl" style="margin-top:18px;">Alat Khusus</div>
+        <div class="section-lbl" style="margin-top:18px;">Alat Khusus (Total: Rp {{ number_format($totalAlat, 0, ',', '.') }})</div>
         <div style="margin-top:6px;">
           @forelse($case->alat as $a)
-            <span class="chip">{{ $a->nama }}</span>
+            @php
+              $price = $a->harga > 0 ? $a->harga : ($a->masterAlat ? $a->masterAlat->tarif : 0);
+            @endphp
+            <span class="chip">{{ $a->nama }} (Rp {{ $isViewer ? '***' : number_format($price, 0, ',', '.') }})</span>
           @empty
             <span class="footer-hint">Belum ada</span>
           @endforelse
         </div>
 
-        <div class="section-lbl" style="margin-top:18px;">Tambahan di Luar Paket</div>
+        <div class="section-lbl" style="margin-top:18px;">Kebutuhan Obat &amp; BMHP (Total: Rp {{ number_format($totalBmhp, 0, ',', '.') }})</div>
         <div style="margin-top:6px;">
-          @forelse($case->tambahanBmhp as $t)
-            <span class="chip">{{ $t->nama }} (Qty: {{ $t->qty }})</span>
-          @empty
-            <span class="footer-hint">Tidak ada</span>
-          @endforelse
+          <div style="font-size:12px; font-weight:600; color:var(--slate-500); margin-bottom:4px;">A. Paket BMHP (Total: Rp {{ number_format($totalBmhpPaket, 0, ',', '.') }})</div>
+          @php $hasPaket = false; @endphp
+          @foreach($case->tambahanBmhp as $t)
+            @if($t->jenis === 'paket')
+              @php $hasPaket = true; @endphp
+              <span class="chip" style="background:#E0F2FE; color:#0369A1;">{{ $t->nama }} (x{{ $t->qty }} @ Rp {{ $isViewer ? '***' : number_format($t->harga ?: 0, 0, ',', '.') }})</span>
+            @endif
+          @endforeach
+          @if(!$hasPaket)
+            <span class="footer-hint" style="display:block; margin-bottom:10px;">Tidak ada paket BMHP.</span>
+          @endif
+
+          <div style="font-size:12px; font-weight:600; color:var(--slate-500); margin-top:8px; margin-bottom:4px;">B. Tambahan di Luar Paket (Total: Rp {{ number_format($totalBmhpTambahan, 0, ',', '.') }})</div>
+          @php $hasTambahan = false; @endphp
+          @foreach($case->tambahanBmhp as $t)
+            @if($t->jenis !== 'paket')
+              @php $hasTambahan = true; @endphp
+              <span class="chip" style="background:#FEF3C7; color:#B45309;">{{ $t->nama }} (x{{ $t->qty }} @ Rp {{ $isViewer ? '***' : number_format($t->harga ?: 0, 0, ',', '.') }})</span>
+            @endif
+          @endforeach
+          @if(!$hasTambahan)
+            <span class="footer-hint" style="display:block;">Tidak ada tambahan BMHP.</span>
+          @endif
         </div>
 
         @if($case->adminCot->final_done)
@@ -340,141 +406,307 @@
             @endif
 
             <!-- VA ACTION -->
-            @if($activeRole === 'VA' && $vaActive)
-              @if(!$case->va->done)
-                @if($case->va->estimasi_total == 0)
-                  <!-- VA Stage 1: Susun Estimasi -->
-                  <h4>Susun Estimasi Jasa Medis</h4>
-                  <div class="field" style="margin-bottom:12px;">
-                    <label>Golongan Tindakan</label>
-                    <select id="vaGolongan" class="form-control">
-                      <option value="KECIL" {{ $case->golongan === 'KECIL' ? 'selected' : '' }}>KECIL</option>
-                      <option value="SEDANG" {{ $case->golongan === 'SEDANG' ? 'selected' : '' }}>SEDANG</option>
-                      <option value="BESAR" {{ $case->golongan === 'BESAR' ? 'selected' : '' }}>BESAR</option>
-                      <option value="KHUSUS A" {{ $case->golongan === 'KHUSUS A' ? 'selected' : '' }}>KHUSUS A</option>
-                      <option value="KHUSUS B" {{ $case->golongan === 'KHUSUS B' ? 'selected' : '' }}>KHUSUS B</option>
-                      <option value="KHUSUS C" {{ $case->golongan === 'KHUSUS C' ? 'selected' : '' }}>KHUSUS C</option>
-                    </select>
+            @if($activeRole === 'VA')
+              @if(!$vaActive)
+                <div style="opacity: 0.6; pointer-events: none; background: var(--slate-100); border: 1px solid var(--slate-300); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                  <div style="font-weight: 700; color: var(--slate-600); margin-bottom: 10px;">🚫 Non-aktif (Penjamin = Umum)</div>
+                  <div style="font-size: 13px; color: var(--slate-500); margin-bottom: 10px;">Form Verifikasi Asuransi hanya dapat diisi jika Penjamin Kasus adalah Asuransi.</div>
+                  <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                    <div class="field">
+                      <label>Golongan Tindakan</label>
+                      <select class="form-control" disabled><option>KECIL</option></select>
+                    </div>
+                    <div class="field">
+                      <label>Kelas Perawatan</label>
+                      <select class="form-control" disabled><option>Kelas 3</option></select>
+                    </div>
                   </div>
-                  <div class="field" style="margin-bottom:12px;">
-                    <label>Kelas Perawatan</label>
-                    <select id="vaKelas" class="form-control">
-                      <option value="Kelas 3" {{ $case->kelas_perawatan === 'Kelas 3' ? 'selected' : '' }}>Kelas 3</option>
-                      <option value="Kelas 2" {{ $case->kelas_perawatan === 'Kelas 2' ? 'selected' : '' }}>Kelas 2</option>
-                      <option value="Kelas 1" {{ $case->kelas_perawatan === 'Kelas 1' ? 'selected' : '' }}>Kelas 1</option>
-                      <option value="VIP" {{ $case->kelas_perawatan === 'VIP' ? 'selected' : '' }}>VIP</option>
-                      <option value="VVIP" {{ $case->kelas_perawatan === 'VVIP' ? 'selected' : '' }}>VVIP</option>
-                    </select>
-                  </div>
-
-                  <div id="vaEstimasiBox" style="margin-bottom:15px;"></div>
-
-                  <div class="field" style="margin-bottom:12px;">
-                    <label>Catatan VA</label>
-                    <textarea id="vaNote" style="width:100%;" placeholder="Catatan estimasi..."></textarea>
-                  </div>
-
-                  <div class="btn-row">
-                    <button type="button" class="btn btn-primary" id="vaAjukanBtn">Ajukan ke Case Manager</button>
-                    <button type="button" class="btn btn-danger" id="vaRevisiBtn">Minta Revisi ke Nurse</button>
-                  </div>
-                @elseif($case->caseManager->done)
-                  <!-- VA Stage 2: Verifikasi & Finalisasi Asuransi -->
-                  <h4>Proses Verifikasi Asuransi</h4>
-                  <div class="permission-note" style="margin-bottom:12px;">Case Manager telah menyetujui dokumen estimasi awal. Silakan upload berkas kelayakan asuransi, mulai verifikasi, dan submit keputusan final asuransi.</div>
-                  
-                  <div class="field" style="margin-bottom:12px;">
-                    <label>Catatan/Keputusan Asuransi</label>
-                    <textarea id="vaFinalNote" style="width:100%;" placeholder="Catatan/No. Surat Jaminan..."></textarea>
-                  </div>
-
-                  <div class="btn-row">
-                    <button type="button" class="btn" id="vaMulaiBtn">Mulai Verifikasi Asuransi</button>
-                    <button type="button" class="btn btn-danger" id="vaBelumLengkapBtn">Tandai Berkas Belum Lengkap</button>
-                    <button type="button" class="btn btn-primary" id="vaSetujuBtn">Disetujui (Surat Jaminan Terbit)</button>
-                  </div>
-                  <div class="btn-row" style="margin-top:10px;">
-                    <button type="button" class="btn" id="vaPendingBtn">Pending (Asuransi)</button>
-                    <button type="button" class="btn btn-danger" id="vaTolakBtn">Ditolak (Asuransi)</button>
-                  </div>
-                @else
-                  <div class="locked-note">Estimasi awal telah diajukan ke Case Manager. Menunggu verifikasi dokumen oleh Case Manager.</div>
-                @endif
+                </div>
               @else
-                <div class="locked-note">Proses verifikasi asuransi telah selesai. CS akan menindaklanjuti.</div>
+                <div class="user-context-badge" style="background:#EBF5FB; border-color:#AED6F1; color:#1B4F72; margin-bottom:12px; display:flex; flex-direction:column; gap:4px; align-items:flex-start; padding:10px 14px;">
+                  <div style="font-weight:700; font-size:13px;">💡 Rincian Biaya dari Unit Lain:</div>
+                  <div style="font-size:12px; display:flex; gap:12px; flex-wrap:wrap; margin-top:2px;">
+                    <span><strong>Total Obat/BMHP:</strong> Rp {{ number_format($totalBmhp, 0, ',', '.') }}</span>
+                    <span><strong>Total Alat Khusus:</strong> Rp {{ number_format($totalAlat, 0, ',', '.') }}</span>
+                  </div>
+                </div>
+
+                @if(!$case->va->done)
+                  @if(!$case->va->stage1_done)
+                    <h4>Penyusunan Estimasi Biaya (VA Stage 1)</h4>
+                    <div class="permission-note" style="margin-bottom:12px;">
+                      Susun estimasi biaya jasa medis sesuai golongan &amp; kelas penjamin asuransi untuk diajukan ke Case Manager.
+                    </div>
+                    
+                    <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                      <div class="field">
+                        <label>Golongan Tindakan</label>
+                        <select id="vaGolongan" class="form-control">
+                          <option value="KECIL" {{ ($case->va->golongan ?: $case->golongan) === 'KECIL' ? 'selected' : '' }}>KECIL</option>
+                          <option value="SEDANG" {{ ($case->va->golongan ?: $case->golongan) === 'SEDANG' ? 'selected' : '' }}>SEDANG</option>
+                          <option value="BESAR" {{ ($case->va->golongan ?: $case->golongan) === 'BESAR' ? 'selected' : '' }}>BESAR</option>
+                          <option value="KHUSUS A" {{ ($case->va->golongan ?: $case->golongan) === 'KHUSUS A' ? 'selected' : '' }}>KHUSUS A</option>
+                          <option value="KHUSUS B" {{ ($case->va->golongan ?: $case->golongan) === 'KHUSUS B' ? 'selected' : '' }}>KHUSUS B</option>
+                          <option value="KHUSUS C" {{ ($case->va->golongan ?: $case->golongan) === 'KHUSUS C' ? 'selected' : '' }}>KHUSUS C</option>
+                        </select>
+                      </div>
+                      <div class="field">
+                        <label>Kelas Perawatan</label>
+                        <select id="vaKelas" class="form-control">
+                          <option value="Kelas 3" {{ ($case->va->kelas ?: $case->kelas_perawatan) === 'Kelas 3' ? 'selected' : '' }}>Kelas 3</option>
+                          <option value="Kelas 2" {{ ($case->va->kelas ?: $case->kelas_perawatan) === 'Kelas 2' ? 'selected' : '' }}>Kelas 2</option>
+                          <option value="Kelas 1" {{ ($case->va->kelas ?: $case->kelas_perawatan) === 'Kelas 1' ? 'selected' : '' }}>Kelas 1</option>
+                          <option value="VIP" {{ ($case->va->kelas ?: $case->kelas_perawatan) === 'VIP' ? 'selected' : '' }}>VIP</option>
+                          <option value="VVIP" {{ ($case->va->kelas ?: $case->kelas_perawatan) === 'VVIP' ? 'selected' : '' }}>VVIP</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div id="vaEstimasiBox" style="margin-bottom:15px;"></div>
+
+                    <div class="field" style="margin-bottom:12px;">
+                      <label>Catatan VA</label>
+                      <textarea id="vaNote" style="width:100%;" placeholder="Catatan estimasi biaya...">{{ $case->va->decision_note ?: '' }}</textarea>
+                    </div>
+
+                    <div class="btn-row" style="margin-bottom:15px;">
+                      <button type="button" class="btn btn-primary" id="vaAjukanBtn">Ajukan Estimasi ke Case Manager</button>
+                      <button type="button" class="btn btn-danger" id="vaRevisiBtn">Kembalikan ke Nurse</button>
+                    </div>
+                  @elseif(!$case->caseManager->done)
+                    <div class="locked-note" style="background:#FEF3C7; color:#B45309; border-color:#FDE68A;">
+                      ⚡ Estimasi biaya telah diajukan ke Case Manager. Menunggu review &amp; persetujuan CM.
+                    </div>
+                  @else
+                    <h4>Proses Verifikasi &amp; Keputusan Asuransi (VA Stage 2)</h4>
+                    <div class="permission-note" style="margin-bottom:12px;">
+                      Case Manager telah menyetujui. Silakan unggah berkas kelengkapan asuransi (LMA, CL, dll), periksa checklist pemberkasan, dan berikan keputusan status jaminan.
+                    </div>
+
+                    <div class="field" style="margin-bottom:12px;">
+                      <label>Lampiran Berkas (bisa pilih multiple)</label>
+                      <input type="file" id="vaFile" multiple class="form-control" style="background:var(--white);">
+                      <div id="vaFileList" style="margin-top:6px; display:flex; gap:6px; flex-wrap:wrap;">
+                        @if($case->va->attachments)
+                          @foreach($case->va->attachments as $att)
+                            <span class="chip">📄 {{ $att['name'] }}</span>
+                          @endforeach
+                        @endif
+                      </div>
+                    </div>
+
+                    <div class="field" style="margin-top:15px; margin-bottom:15px;">
+                      <label style="font-weight:700;">Checklist Kelengkapan Pemberkasan</label>
+                      @php
+                        $checklist = $case->va->checklist ?: [];
+                        $checklistItems = [
+                          'Formulir Penjadwalan',
+                          'Surat Pengantar DPJP',
+                          'Hasil Laboratorium / Penunjang',
+                          'Informed Consent (Persetujuan Medis)',
+                          'Dokumen LMA',
+                          'Dokumen CL'
+                        ];
+                      @endphp
+                      <div style="display:grid; grid-template-columns: 1fr; gap: 8px; margin-top: 8px;">
+                        @foreach($checklistItems as $cli)
+                          <label style="display:flex; align-items:center; gap:8px; font-weight:normal; cursor:pointer;">
+                            <input type="checkbox" class="va-check" value="{{ $cli }}" {{ in_array($cli, $checklist) ? 'checked' : '' }}>
+                            {{ $cli }}
+                          </label>
+                        @endforeach
+                      </div>
+                    </div>
+
+                    <div class="field" style="margin-bottom:12px;">
+                      <label>Keterangan Keputusan Asuransi</label>
+                      <textarea id="vaNote" style="width:100%;" placeholder="Catatan atau alasan status keputusan...">{{ $case->va->decision_note ?: '' }}</textarea>
+                    </div>
+
+                    <div style="border-top:1px solid var(--slate-200); padding-top:10px; margin-top:10px;">
+                      <h5>Status &amp; Keputusan Asuransi</h5>
+                      <div class="btn-row">
+                        <button type="button" class="btn btn-primary" id="vaMulaiBtn">Mulai Verifikasi (Ajukan ke Asuransi)</button>
+                        <button type="button" class="btn btn-danger" id="vaBelumLengkapBtn">Tandai Berkas Belum Lengkap</button>
+                        @if($case->va->berkas_belum_lengkap)
+                          <button type="button" class="btn btn-success" id="vaLengkapBtn">Tandai Berkas Sudah Lengkap</button>
+                        @endif
+                      </div>
+                      <div class="btn-row" style="margin-top:10px;">
+                        <button type="button" class="btn btn-success" id="vaSetujuBtn">Disetujui (Acc Asuransi)</button>
+                        <button type="button" class="btn" id="vaPendingBtn">Pending</button>
+                        <button type="button" class="btn btn-danger" id="vaTolakBtn">Ditolak</button>
+                        <button type="button" class="btn" id="vaDalamKonfBtn">Dalam Konfirmasi</button>
+                      </div>
+                    </div>
+                  @endif
+                @else
+                  <div class="locked-note">Proses verifikasi asuransi telah disetujui/selesai. Status: <strong>{{ $case->va->decision }}</strong></div>
+                @endif
               @endif
             @endif
 
             <!-- KASIR ACTION -->
-            @if($activeRole === 'Kasir' && !$vaActive)
-              @if(!$case->kasir->done)
-                <h4>Verifikasi Administrasi Awal (Umum)</h4>
-                <div class="field" style="margin-bottom:12px;">
-                  <label>Catatan Kasir</label>
-                  <textarea id="kasirNote" style="width:100%;" placeholder="Catatan..."></textarea>
-                </div>
-                <div class="btn-row">
-                  <button type="button" class="btn" id="kasirMulaiBtn">Mulai Administrasi</button>
-                  <button type="button" class="btn btn-primary" id="kasirSelesai1Btn">Selesaikan Tahap Awal</button>
-                  <button type="button" class="btn btn-danger" id="kasirRevisiBtn">Revisi Ke Nurse</button>
-                </div>
-              @elseif($case->caseManager->done)
-                <h4>Verifikasi Administrasi Akhir (Umum)</h4>
-                <div class="field" style="margin-bottom:12px;">
-                  <label>Catatan Pembayaran Akhir</label>
-                  <textarea id="kasirFinalNote" style="width:100%;" placeholder="Catatan..."></textarea>
-                </div>
-                <div class="btn-row">
-                  <button type="button" class="btn btn-primary" id="kasirSelesai2Btn">Validasi &amp; Selesaikan</button>
+            @if($activeRole === 'Kasir')
+              @if($vaActive)
+                <div style="opacity: 0.6; pointer-events: none; background: var(--slate-100); border: 1px solid var(--slate-300); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                  <div style="font-weight: 700; color: var(--slate-600); margin-bottom: 10px;">🚫 Non-aktif (Penjamin = Asuransi)</div>
+                  <div style="font-size: 13px; color: var(--slate-500); margin-bottom: 10px;">Form Kasir hanya dapat diisi jika Penjamin Kasus adalah Umum.</div>
+                  <div class="field">
+                    <label>Total Estimasi Biaya (Rp)</label>
+                    <input class="form-control" disabled value="">
+                  </div>
                 </div>
               @else
-                <div class="locked-note">Administrasi awal diselesaikan. Menunggu persetujuan Case Manager.</div>
+                <div class="user-context-badge" style="background:#EBF5FB; border-color:#AED6F1; color:#1B4F72; margin-bottom:12px; display:flex; flex-direction:column; gap:4px; align-items:flex-start; padding:10px 14px;">
+                  <div style="font-weight:700; font-size:13px;">💡 Rincian Biaya dari Unit Lain:</div>
+                  <div style="font-size:12px; display:flex; gap:12px; flex-wrap:wrap; margin-top:2px;">
+                    <span><strong>Total Obat/BMHP:</strong> Rp {{ number_format($totalBmhp, 0, ',', '.') }}</span>
+                    <span><strong>Total Alat Khusus:</strong> Rp {{ number_format($totalAlat, 0, ',', '.') }}</span>
+                  </div>
+                </div>
+
+                @if(!$case->kasir->done)
+                  @if(!$case->kasir->stage1_done)
+                    <h4>Penyusunan &amp; Administrasi Kasir (Kasir Stage 1)</h4>
+                    <div class="permission-note" style="margin-bottom:12px;">
+                      Susun estimasi biaya administrasi awal untuk diajukan ke Case Manager.
+                    </div>
+                    
+                    <div class="field" style="margin-bottom:12px;">
+                      <label>Total Estimasi Biaya (Rp)</label>
+                      <input type="number" id="kasirTotalEstimasi" class="form-control" placeholder="mis. 15000000" value="{{ $case->kasir->total_estimasi ?: '' }}">
+                    </div>
+
+                    <div class="field" style="margin-bottom:12px;">
+                      <label>Catatan Kasir</label>
+                      <textarea id="kasirNote" style="width:100%;" placeholder="Catatan administrasi kasir...">{{ $case->kasir->note ?: '' }}</textarea>
+                    </div>
+
+                    <div class="btn-row">
+                      <button type="button" class="btn" id="kasirMulaiBtn">Mulai Administrasi</button>
+                      <button type="button" class="btn btn-primary" id="kasirSelesai1Btn">Selesaikan &amp; Ajukan ke CM</button>
+                      <button type="button" class="btn btn-danger" id="kasirRevisiBtn">Kembalikan ke Nurse</button>
+                    </div>
+                  @elseif(!$case->caseManager->done)
+                    <div class="locked-note" style="background:#FEF3C7; color:#B45309; border-color:#FDE68A;">
+                      ⚡ Estimasi kasir telah diajukan ke Case Manager. Menunggu review &amp; persetujuan CM.
+                    </div>
+                  @else
+                    <h4>Validasi Akhir Kasir (Kasir Stage 2)</h4>
+                    <div class="permission-note" style="margin-bottom:12px;">
+                      Case Manager telah menyetujui. Selesaikan proses administrasi akhir untuk diteruskan ke Customer Service.
+                    </div>
+
+                    <div class="field" style="margin-bottom:12px;">
+                      <label>Catatan Administrasi Akhir</label>
+                      <textarea id="kasirNote" style="width:100%;" placeholder="Catatan administrasi akhir...">{{ $case->kasir->note2 ?: '' }}</textarea>
+                    </div>
+
+                    <div class="btn-row">
+                      <button type="button" class="btn btn-success" id="kasirSelesai2Btn">Validasi &amp; Selesaikan Akhir</button>
+                    </div>
+                  @endif
+                @else
+                  <div class="locked-note">Proses administrasi kasir telah selesai.</div>
+                @endif
               @endif
             @endif
 
             <!-- ADRU COT ACTION -->
-            @if($activeRole === 'ADRUCOT' && !$vaActive)
-              @if(!$case->adru->done)
-                <h4>Estimasi Biaya Tindakan (Umum)</h4>
-                <div class="field" style="margin-bottom:12px;">
-                  <label>Nilai Perkiraan Biaya (Rp)</label>
-                  <input id="adruEstimasi" placeholder="mis. Rp 15.000.000">
-                </div>
-                <div class="field" style="margin-bottom:12px;">
-                  <label>Catatan ADRU</label>
-                  <textarea id="adruNote" style="width:100%;" placeholder="Catatan..."></textarea>
-                </div>
-                <div class="btn-row">
-                  <button type="button" class="btn" id="adruMulaiBtn">Mulai Proses</button>
-                  <button type="button" class="btn btn-primary" id="adruAjukanBtn">Ajukan ke Case Manager</button>
-                  <button type="button" class="btn btn-danger" id="adruRevisiBtn">Revisi Ke Nurse</button>
-                </div>
-              @elseif($case->caseManager->done)
-                <h4>Konfirmasi Persetujuan Pasien (Umum)</h4>
-                <div class="field" style="margin-bottom:12px;">
-                  <label>Keterangan Persetujuan</label>
-                  <textarea id="adruConfirmNote" style="width:100%;" placeholder="Keterangan..."></textarea>
-                </div>
-                <div class="btn-row">
-                  <button type="button" class="btn btn-primary" id="adruSetujuBtn">Pasien Menyetujui Biaya</button>
+            @if($activeRole === 'ADRUCOT')
+              @if($vaActive)
+                <div style="opacity: 0.6; pointer-events: none; background: var(--slate-100); border: 1px solid var(--slate-300); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                  <div style="font-weight: 700; color: var(--slate-600); margin-bottom: 10px;">🚫 Non-aktif (Penjamin = Asuransi)</div>
+                  <div style="font-size: 13px; color: var(--slate-500); margin-bottom: 10px;">Form ADRU COT hanya dapat diisi jika Penjamin Kasus adalah Umum.</div>
+                  <div class="field">
+                    <label>Nilai Perkiraan Biaya (Rp)</label>
+                    <input class="form-control" disabled value="">
+                  </div>
                 </div>
               @else
-                <div class="locked-note">Estimasi biaya diajukan ke Case Manager. Menunggu persetujuan CM.</div>
+                <div class="user-context-badge" style="background:#EBF5FB; border-color:#AED6F1; color:#1B4F72; margin-bottom:12px; display:flex; flex-direction:column; gap:4px; align-items:flex-start; padding:10px 14px;">
+                  <div style="font-weight:700; font-size:13px;">💡 Rincian Biaya dari Unit Lain:</div>
+                  <div style="font-size:12px; display:flex; gap:12px; flex-wrap:wrap; margin-top:2px;">
+                    <span><strong>Total Obat/BMHP:</strong> Rp {{ number_format($totalBmhp, 0, ',', '.') }}</span>
+                    <span><strong>Total Alat Khusus:</strong> Rp {{ number_format($totalAlat, 0, ',', '.') }}</span>
+                  </div>
+                </div>
+
+                @if(!$case->adru->done)
+                  @if(!$case->adru->stage1_done)
+                    <h4>Penyusunan Estimasi ADRU (ADRU Stage 1)</h4>
+                    <div class="permission-note" style="margin-bottom:12px;">
+                      Susun estimasi biaya tindakan di COT untuk diajukan ke Case Manager.
+                    </div>
+
+                    <div class="field" style="margin-bottom:12px;">
+                      <label>Nilai Perkiraan Biaya (Rp)</label>
+                      <input id="adruEstimasi" placeholder="mis. Rp 15.000.000" value="{{ $case->adru->estimasi ?: '' }}" class="form-control">
+                    </div>
+                    <div class="field" style="margin-bottom:12px;">
+                      <label>Catatan ADRU</label>
+                      <textarea id="adruNote" style="width:100%;" placeholder="Catatan estimasi ADRU...">{{ $case->adru->note ?: '' }}</textarea>
+                    </div>
+                    <div class="btn-row" style="margin-bottom:12px;">
+                      <button type="button" class="btn" id="adruMulaiBtn">Mulai Hitung Estimasi</button>
+                      <button type="button" class="btn btn-primary" id="adruAjukanBtn">Ajukan ke Case Manager</button>
+                      <button type="button" class="btn btn-danger" id="adruRevisiBtn">Kembalikan ke Nurse</button>
+                    </div>
+                  @elseif(!$case->caseManager->done)
+                    <div class="locked-note" style="background:#FEF3C7; color:#B45309; border-color:#FDE68A;">
+                      ⚡ Estimasi ADRU telah diajukan ke Case Manager. Menunggu review &amp; persetujuan CM.
+                    </div>
+                  @else
+                    <h4>Konfirmasi Persetujuan Pasien (ADRU Stage 2)</h4>
+                    <div class="permission-note" style="margin-bottom:12px;">
+                      Kirim estimasi ke pasien &amp; konfirmasi kesediaan. Setelah pasien setuju, diteruskan langsung ke Admin COT.
+                    </div>
+                    <div class="field" style="margin-bottom:12px;">
+                      <label>Catatan Konfirmasi Pasien</label>
+                      <textarea id="adruConfirmNote" style="width:100%;" placeholder="Keterangan persetujuan pasien...">{{ $case->adru->confirm_note ?: '' }}</textarea>
+                    </div>
+                    <div class="btn-row">
+                      <button type="button" class="btn btn-success" id="adruSetujuBtn">Pasien Setuju — Teruskan ke Admin COT</button>
+                    </div>
+                  @endif
+                @else
+                  <div class="locked-note">Proses estimasi &amp; persetujuan pasien umum di COT telah selesai.</div>
+                @endif
               @endif
             @endif
 
             <!-- FARMASI ACTION -->
             @if($activeRole === 'Farmasi')
               @if(!$case->farmasi->done)
-                <h4>Review Kebutuhan Paket BMHP / Obat</h4>
+                <h4>Review &amp; Edit Kebutuhan BMHP / Obat</h4>
+                <div style="margin-top:12px; margin-bottom:12px;">
+                  <table class="af-table" style="width:100%;">
+                    <thead>
+                      <tr style="font-weight:700;">
+                        <td>Nama Item</td>
+                        <td style="width:70px;">Qty</td>
+                        <td style="width:130px;">Harga (Rp)</td>
+                        <td style="width:100px;">Jenis</td>
+                        <td style="width:65px;">Aksi</td>
+                      </tr>
+                    </thead>
+                    <tbody id="farmasiBmhpBody"></tbody>
+                  </table>
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+                    <button type="button" class="btn btn-sm" id="farmasiAddBtn">+ Tambah Item BMHP</button>
+                    <div style="font-weight:bold; font-size:14px;" id="farmasiGrandTotal">Total: Rp 0</div>
+                  </div>
+                </div>
                 <div class="field" style="margin-bottom:12px;">
                   <label>Catatan Farmasi</label>
-                  <textarea id="farmasiNote" style="width:100%;" placeholder="Catatan obat/BMHP..."></textarea>
+                  <textarea id="farmasiNote" style="width:100%;" placeholder="Catatan obat/BMHP...">{{ $case->farmasi->note ?: '' }}</textarea>
                 </div>
                 <div class="btn-row">
                   <button type="button" class="btn" id="farmasiMulaiBtn">Mulai Review</button>
-                  <button type="button" class="btn btn-primary" id="farmasiSetujuBtn">Setujui &amp; Ambil Paket</button>
-                  <button type="button" class="btn btn-danger" id="farmasiRevisiBtn">Minta Revisi Paket</button>
+                  <button type="button" class="btn btn-primary" id="farmasiSaveOnlyBtn">Simpan BMHP (Draft)</button>
+                  <button type="button" class="btn btn-primary" id="farmasiSetujuBtn">Setujui &amp; Selesaikan</button>
+                  <button type="button" class="btn btn-danger" id="farmasiRevisiBtn">Kembalikan ke Nurse</button>
                 </div>
               @else
                 <div class="locked-note">BMHP &amp; Obat sudah disiapkan oleh Farmasi.</div>
@@ -483,12 +715,7 @@
 
             <!-- CASE MANAGER ACTION -->
             @if($activeRole === 'CaseManager')
-              @php
-                $stage1Done = $vaActive ? ($case->va->estimasi_total > 0) : ($case->kasir->done && $case->adru->done);
-                $cmGateReady = $stage1Done && $case->farmasi->done && (!$adminCotRequired || $case->adminCot->prelim_done);
-              @endphp
-
-              @if($cmGateReady && !$case->caseManager->done)
+              @if(!$case->caseManager->done)
                 <h4>Persetujuan Case Manager (Verifikator Dokumen)</h4>
                 <div class="field" style="margin-bottom:12px;">
                   <label>Tujuan Kembalikan / Revisi <span class="hint">(jika ada revisi)</span></label>
@@ -503,91 +730,100 @@
                 </div>
                 <div class="field" style="margin-bottom:12px;">
                   <label>Catatan / Instruksi CM</label>
-                  <textarea id="cmNote" style="width:100%;" placeholder="Instruksi CM..."></textarea>
+                  <textarea id="cmNote" style="width:100%;" placeholder="Instruksi CM...">{{ $case->caseManager->instruksi ?: '' }}</textarea>
                 </div>
                 <div class="btn-row">
-                  <button type="button" class="btn btn-primary" id="cmSetujuBtn">Setujui Estimasi &amp; Dokumen</button>
+                  <button type="button" class="btn btn-success" id="cmSetujuBtn">Setujui Estimasi &amp; Dokumen</button>
                   <button type="button" class="btn btn-danger" id="cmRevisiBtn">Kembalikan untuk Revisi</button>
                   <button type="button" class="btn" id="cmBelumLengkapBtn">Dokumen Belum Lengkap</button>
                 </div>
               @else
-                <div class="locked-note">Menunggu kelengkapan data awal/estimasi/BMHP/alat dari unit pelaksana sebelum diverifikasi oleh Case Manager.</div>
+                <div class="locked-note">Case Manager telah menyetujui dokumen ini.</div>
               @endif
             @endif
 
             <!-- CUSTOMER SERVICE ACTION -->
             @if($activeRole === 'CS' && $vaActive)
-              @if($case->va->done && !$case->cs->done)
+              @if(!$case->cs->done)
                 <h4>Follow Up &amp; Konfirmasi Pasien</h4>
+                @if($case->cs->follow_up_due)
+                  <div id="csCountdown" data-due="{{ $case->cs->follow_up_due }}" style="padding: 10px 14px; border-radius: 6px; font-weight: bold; margin-bottom: 12px;"></div>
+                @endif
                 <div class="field" style="margin-bottom:12px;">
                   <label>Catatan Follow Up</label>
-                  <textarea id="csNote" style="width:100%;" placeholder="Keterangan respon pasien..."></textarea>
+                  <textarea id="csNote" style="width:100%;" placeholder="Keterangan respon pasien...">{{ $case->cs->decision_note ?: '' }}</textarea>
                 </div>
                 <div class="btn-row">
                   <button type="button" class="btn" id="csHubungiBtn">Hubungi Pasien (Follow Up)</button>
-                  <button type="button" class="btn btn-primary" id="csSetujuBtn">Pasien Setuju Tindakan</button>
+                  <button type="button" class="btn btn-success" id="csSetujuBtn">Pasien Setuju Tindakan</button>
                   <button type="button" class="btn" id="csRescheduleBtn">Pasien Minta Reschedule</button>
                 </div>
                 <div class="btn-row" style="margin-top:10px;">
                   <button type="button" class="btn btn-danger" id="csBatalBtn">Pasien Batal Tindakan</button>
+                  <button type="button" class="btn btn-warning" id="csRevisiBtn">Kembalikan ke Nurse</button>
                   <button type="button" class="btn" id="csKonfirmasiBtn">Kembalikan ke Case Manager</button>
                 </div>
               @else
-                <div class="locked-note">Menunggu verifikasi jaminan asuransi selesai sebelum dilakukan follow-up ke pasien.</div>
+                <div class="locked-note">Follow-up pasien telah selesai/disetujui.</div>
               @endif
             @endif
 
             <!-- ADMIN COT ACTION -->
             @if($activeRole === 'AdminCOT' && $adminCotRequired)
-              @if(!$case->adminCot->prelim_done)
-                <!-- Admin COT Stage 1: Alat Khusus -->
-                <h4>Prelim: Verifikasi Kebutuhan Alat Khusus</h4>
-                <div class="field" style="margin-bottom:12px;">
-                  <label>Masukkan Kebutuhan Alat Khusus (pisahkan dengan koma)</label>
-                  <input id="adminAlat" placeholder="mis. C-ARM, Boor High Speed" value="{{ $case->alat->pluck('nama')->implode(', ') }}">
+              {{-- Alat Khusus Editor --}}
+              <div style="border: 1px solid var(--slate-200); border-radius: 6px; padding: 12px; margin-bottom: 15px; background: var(--slate-50);">
+                <h5 style="margin: 0 0 8px 0; font-size: 14px; font-weight: 700; color: var(--primary-800);">Kelola Kebutuhan Alat &amp; Harga</h5>
+                <table class="af-table" style="width:100%;">
+                  <thead>
+                    <tr style="font-weight:700;">
+                      <td>Nama Alat Khusus</td>
+                      <td style="width:150px;">Harga (Rp)</td>
+                      <td style="width:65px;">Aksi</td>
+                    </tr>
+                  </thead>
+                  <tbody id="adminAlatBody"></tbody>
+                </table>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+                  <button type="button" class="btn btn-sm" id="adminAddAlatBtn">+ Tambah Alat</button>
+                  <div style="font-weight:bold; font-size:14px;" id="adminAlatGrandTotal">Total: Rp 0</div>
+                </div>
+                <div style="margin-top:8px; text-align:right;">
+                  <button type="button" class="btn btn-sm btn-primary" id="adminSaveToolsBtn">Simpan Perubahan Alat</button>
+                </div>
+              </div>
+
+              @if(!$case->adminCot->final_done)
+                <h4>Penetapan Jadwal &amp; Kamar Operasi Final</h4>
+                <div class="form-grid">
+                  <div class="field"><label class="req">Tanggal Operasi</label><input type="date" id="adminTgl" value="{{ $case->tanggal_pilihan1 ? $case->tanggal_pilihan1->format('Y-m-d') : '' }}"></div>
+                  <div class="field"><label class="req">Jam Operasi</label><input type="time" id="adminJam" value="{{ $case->jam_operasi ?: '' }}"></div>
+                  <div class="field"><label class="req">Ruang/Kamar Operasi</label>
+                    <select id="adminRuang" class="form-control">
+                      <option value="Kamar Operasi 1" {{ $case->adminCot->kamar_operasi === 'Kamar Operasi 1' ? 'selected' : '' }}>Kamar Operasi 1</option>
+                      <option value="Kamar Operasi 2" {{ $case->adminCot->kamar_operasi === 'Kamar Operasi 2' ? 'selected' : '' }}>Kamar Operasi 2</option>
+                      <option value="Kamar Operasi 3" {{ $case->adminCot->kamar_operasi === 'Kamar Operasi 3' ? 'selected' : '' }}>Kamar Operasi 3</option>
+                      <option value="Cathlab Room" {{ $case->adminCot->kamar_operasi === 'Cathlab Room' ? 'selected' : '' }}>Cathlab Room</option>
+                      <option value="Endoscopy Room" {{ $case->adminCot->kamar_operasi === 'Endoscopy Room' ? 'selected' : '' }}>Endoscopy Room</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field" style="margin-top:12px; margin-bottom:12px;">
+                  <label>Catatan Penjadwalan</label>
+                  <textarea id="adminNote" style="width:100%;" placeholder="Catatan penjadwalan...">{{ $case->adminCot->decision_note ?: '' }}</textarea>
                 </div>
                 <div class="btn-row">
-                  <button type="button" class="btn btn-primary" id="adminPrelimBtn">Simpan Kebutuhan Alat</button>
+                  <button type="button" class="btn btn-primary" id="adminFinalBtn">Tetapkan Jadwal Final</button>
+                  <button type="button" class="btn btn-primary" id="adminPrelimBtn">Simpan Alat &amp; Tandai Prelim Selesai</button>
+                  <button type="button" class="btn btn-danger" id="adminRevisiNurseBtn">Kembalikan ke Nurse</button>
                 </div>
-              @elseif($case->adminCot->prelim_done && !$case->adminCot->final_done)
-                <!-- Admin COT Stage 2: Final Scheduling -->
-                @php
-                  $routeDone = $vaActive ? $case->cs->done : ($case->kasir->done && $case->adru->done);
-                @endphp
-
-                @if($routeDone)
-                  <h4>Penetapan Jadwal &amp; Kamar Operasi Final</h4>
-                  <div class="form-grid">
-                    <div class="field"><label class="req">Tanggal Operasi</label><input type="date" id="adminTgl" value="{{ $case->tanggal_pilihan1 ? $case->tanggal_pilihan1->format('Y-m-d') : '' }}"></div>
-                    <div class="field"><label class="req">Jam Operasi</label><input type="time" id="adminJam" value="{{ $case->jam_operasi ?: '' }}"></div>
-                    <div class="field"><label class="req">Ruang/Kamar Operasi</label>
-                      <select id="adminRuang" class="form-control">
-                        <option value="Kamar Operasi 1">Kamar Operasi 1</option>
-                        <option value="Kamar Operasi 2">Kamar Operasi 2</option>
-                        <option value="Kamar Operasi 3">Kamar Operasi 3</option>
-                        <option value="Cathlab Room">Cathlab Room</option>
-                        <option value="Endoscopy Room">Endoscopy Room</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="field" style="margin-top:12px; margin-bottom:12px;">
-                    <label>Catatan Penjadwalan</label>
-                    <textarea id="adminNote" style="width:100%;" placeholder="Catatan..."></textarea>
-                  </div>
-                  <div class="btn-row">
-                    <button type="button" class="btn btn-primary" id="adminFinalBtn">Tetapkan Jadwal Final</button>
-                    <button type="button" class="btn" id="adminConfirmBtn">Tandai Dalam Konfirmasi</button>
-                    <button type="button" class="btn btn-danger" id="adminRevisiBtn">Ajukan Revisi Estimasi</button>
-                    <button type="button" class="btn" id="adminRescheduleBtn">Reschedule Jadwal</button>
-                  </div>
-                @else
-                  <div class="locked-note">Kebutuhan alat (prelim) selesai diverifikasi. Menunggu persetujuan administrasi/pasien selesai sebelum menjadwalkan kamar operasi.</div>
-                @endif
+                <div class="btn-row" style="margin-top:10px;">
+                  <button type="button" class="btn" id="adminConfirmBtn">Tandai Dalam Konfirmasi</button>
+                  <button type="button" class="btn" id="adminRescheduleBtn">Reschedule Jadwal</button>
+                </div>
               @else
                 <div class="locked-note">Proses penjadwalan kamar operasi final telah selesai.</div>
               @endif
             @endif
-
           @endif
         </div>
       </div>
@@ -616,6 +852,12 @@
 
 @section('scripts')
   <script>
+    // Global helper and state variables
+    function rupiah(n) {
+      return "Rp " + new Intl.NumberFormat("id-ID").format(n);
+    }
+    let masterData = { tindakan: [], alat: [], paket_bmhp: [] };
+
     // Embed the estimasi table from COT_DB
     const ESTIMASI_DB = {
       "KECIL": {
@@ -738,14 +980,21 @@
 
     // General AJAX submission helper
     function submitAction(routeUrl, payload, message = "Aksi berhasil diproses") {
-      fetch(routeUrl, {
+      let options = {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
           'X-CSRF-TOKEN': csrfToken
-        },
-        body: JSON.stringify(payload)
-      })
+        }
+      };
+
+      if (payload instanceof FormData) {
+        options.body = payload;
+      } else {
+        options.headers['Content-Type'] = 'application/json';
+        options.body = JSON.stringify(payload);
+      }
+
+      fetch(routeUrl, options)
       .then(res => res.json())
       .then(data => {
         if (data.success) {
@@ -818,41 +1067,61 @@
       };
     }
 
+    // VA stage 2 submit helper (multipart file upload + checklist)
+    function submitVaStage2(action) {
+      const formData = new FormData();
+      formData.append('action', action);
+      
+      const noteInput = document.getElementById("vaNote");
+      if (noteInput) {
+        formData.append('note', noteInput.value);
+      }
+
+      // Add checklist items
+      const checks = document.querySelectorAll(".va-check:checked");
+      checks.forEach(chk => {
+        formData.append('checklist[]', chk.value);
+      });
+
+      // Add files
+      const fileInput = document.getElementById("vaFile");
+      if (fileInput && fileInput.files.length > 0) {
+        for (let i = 0; i < fileInput.files.length; i++) {
+          formData.append('files[]', fileInput.files[i]);
+        }
+      }
+
+      submitAction('{{ route("cases.va", $case->id) }}', formData, "Aksi VA Stage 2 berhasil diproses");
+    }
+
     // VA stage 2 buttons
     const vaMulaiBtn = document.getElementById("vaMulaiBtn");
     if (vaMulaiBtn) {
-      vaMulaiBtn.onclick = () => {
-        const note = document.getElementById("vaFinalNote").value;
-        submitAction('{{ route("cases.va", $case->id) }}', { action: 'mulai', note: note }, "Verifikasi asuransi dimulai");
-      };
+      vaMulaiBtn.onclick = () => submitVaStage2('mulai');
     }
     const vaBelumLengkapBtn = document.getElementById("vaBelumLengkapBtn");
     if (vaBelumLengkapBtn) {
-      vaBelumLengkapBtn.onclick = () => {
-        const note = document.getElementById("vaFinalNote").value;
-        submitAction('{{ route("cases.va", $case->id) }}', { action: 'berkasBelumLengkap', note: note }, "Berkas ditandai belum lengkap");
-      };
+      vaBelumLengkapBtn.onclick = () => submitVaStage2('berkasBelumLengkap');
+    }
+    const vaLengkapBtn = document.getElementById("vaLengkapBtn");
+    if (vaLengkapBtn) {
+      vaLengkapBtn.onclick = () => submitVaStage2('berkasLengkap');
     }
     const vaSetujuBtn = document.getElementById("vaSetujuBtn");
     if (vaSetujuBtn) {
-      vaSetujuBtn.onclick = () => {
-        const note = document.getElementById("vaFinalNote").value;
-        submitAction('{{ route("cases.va", $case->id) }}', { action: 'disetujui', note: note }, "Jaminan Asuransi disetujui!");
-      };
+      vaSetujuBtn.onclick = () => submitVaStage2('disetujui');
     }
     const vaPendingBtn = document.getElementById("vaPendingBtn");
     if (vaPendingBtn) {
-      vaPendingBtn.onclick = () => {
-        const note = document.getElementById("vaFinalNote").value;
-        submitAction('{{ route("cases.va", $case->id) }}', { action: 'pending', note: note }, "Status diubah menjadi Pending");
-      };
+      vaPendingBtn.onclick = () => submitVaStage2('pending');
     }
     const vaTolakBtn = document.getElementById("vaTolakBtn");
     if (vaTolakBtn) {
-      vaTolakBtn.onclick = () => {
-        const note = document.getElementById("vaFinalNote").value;
-        submitAction('{{ route("cases.va", $case->id) }}', { action: 'ditolak', note: note }, "Pengajuan asuransi Ditolak");
-      };
+      vaTolakBtn.onclick = () => submitVaStage2('ditolak');
+    }
+    const vaDalamKonfBtn = document.getElementById("vaDalamKonfBtn");
+    if (vaDalamKonfBtn) {
+      vaDalamKonfBtn.onclick = () => submitVaStage2('dalamKonfirmasi');
     }
 
     // Kasir buttons
@@ -866,7 +1135,8 @@
     if (kasirSelesai1Btn) {
       kasirSelesai1Btn.onclick = () => {
         const note = document.getElementById("kasirNote").value;
-        submitAction('{{ route("cases.kasir", $case->id) }}', { action: 'selesai1', note: note }, "Administrasi awal diselesaikan");
+        const total = document.getElementById("kasirTotalEstimasi").value;
+        submitAction('{{ route("cases.kasir", $case->id) }}', { action: 'selesai1', note: note, total_estimasi: total }, "Administrasi awal diselesaikan dan diajukan ke CM");
       };
     }
     const kasirRevisiBtn = document.getElementById("kasirRevisiBtn");
@@ -879,7 +1149,7 @@
     const kasirSelesai2Btn = document.getElementById("kasirSelesai2Btn");
     if (kasirSelesai2Btn) {
       kasirSelesai2Btn.onclick = () => {
-        const note = document.getElementById("kasirFinalNote").value;
+        const note = document.getElementById("kasirNote").value;
         submitAction('{{ route("cases.kasir", $case->id) }}', { action: 'selesai2', note: note }, "Administrasi akhir diselesaikan!");
       };
     }
@@ -925,7 +1195,14 @@
     if (farmasiSetujuBtn) {
       farmasiSetujuBtn.onclick = () => {
         const note = document.getElementById("farmasiNote").value;
-        submitAction('{{ route("cases.farmasi", $case->id) }}', { action: 'setuju', note: note }, "Farmasi menyetujui obat & BMHP!");
+        submitAction('{{ route("cases.farmasi", $case->id) }}', { action: 'setuju', note: note, items: farmasiBmhpList }, "Farmasi menyetujui obat & BMHP!");
+      };
+    }
+    const farmasiSaveOnlyBtn = document.getElementById("farmasiSaveOnlyBtn");
+    if (farmasiSaveOnlyBtn) {
+      farmasiSaveOnlyBtn.onclick = () => {
+        const note = document.getElementById("farmasiNote").value;
+        submitAction('{{ route("cases.farmasi", $case->id) }}', { action: 'save_items', note: note, items: farmasiBmhpList }, "Daftar BMHP/obat berhasil disimpan!");
       };
     }
     const farmasiRevisiBtn = document.getElementById("farmasiRevisiBtn");
@@ -996,14 +1273,25 @@
         submitAction('{{ route("cases.cs", $case->id) }}', { action: 'dalamKonfirmasi', note: note }, "Keberatan diteruskan ke Case Manager");
       };
     }
+    const csRevisiBtn = document.getElementById("csRevisiBtn");
+    if (csRevisiBtn) {
+      csRevisiBtn.onclick = () => {
+        const note = document.getElementById("csNote").value;
+        submitAction('{{ route("cases.cs", $case->id) }}', { action: 'revisi', note: note }, "Permintaan revisi dikirim ke Nurse");
+      };
+    }
 
     // Admin COT buttons
     const adminPrelimBtn = document.getElementById("adminPrelimBtn");
     if (adminPrelimBtn) {
       adminPrelimBtn.onclick = () => {
-        const alatVal = document.getElementById("adminAlat").value;
-        const list = alatVal.split(",").map(x => x.trim()).filter(Boolean);
-        submitAction('{{ route("cases.admin-cot", $case->id) }}', { action: 'prelim', alat: list }, "Prelim alat khusus disimpan!");
+        submitAction('{{ route("cases.admin-cot", $case->id) }}', { action: 'prelim', alat: adminAlatList }, "Prelim alat khusus disimpan!");
+      };
+    }
+    const adminSaveToolsBtn = document.getElementById("adminSaveToolsBtn");
+    if (adminSaveToolsBtn) {
+      adminSaveToolsBtn.onclick = () => {
+        submitAction('{{ route("cases.admin-cot", $case->id) }}', { action: 'save_tools', alat: adminAlatList }, "Alat khusus berhasil disimpan!");
       };
     }
     const adminFinalBtn = document.getElementById("adminFinalBtn");
@@ -1015,7 +1303,7 @@
         const note = document.getElementById("adminNote").value;
 
         if (!tgl || !jam || !ruang) {
-          toast("Tanggal, Jam, dan Ruang wajib diisi!", "error");
+          toast("Tanggal, Jam, and Ruang wajib diisi!", "error");
           return;
         }
 
@@ -1035,11 +1323,11 @@
         submitAction('{{ route("cases.admin-cot", $case->id) }}', { action: 'dalamKonfirmasi', note: note }, "Jadwal ditandai Dalam Konfirmasi");
       };
     }
-    const adminRevisiBtn = document.getElementById("adminRevisiBtn");
-    if (adminRevisiBtn) {
-      adminRevisiBtn.onclick = () => {
+    const adminRevisiNurseBtn = document.getElementById("adminRevisiNurseBtn");
+    if (adminRevisiNurseBtn) {
+      adminRevisiNurseBtn.onclick = () => {
         const note = document.getElementById("adminNote").value;
-        submitAction('{{ route("cases.admin-cot", $case->id) }}', { action: 'revisi', note: note }, "Revisi diajukan ke Verifikator");
+        submitAction('{{ route("cases.admin-cot", $case->id) }}', { action: 'revisi_nurse', note: note }, "Permintaan revisi dikirim ke Nurse");
       };
     }
     const adminRescheduleBtn = document.getElementById("adminRescheduleBtn");
@@ -1063,6 +1351,262 @@
           note: note
         }, "Jadwal berhasil di-reschedule!");
       };
+    }
+
+    // --- Farmasi BMHP Editor Logic ---
+    let farmasiBmhpList = {!! json_encode($case->tambahanBmhp->map(function($t){
+        return [
+            'nama' => $t->nama,
+            'qty' => (float)$t->qty,
+            'harga' => (int)$t->harga,
+            'jenis' => $t->jenis ?: 'tambahan'
+        ];
+    })->toArray()) !!};
+
+    function renderFarmasiBmhp() {
+      const tbody = document.getElementById("farmasiBmhpBody");
+      if (!tbody) return;
+      tbody.innerHTML = "";
+      let grandTotal = 0;
+
+      farmasiBmhpList.forEach((item, idx) => {
+        const sub = item.qty * item.harga;
+        grandTotal += sub;
+
+        const tr = document.createElement("tr");
+
+        // Nama
+        const tdNama = document.createElement("td");
+        const inpNama = document.createElement("input");
+        inpNama.type = "text";
+        inpNama.value = item.nama;
+        inpNama.style.width = "100%";
+        inpNama.style.padding = "4px 6px";
+        inpNama.addEventListener("input", (e) => item.nama = e.target.value);
+        tdNama.appendChild(inpNama);
+
+        // Qty
+        const tdQty = document.createElement("td");
+        const inpQty = document.createElement("input");
+        inpQty.type = "number";
+        inpQty.step = "any";
+        inpQty.value = item.qty;
+        inpQty.style.width = "100%";
+        inpQty.style.padding = "4px 6px";
+        inpQty.style.textAlign = "right";
+        inpQty.addEventListener("input", (e) => {
+          item.qty = Number(inpQty.value) || 0;
+          updateTotals();
+        });
+        tdQty.appendChild(inpQty);
+
+        // Harga
+        const tdHarga = document.createElement("td");
+        const inpHarga = document.createElement("input");
+        inpHarga.type = "number";
+        inpHarga.value = item.harga;
+        inpHarga.style.width = "100%";
+        inpHarga.style.padding = "4px 6px";
+        inpHarga.style.textAlign = "right";
+        inpHarga.addEventListener("input", (e) => {
+          item.harga = Number(inpHarga.value) || 0;
+          updateTotals();
+        });
+        tdHarga.appendChild(inpHarga);
+
+        // Jenis
+        const tdJenis = document.createElement("td");
+        const selJenis = document.createElement("select");
+        selJenis.style.width = "100%";
+        selJenis.style.padding = "4px 6px";
+        ["paket", "tambahan"].forEach(j => {
+          const opt = document.createElement("option");
+          opt.value = j;
+          opt.textContent = j;
+          if (item.jenis === j) opt.selected = true;
+          selJenis.appendChild(opt);
+        });
+        selJenis.addEventListener("change", (e) => item.jenis = e.target.value);
+        tdJenis.appendChild(selJenis);
+
+        // Aksi (Delete)
+        const tdAksi = document.createElement("td");
+        const btnDel = document.createElement("button");
+        btnDel.type = "button";
+        btnDel.className = "btn btn-sm btn-danger";
+        btnDel.textContent = "Hapus";
+        btnDel.onclick = () => {
+          farmasiBmhpList.splice(idx, 1);
+          renderFarmasiBmhp();
+        };
+        tdAksi.appendChild(btnDel);
+
+        tr.appendChild(tdNama);
+        tr.appendChild(tdQty);
+        tr.appendChild(tdHarga);
+        tr.appendChild(tdJenis);
+        tr.appendChild(tdAksi);
+        tbody.appendChild(tr);
+
+        // Autocomplete BMHP dari Database
+        const bmhpSuggestions = (masterData && masterData.paket_bmhp) ? masterData.paket_bmhp.map(x => x.nama) : [];
+        makeAutocomplete(inpNama, bmhpSuggestions, (selectedName) => {
+          item.nama = selectedName;
+          
+          // Cari tarif BMHP paket di database seeder
+          const found = masterData.paket_bmhp.find(x => x.nama === selectedName);
+          if (found) {
+            inpHarga.value = found.tarif;
+            item.harga = found.tarif;
+            updateTotals();
+          }
+        });
+      });
+
+      document.getElementById("farmasiGrandTotal").textContent = "Total: " + rupiah(grandTotal);
+    }
+
+    function updateTotals() {
+      let grandTotal = 0;
+      farmasiBmhpList.forEach(item => grandTotal += (item.qty * item.harga));
+      const el = document.getElementById("farmasiGrandTotal");
+      if (el) el.textContent = "Total: " + rupiah(grandTotal);
+    }
+
+    const farmasiAddBtn = document.getElementById("farmasiAddBtn");
+    if (farmasiAddBtn) {
+      farmasiAddBtn.onclick = () => {
+        farmasiBmhpList.push({ nama: "", qty: 1, harga: 0, jenis: "tambahan" });
+        renderFarmasiBmhp();
+      };
+    }
+    renderFarmasiBmhp();
+
+
+    // --- Admin COT Alat Editor Logic ---
+    let adminAlatList = {!! json_encode($case->alat->map(function($a){
+        return [
+            'nama' => $a->nama,
+            'harga' => $a->harga > 0 ? $a->harga : ($a->masterAlat ? $a->masterAlat->tarif : 0)
+        ];
+    })->toArray()) !!};
+
+    fetch('{{ route("api.master-data") }}')
+      .then(res => res.json())
+      .then(data => {
+        masterData = data;
+        renderAdminAlat();
+        renderFarmasiBmhp();
+      });
+
+    function renderAdminAlat() {
+      const tbody = document.getElementById("adminAlatBody");
+      if (!tbody) return;
+      tbody.innerHTML = "";
+      let grandTotal = 0;
+
+      adminAlatList.forEach((item, idx) => {
+        grandTotal += item.harga;
+
+        const tr = document.createElement("tr");
+
+        // Nama
+        const tdNama = document.createElement("td");
+        const inpNama = document.createElement("input");
+        inpNama.type = "text";
+        inpNama.value = item.nama;
+        inpNama.style.width = "100%";
+        inpNama.style.padding = "4px 6px";
+        inpNama.addEventListener("input", (e) => item.nama = e.target.value);
+        tdNama.appendChild(inpNama);
+
+        // Harga
+        const tdHarga = document.createElement("td");
+        const inpHarga = document.createElement("input");
+        inpHarga.type = "number";
+        inpHarga.value = item.harga;
+        inpHarga.style.width = "100%";
+        inpHarga.style.padding = "4px 6px";
+        inpHarga.style.textAlign = "right";
+        inpHarga.addEventListener("input", (e) => {
+          item.harga = Number(inpHarga.value) || 0;
+          updateAdminAlatTotals();
+        });
+        tdHarga.appendChild(inpHarga);
+
+        // Aksi (Delete)
+        const tdAksi = document.createElement("td");
+        const btnDel = document.createElement("button");
+        btnDel.type = "button";
+        btnDel.className = "btn btn-sm btn-danger";
+        btnDel.textContent = "Hapus";
+        btnDel.onclick = () => {
+          adminAlatList.splice(idx, 1);
+          renderAdminAlat();
+        };
+        tdAksi.appendChild(btnDel);
+
+        tr.appendChild(tdNama);
+        tr.appendChild(tdHarga);
+        tr.appendChild(tdAksi);
+        tbody.appendChild(tr);
+
+        // Autocomplete
+        makeAutocomplete(inpNama, masterData.alat, (selectedTool) => {
+          item.nama = selectedTool;
+          // Look up tool rate
+          fetch(`/api/alat/lookup?nama=${encodeURIComponent(selectedTool)}`)
+            .then(res => res.json())
+            .then(resData => {
+              if (resData.success && resData.tarif) {
+                inpHarga.value = resData.tarif;
+                item.harga = resData.tarif;
+                updateAdminAlatTotals();
+              }
+            });
+        });
+      });
+
+      document.getElementById("adminAlatGrandTotal").textContent = "Total: " + rupiah(grandTotal);
+    }
+
+    function updateAdminAlatTotals() {
+      let grandTotal = 0;
+      adminAlatList.forEach(item => grandTotal += item.harga);
+      const el = document.getElementById("adminAlatGrandTotal");
+      if (el) el.textContent = "Total: " + rupiah(grandTotal);
+    }
+
+    const adminAddAlatBtn = document.getElementById("adminAddAlatBtn");
+    if (adminAddAlatBtn) {
+      adminAddAlatBtn.onclick = () => {
+        adminAlatList.push({ nama: "", harga: 0 });
+        renderAdminAlat();
+      };
+    }
+
+    // CS follow-up countdown timer script
+    const csCountdownEl = document.getElementById("csCountdown");
+    if (csCountdownEl) {
+      const dueTime = new Date(csCountdownEl.dataset.due).getTime();
+      const tick = () => {
+        const now = Date.now();
+        const diff = dueTime - now;
+        if (diff <= 0) {
+          csCountdownEl.innerHTML = `⚠️ <strong>Follow-up Overdue!</strong> Hubungi pasien segera untuk konfirmasi kesediaan.`;
+          csCountdownEl.style.background = "#FEE2E2";
+          csCountdownEl.style.color = "#991B1B";
+        } else {
+          const hrs = Math.floor(diff / 3600000);
+          const mins = Math.floor((diff % 3600000) / 60000);
+          const secs = Math.floor((diff % 60000) / 1000);
+          csCountdownEl.innerHTML = `⏱️ <strong>Batas waktu follow-up berikutnya:</strong> ${hrs}j ${mins}m ${secs}d lagi (Ingatkan petugas shift berikutnya).`;
+          csCountdownEl.style.background = "#E0F2FE";
+          csCountdownEl.style.color = "#0369A1";
+        }
+      };
+      tick();
+      setInterval(tick, 1000);
     }
   </script>
 @endsection

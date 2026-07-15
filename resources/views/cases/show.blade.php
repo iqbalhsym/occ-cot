@@ -157,6 +157,13 @@
     </div>
   </div>
 
+  @if($case->va && $case->va->berkas_belum_lengkap)
+    <div style="background:#FEE2E2; border-left:4px solid #EF4444; color:#991B1B; padding:12px 16px; border-radius:6px; margin-bottom:15px; font-weight:700; display:flex; align-items:center; gap:8px;">
+      <span>⚠</span>
+      <span>Dokumen Kelengkapan Asuransi Ditandai BELUM LENGKAP oleh VA. Silakan lengkapi berkas dan unggah ulang.</span>
+    </div>
+  @endif
+
   <!-- Stepper Timeline -->
   <div class="card">
     <h3>Progres Alur Kerja</h3>
@@ -431,6 +438,26 @@
                   </div>
                 </div>
 
+                <!-- Upload Dokumen Asuransi Section (Selalu muncul untuk VA di awal maupun akhir) -->
+                <div class="field" style="margin-bottom:15px; background:var(--white); border:1px dashed var(--slate-300); padding:12px 16px; border-radius:8px;">
+                  <label style="font-weight:700; display:flex; align-items:center; gap:6px;">
+                    📂 Lampiran Berkas Asuransi (LMA, CL, dll)
+                  </label>
+                  <input type="file" id="vaFile" multiple class="form-control" style="background:var(--white); margin-top:6px;">
+                  <div id="vaFileList" style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
+                    @if($case->va && $case->va->attachments && count($case->va->attachments) > 0)
+                      @foreach($case->va->attachments as $att)
+                        <a href="{{ $att['path'] }}" download="{{ $att['name'] }}" class="chip" style="background:#E0F2FE; color:#0369A1; text-decoration:none; font-weight:600; padding:4px 10px; border-radius:15px; border:1px solid #B9E6FE;">
+                          📄 {{ $att['name'] }} (Unduh)
+                        </a>
+                      @endforeach
+                    @else
+                      <span class="hint" style="color:var(--slate-400);">Belum ada berkas yang diunggah.</span>
+                    @endif
+                  </div>
+                  <span class="hint" style="display:block; margin-top:4px;">Anda dapat memilih beberapa berkas sekaligus. Berkas baru akan ditambahkan ke lampiran kasus.</span>
+                </div>
+
                 @if(!$case->va->done)
                   @if(!$case->va->stage1_done)
                     <h4>Penyusunan Estimasi Biaya (VA Stage 1)</h4>
@@ -483,16 +510,10 @@
                       Case Manager telah menyetujui. Silakan unggah berkas kelengkapan asuransi (LMA, CL, dll), periksa checklist pemberkasan, dan berikan keputusan status jaminan.
                     </div>
 
+                    <!-- Catatan Keputusan VA (Stage 2) -->
                     <div class="field" style="margin-bottom:12px;">
-                      <label>Lampiran Berkas (bisa pilih multiple)</label>
-                      <input type="file" id="vaFile" multiple class="form-control" style="background:var(--white);">
-                      <div id="vaFileList" style="margin-top:6px; display:flex; gap:6px; flex-wrap:wrap;">
-                        @if($case->va->attachments)
-                          @foreach($case->va->attachments as $att)
-                            <span class="chip">📄 {{ $att['name'] }}</span>
-                          @endforeach
-                        @endif
-                      </div>
+                      <label>Catatan / Keterangan Keputusan VA</label>
+                      <textarea id="vaNote" style="width:100%;" placeholder="Keterangan keputusan/proses verifikasi...">{{ $case->va->decision_note ?: '' }}</textarea>
                     </div>
 
                     <div class="field" style="margin-top:15px; margin-bottom:15px;">
@@ -715,8 +736,43 @@
 
             <!-- CASE MANAGER ACTION -->
             @if($activeRole === 'CaseManager')
-              @if(!$case->caseManager->done)
+              @php
+                $stage1Done = $vaActive ? ($case->va && $case->va->stage1_done) : (($case->kasir && $case->kasir->stage1_done) && ($case->adru && $case->adru->stage1_done));
+              @endphp
+              @if(!$stage1Done)
+                <div class="locked-note" style="background:#FEF3C7; color:#B45309; border-color:#FDE68A;">
+                  ⚡ Menunggu penyusunan estimasi awal oleh {{ $vaActive ? 'VA (Asuransi)' : 'Kasir & ADRU COT (Umum)' }} sebelum Case Manager dapat melakukan verifikasi.
+                </div>
+              @elseif(!$case->caseManager->done)
                 <h4>Persetujuan Case Manager (Verifikator Dokumen)</h4>
+
+                <!-- Display Uploaded Insurance Documents for CM -->
+                @if($case->va && $case->va->attachments && count($case->va->attachments) > 0)
+                  <div class="field" style="margin-bottom:15px; background:#F0F9FF; border:1px solid #B9E6FE; padding:10px 14px; border-radius:6px;">
+                    <label style="font-weight:700; color:#0369A1;">Dokumen Asuransi yang Diunggah oleh VA:</label>
+                    <div style="margin-top:6px; display:flex; gap:6px; flex-wrap:wrap;">
+                      @foreach($case->va->attachments as $att)
+                        <a href="{{ $att['path'] }}" download="{{ $att['name'] }}" class="chip" style="background:#E0F2FE; color:#0369A1; text-decoration:none; font-weight:600; padding:4px 10px; border-radius:15px; border:1px solid #B9E6FE;">
+                          📄 {{ $att['name'] }} (Unduh)
+                        </a>
+                      @endforeach
+                    </div>
+                  </div>
+                @endif
+
+                <div class="field" style="margin-bottom:12px;">
+                  <label>Golongan Tindakan <span class="hint">(Case Manager dapat menyesuaikan golongan di sini)</span></label>
+                  <select id="cmGolongan" class="form-control">
+                    <option value="KECIL" {{ $case->golongan === 'KECIL' ? 'selected' : '' }}>KECIL</option>
+                    <option value="SEDANG" {{ $case->golongan === 'SEDANG' ? 'selected' : '' }}>SEDANG</option>
+                    <option value="BESAR" {{ $case->golongan === 'BESAR' ? 'selected' : '' }}>BESAR</option>
+                    <option value="KHUSUS A" {{ $case->golongan === 'KHUSUS A' ? 'selected' : '' }}>KHUSUS A</option>
+                    <option value="KHUSUS B" {{ $case->golongan === 'KHUSUS B' ? 'selected' : '' }}>KHUSUS B</option>
+                    <option value="KHUSUS C" {{ $case->golongan === 'KHUSUS C' ? 'selected' : '' }}>KHUSUS C</option>
+                    <option value="NON GOLONGAN" {{ $case->golongan === 'NON GOLONGAN' ? 'selected' : '' }}>NON GOLONGAN</option>
+                  </select>
+                </div>
+
                 <div class="field" style="margin-bottom:12px;">
                   <label>Tujuan Kembalikan / Revisi <span class="hint">(jika ada revisi)</span></label>
                   <select id="cmReturnTo" class="form-control">
@@ -1012,7 +1068,11 @@
     // Nurse buttons
     const submitBtn = document.getElementById("submitBtn");
     if (submitBtn) {
-      submitBtn.onclick = () => submitAction('{{ route("cases.submit", $case->id) }}', {}, "Kasus diajukan ke Workflow Engine!");
+      submitBtn.onclick = () => {
+        if (confirm("Apakah anda yakin data sudah sesuai?")) {
+          submitAction('{{ route("cases.submit", $case->id) }}', {}, "Kasus diajukan ke Workflow Engine!");
+        }
+      };
     }
     const cancelBtn = document.getElementById("cancelBtn");
     if (cancelBtn) {
@@ -1046,14 +1106,22 @@
         const gol = document.getElementById("vaGolongan").value;
         const kelas = document.getElementById("vaKelas").value;
 
-        submitAction('{{ route("cases.va", $case->id) }}', {
-          action: 'ajukan1',
-          golongan: gol,
-          kelas: kelas,
-          rincian: rincian,
-          total: total,
-          note: note
-        }, "Estimasi biaya diajukan ke Case Manager!");
+        const formData = new FormData();
+        formData.append('action', 'ajukan1');
+        formData.append('golongan', gol);
+        formData.append('kelas', kelas);
+        formData.append('total', total);
+        formData.append('note', note);
+        formData.append('rincian', JSON.stringify(rincian));
+
+        const fileInput = document.getElementById("vaFile");
+        if (fileInput && fileInput.files.length > 0) {
+          for (let i = 0; i < fileInput.files.length; i++) {
+            formData.append('files[]', fileInput.files[i]);
+          }
+        }
+
+        submitAction('{{ route("cases.va", $case->id) }}', formData, "Estimasi biaya diajukan ke Case Manager!");
       };
     }
 
@@ -1218,7 +1286,8 @@
     if (cmSetujuBtn) {
       cmSetujuBtn.onclick = () => {
         const note = document.getElementById("cmNote").value;
-        submitAction('{{ route("cases.case-manager", $case->id) }}', { action: 'setuju', note: note }, "Dokumen disetujui Case Manager!");
+        const gol = document.getElementById("cmGolongan").value;
+        submitAction('{{ route("cases.case-manager", $case->id) }}', { action: 'setuju', note: note, golongan: gol }, "Dokumen disetujui Case Manager!");
       };
     }
     const cmRevisiBtn = document.getElementById("cmRevisiBtn");
@@ -1226,14 +1295,16 @@
       cmRevisiBtn.onclick = () => {
         const note = document.getElementById("cmNote").value;
         const target = document.getElementById("cmReturnTo").value;
-        submitAction('{{ route("cases.case-manager", $case->id) }}', { action: 'revisi', returnTo: target, note: note }, "Revisi dikirim ke " + target);
+        const gol = document.getElementById("cmGolongan").value;
+        submitAction('{{ route("cases.case-manager", $case->id) }}', { action: 'revisi', returnTo: target, note: note, golongan: gol }, "Revisi dikirim ke " + target);
       };
     }
     const cmBelumLengkapBtn = document.getElementById("cmBelumLengkapBtn");
     if (cmBelumLengkapBtn) {
       cmBelumLengkapBtn.onclick = () => {
         const note = document.getElementById("cmNote").value;
-        submitAction('{{ route("cases.case-manager", $case->id) }}', { action: 'dokbelumlengkap', note: note }, "Status berkas ditandai belum lengkap");
+        const gol = document.getElementById("cmGolongan").value;
+        submitAction('{{ route("cases.case-manager", $case->id) }}', { action: 'dokbelumlengkap', note: note, golongan: gol }, "Status berkas ditandai belum lengkap");
       };
     }
 

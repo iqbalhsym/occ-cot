@@ -185,33 +185,12 @@
         </div>
       </div>
 
-      <h4>L. Kelas Perawatan</h4>
-      <div class="form-grid">
-        <div class="field">
-          <label>Kelas Perawatan</label>
-          <select name="kelasPerawatan">
-            <option value="VVIP" {{ $case->kelas_perawatan === 'VVIP' ? 'selected' : '' }}>VVIP</option>
-            <option value="VIP" {{ $case->kelas_perawatan === 'VIP' ? 'selected' : '' }}>VIP</option>
-            <option value="Kelas 1" {{ $case->kelas_perawatan === 'Kelas 1' ? 'selected' : '' }}>Kelas 1</option>
-            <option value="Kelas 2" {{ $case->kelas_perawatan === 'Kelas 2' ? 'selected' : '' }}>Kelas 2</option>
-            <option value="Kelas 3" {{ $case->kelas_perawatan === 'Kelas 3' ? 'selected' : '' }}>Kelas 3</option>
-          </select>
-        </div>
-      </div>
-
       <h4>M. Golongan Tindakan</h4>
       <div class="form-grid">
         <div class="field">
-          <label>Golongan <span class="hint">(otomatis dari tindakan/spesialisasi; bisa disesuaikan)</span></label>
-          <select name="golongan" id="golonganSel">
-            <option value="KECIL" {{ $case->golongan === 'KECIL' ? 'selected' : '' }}>KECIL</option>
-            <option value="SEDANG" {{ $case->golongan === 'SEDANG' ? 'selected' : '' }}>SEDANG</option>
-            <option value="BESAR" {{ $case->golongan === 'BESAR' ? 'selected' : '' }}>BESAR</option>
-            <option value="KHUSUS A" {{ $case->golongan === 'KHUSUS A' ? 'selected' : '' }}>KHUSUS A</option>
-            <option value="KHUSUS B" {{ $case->golongan === 'KHUSUS B' ? 'selected' : '' }}>KHUSUS B</option>
-            <option value="KHUSUS C" {{ $case->golongan === 'KHUSUS C' ? 'selected' : '' }}>KHUSUS C</option>
-            <option value="NON GOLONGAN" {{ $case->golongan === 'NON GOLONGAN' ? 'selected' : '' }}>NON GOLONGAN</option>
-          </select>
+          <label>Golongan <span class="hint">(otomatis dari tindakan/spesialisasi)</span></label>
+          <input type="text" id="golonganSelDisplay" readonly value="{{ $case->golongan ?: 'NON GOLONGAN' }}" class="form-control" style="background:var(--slate-100); cursor:not-allowed;">
+          <input type="hidden" name="golongan" id="golonganSel" value="{{ $case->golongan ?: 'NON GOLONGAN' }}">
         </div>
         <div class="field">
           <label>Spesialisasi Operator</label>
@@ -445,6 +424,8 @@
         .then(data => {
           if (data.success && data.golongan !== "NON GOLONGAN") {
             golSel.value = data.golongan;
+            const golSelDisplay = document.getElementById("golonganSelDisplay");
+            if (golSelDisplay) golSelDisplay.value = data.golongan;
             if (!spesInput.value.trim()) {
               spesInput.value = data.spesialisasi || "";
             }
@@ -473,6 +454,8 @@
             }
           } else {
             golSel.value = "NON GOLONGAN";
+            const golSelDisplay = document.getElementById("golonganSelDisplay");
+            if (golSelDisplay) golSelDisplay.value = "NON GOLONGAN";
             afBox.innerHTML = `
               <div class="autofill-box">
                 <span class="hint">Tindakan tidak terdaftar di database paket → <strong>Non Golongan</strong>. Estimasi biaya akan diproses oleh <strong>Kasir</strong> atau <strong>ADRU COT</strong>.</span>

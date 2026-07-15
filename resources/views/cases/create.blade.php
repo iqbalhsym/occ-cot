@@ -197,33 +197,12 @@
         </div>
       </div>
 
-      <h4>L. Kelas Perawatan</h4>
-      <div class="form-grid">
-        <div class="field">
-          <label>Kelas Perawatan</label>
-          <select name="kelasPerawatan">
-            <option value="VVIP">VVIP</option>
-            <option value="VIP">VIP</option>
-            <option value="Kelas 1">Kelas 1</option>
-            <option value="Kelas 2">Kelas 2</option>
-            <option value="Kelas 3" selected>Kelas 3</option>
-          </select>
-        </div>
-      </div>
-
       <h4>M. Golongan Tindakan</h4>
       <div class="form-grid">
         <div class="field">
-          <label>Golongan <span class="hint">(otomatis dari tindakan/spesialisasi; bisa disesuaikan)</span></label>
-          <select name="golongan" id="golonganSel">
-            <option value="KECIL">KECIL</option>
-            <option value="SEDANG">SEDANG</option>
-            <option value="BESAR">BESAR</option>
-            <option value="KHUSUS A">KHUSUS A</option>
-            <option value="KHUSUS B">KHUSUS B</option>
-            <option value="KHUSUS C">KHUSUS C</option>
-            <option value="NON GOLONGAN" selected>NON GOLONGAN</option>
-          </select>
+          <label>Golongan <span class="hint">(otomatis dari tindakan/spesialisasi)</span></label>
+          <input type="text" id="golonganSelDisplay" readonly value="NON GOLONGAN" class="form-control" style="background:var(--slate-100); cursor:not-allowed;">
+          <input type="hidden" name="golongan" id="golonganSel" value="NON GOLONGAN">
         </div>
         <div class="field">
           <label>Spesialisasi Operator</label>
@@ -482,6 +461,8 @@
         .then(data => {
           if (data.success && data.golongan !== "NON GOLONGAN") {
             golSel.value = data.golongan;
+            const golSelDisplay = document.getElementById("golonganSelDisplay");
+            if (golSelDisplay) golSelDisplay.value = data.golongan;
             if (!spesInput.value.trim()) {
               spesInput.value = data.spesialisasi || "";
             }
@@ -510,6 +491,8 @@
             }
           } else {
             golSel.value = "NON GOLONGAN";
+            const golSelDisplay = document.getElementById("golonganSelDisplay");
+            if (golSelDisplay) golSelDisplay.value = "NON GOLONGAN";
             afBox.innerHTML = `
               <div class="autofill-box">
                 <span class="hint">Tindakan tidak terdaftar di database paket → <strong>Non Golongan</strong>. Estimasi biaya akan diproses oleh <strong>Kasir</strong> atau <strong>ADRU COT</strong>.</span>

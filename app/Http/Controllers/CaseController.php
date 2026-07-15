@@ -513,6 +513,7 @@ class CaseController extends Controller
         // Handle file uploads if any
         if ($request->hasFile('files')) {
             $attachments = $va->attachments ?: [];
+            $uploadedNames = [];
             foreach ($request->file('files') as $file) {
                 $filename = time() . '_' . $file->getClientOriginalName();
                 $file->move(public_path('attachments'), $filename);
@@ -520,10 +521,11 @@ class CaseController extends Controller
                     'name' => $file->getClientOriginalName(),
                     'path' => '/attachments/' . $filename
                 ];
+                $uploadedNames[] = $file->getClientOriginalName();
             }
             $va->attachments = $attachments;
             $va->save();
-            $c->addAudit("VA melampirkan berkas", implode(', ', array_column($request->file('files'), 'name') ?: []), "VA");
+            $c->addAudit("VA melampirkan berkas", implode(', ', $uploadedNames), "VA");
         }
 
         // Handle checklist save
@@ -535,7 +537,13 @@ class CaseController extends Controller
         if ($action === 'ajukan1') {
             $va->kelas = $request->kelas ?: $c->kelas_perawatan;
             $va->golongan = $request->golongan ?: $c->golongan;
-            $va->estimasi_rincian = $request->rincian ?: [];
+            
+            $rincian = $request->rincian ?: [];
+            if (is_string($rincian)) {
+                $rincian = json_decode($rincian, true) ?: [];
+            }
+            $va->estimasi_rincian = $rincian;
+            
             $va->estimasi_total = $request->total ?: 0;
             $va->stage1_done = true;
             $va->done = false; // CM must approve first
@@ -852,6 +860,11 @@ class CaseController extends Controller
         $cm = $c->caseManager ?: $c->caseManager()->firstOrCreate([]);
         $action = $request->action;
 
+        if ($request->filled('golongan')) {
+            $c->golongan = $request->golongan;
+            $c->save();
+        }
+
         if ($action === 'setuju') {
             $cm->done = true;
             $cm->decision = 'Disetujui';
@@ -875,7 +888,8 @@ class CaseController extends Controller
                 $c->status = 'Returned';
                 $c->save();
             } elseif ($target === 'VA') {
-                $c->va->estimasi_total = 0;
+                $c->va->stage1_done = false;
+                $c->va->done = false;
                 $c->va->save();
             } elseif ($target === 'Kasir') {
                 $c->kasir->done = false;
@@ -968,23 +982,81 @@ class CaseController extends Controller
 
     public function downloadEstimasi($id)
     {
-        $c = OperationCase::with(['va', 'tindakan'])->findOrFail($id);
+        $c = OperationCase::with(['va', 'tindakan', 'alat.masterAlat', 'tambahanBmhp', 'kasir', 'adru'])->findOrFail($id);
         
-        // Return a print window HTML document identical to buildEstimasiDoc in template
-        $rincian = ($c->va && $c->va->estimasi_rincian) ? $c->va->estimasi_rincian : [];
-        $total = $c->va ? $c->va->estimasi_total : 0;
+        $total = 0;
+        $rincian = [];
+        
+        if ($c->penjamin === 'Asuransi') {
+            $total = $c->va ? $c->va->estimasi_total : 0;
+            $rincian = ($c->va && $c->va->estimasi_rincian) ? $c->va->estimasi_rincian : [];
+        } else {
+            // Pasien Umum
+            if ($c->kasir && $c->kasir->total_estimasi > 0) {
+                $total = $c->kasir->total_estimasi;
+                $rincian = [
+                    ['komponen' => 'Estimasi Tarif Administrasi Awal (Kasir)', 'nilai' => $total]
+                ];
+            } elseif ($c->adru && $c->adru->estimasi) {
+                $numericVal = (float)str_replace(['Rp', '.', ',', ' '], '', $c->adru->estimasi);
+                $total = $numericVal;
+                $rincian = [
+                    ['komponen' => 'Estimasi Tarif Kamar & Jasa COT (ADRU)', 'nilai' => $total]
+                ];
+            }
+        }
         
         $dpjpNames = $c->dpjp->pluck('nama')->implode(', ') ?: '-';
         $tindakanNames = $c->tindakan->pluck('nama')->implode(', ') ?: '-';
         
         $rowsHtml = '';
-        foreach ($rincian as $index => $r) {
-            $num = $index + 1;
-            $komponen = htmlspecialchars($r['komponen'] ?? '');
-            $nilai = number_format($r['nilai'] ?? 0, 0, ',', '.');
-            $rowsHtml .= "<tr><td style=\"width:28px;\">{$num}</td><td>{$komponen}</td><td style=\"text-align:right;\">{$nilai}</td></tr>";
+        $num = 1;
+
+        // A. Jasa Medis
+        if (!empty($rincian)) {
+            $rowsHtml .= "<tr><td colspan=\"3\" style=\"background:#eee; font-weight:bold; font-size:12.5px;\">A. Estimasi Jasa Medis / Awal</td></tr>";
+            foreach ($rincian as $r) {
+                $komponen = htmlspecialchars($r['komponen'] ?? '');
+                $nilai = number_format($r['nilai'] ?? 0, 0, ',', '.');
+                $rowsHtml .= "<tr><td style=\"width:28px;\">{$num}</td><td>{$komponen}</td><td style=\"text-align:right;\">{$nilai}</td></tr>";
+                $num++;
+            }
         }
-        if (empty($rincian)) {
+
+        // B. Alat Khusus
+        $alatKhusus = $c->alat;
+        $totalAlat = 0;
+        if ($alatKhusus->isNotEmpty()) {
+            $rowsHtml .= "<tr><td colspan=\"3\" style=\"background:#eee; font-weight:bold; font-size:12.5px;\">B. Alat Khusus</td></tr>";
+            foreach ($alatKhusus as $a) {
+                $price = $a->harga > 0 ? $a->harga : ($a->masterAlat ? $a->masterAlat->tarif : 0);
+                $totalAlat += $price;
+                $priceFormatted = number_format($price, 0, ',', '.');
+                $alatName = htmlspecialchars($a->nama);
+                $rowsHtml .= "<tr><td style=\"width:28px;\">{$num}</td><td>Instrument: {$alatName}</td><td style=\"text-align:right;\">{$priceFormatted}</td></tr>";
+                $num++;
+            }
+        }
+
+        // C. Obat & BMHP
+        $bmhpList = $c->tambahanBmhp;
+        $totalBmhp = 0;
+        if ($bmhpList->isNotEmpty()) {
+            $rowsHtml .= "<tr><td colspan=\"3\" style=\"background:#eee; font-weight:bold; font-size:12.5px;\">C. Obat &amp; BMHP</td></tr>";
+            foreach ($bmhpList as $t) {
+                $subTotal = ($t->qty ?: 1) * ($t->harga ?: 0);
+                $totalBmhp += $subTotal;
+                $subTotalFormatted = number_format($subTotal, 0, ',', '.');
+                $bmhpName = htmlspecialchars($t->nama);
+                $qty = $t->qty ?: 1;
+                $hargaSatuan = number_format($t->harga ?: 0, 0, ',', '.');
+                $typeLabel = $t->jenis === 'paket' ? 'Paket' : 'Tambahan';
+                $rowsHtml .= "<tr><td style=\"width:28px;\">{$num}</td><td>[{$typeLabel}] {$bmhpName} (x{$qty} @ Rp {$hargaSatuan})</td><td style=\"text-align:right;\">{$subTotalFormatted}</td></tr>";
+                $num++;
+            }
+        }
+
+        if (empty($rincian) && $alatKhusus->isEmpty() && $bmhpList->isEmpty()) {
             $rowsHtml = '<tr><td colspan="3" style="text-align:center;color:#888;">Belum ada rincian estimasi.</td></tr>';
         }
         
@@ -997,7 +1069,9 @@ class CaseController extends Controller
         $penjamin = htmlspecialchars($c->penjamin . ($c->nama_guarantor ? ' — ' . $c->nama_guarantor : ''));
         $golongan = htmlspecialchars(($c->va && $c->va->golongan) ? $c->va->golongan : ($c->golongan ?: '-'));
         $tglSekarang = now()->locale('id')->isoFormat('D MMMM Y');
-        $totalRupiah = number_format($total, 0, ',', '.');
+        
+        $grandTotal = $total + $totalAlat + $totalBmhp;
+        $totalRupiah = number_format($grandTotal, 0, ',', '.');
 
         $htmlContent = <<<HTML
 <!DOCTYPE html>
@@ -1046,7 +1120,7 @@ class CaseController extends Controller
     <tbody>
       {$rowsHtml}
       <tr class="total">
-        <td colspan="2" style="text-align:right;">TOTAL PERKIRAAN BIAYA</td>
+        <td colspan="2" style="text-align:right;">TOTAL PERKIRAAN BIAYA (GRAND TOTAL)</td>
         <td style="text-align:right;">{$totalRupiah}</td>
       </tr>
     </tbody>

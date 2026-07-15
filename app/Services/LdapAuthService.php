@@ -68,6 +68,78 @@ class LdapAuthService
             $bind = @ldap_bind($ldap, $userDn, $password);
 
             if ($bind) {
+                // Check group restriction if configured
+                $configuredGroup = config('services.ldap.group');
+                if (!empty($configuredGroup)) {
+                    $baseDn = config('services.ldap.base_dn');
+                    if (empty($baseDn)) {
+                        Log::warning("LDAP Group validation failed: base_dn is not configured.");
+                        @ldap_close($ldap);
+                        return [
+                            'success' => false,
+                            'message' => 'Konfigurasi LDAP base DN tidak lengkap di server.'
+                        ];
+                    }
+
+                    $searchUsername = $username;
+                    if (str_contains($username, '@')) {
+                        $parts = explode('@', $username);
+                        $searchUsername = $parts[0];
+                    }
+
+                    // Escape input for safety to prevent LDAP injection (CWE-90)
+                    $escapedSearchUsername = str_replace(
+                        ['\\', '*', '(', ')', "\0"],
+                        ['\\5c', '\\2a', '\\28', '\\29', '\\00'],
+                        $searchUsername
+                    );
+
+                    $filter = "(sAMAccountName=" . $escapedSearchUsername . ")";
+                    $search = @ldap_search($ldap, $baseDn, $filter, ['memberof']);
+
+                    if (!$search) {
+                        Log::warning("LDAP Search failed for user {$searchUsername} with base DN {$baseDn}.");
+                        @ldap_close($ldap);
+                        return [
+                            'success' => false,
+                            'message' => 'Gagal memvalidasi keanggotaan group pengguna.'
+                        ];
+                    }
+
+                    $entries = @ldap_get_entries($ldap, $search);
+                    if (!$entries || $entries['count'] === 0) {
+                        Log::warning("LDAP user entries not found for {$searchUsername}.");
+                        @ldap_close($ldap);
+                        return [
+                            'success' => false,
+                            'message' => 'Pengguna tidak ditemukan di direktori AD.'
+                        ];
+                    }
+
+                    $isMember = false;
+                    if (isset($entries[0]['memberof'])) {
+                        $userGroups = $entries[0]['memberof'];
+                        $lowerConfigured = strtolower($configuredGroup);
+                        for ($i = 0; $i < $userGroups['count']; $i++) {
+                            $groupDn = $userGroups[$i];
+                            $lowerGroupDn = strtolower($groupDn);
+                            if (str_contains($lowerGroupDn, "cn=" . $lowerConfigured . ",") || str_ends_with($lowerGroupDn, "cn=" . $lowerConfigured)) {
+                                $isMember = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!$isMember) {
+                        Log::warning("LDAP login denied: user '{$username}' is not a member of group '{$configuredGroup}'");
+                        @ldap_close($ldap);
+                        return [
+                            'success' => false,
+                            'message' => 'Anda tidak memiliki akses ke aplikasi ini.'
+                        ];
+                    }
+                }
+
                 // Try searching for user details (name/mail) if anonymous search or user bind permits
                 $name = ucwords(str_replace('.', ' ', $username));
                 $email = str_contains($username, '@') ? $username : $username . $domain;

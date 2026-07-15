@@ -246,7 +246,8 @@
       <button type="button" class="btn btn-sm" id="addTambahan" style="margin-top:8px;">+ Tambah item BMHP/Obat</button>
 
       <div class="btn-row" style="margin-top:30px;">
-        <button type="submit" class="btn btn-primary">Simpan sebagai Draft</button>
+        <button type="submit" class="btn">Simpan sebagai Draft</button>
+        <button type="button" class="btn btn-primary" id="btnSubmitDirect">Submit Pengajuan</button>
         <a href="{{ route('dashboard') }}" class="btn" style="text-decoration:none;">Batal</a>
       </div>
     </form>
@@ -796,6 +797,71 @@
       })
       .catch(err => {
         toast("Terjadi kesalahan sistem", "error");
+      });
+    });
+
+    // Submit Direct (Saves as draft and then submits immediately)
+    document.getElementById("btnSubmitDirect").addEventListener("click", function() {
+      const form = document.getElementById("caseForm");
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const formData = new FormData(form);
+      const btn = this;
+      btn.disabled = true;
+      const originalText = btn.textContent;
+      btn.textContent = "Sedang mengirim...";
+
+      fetch('{{ route("cases.store") }}', {
+        method: 'POST',
+        headers: {
+          'X-CSRF-TOKEN': csrfToken
+        },
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          // Trigger submit immediately
+          fetch(`/cases/${data.id}/submit`, {
+            method: 'POST',
+            headers: {
+              'X-CSRF-TOKEN': csrfToken,
+              'Content-Type': 'application/json'
+            }
+          })
+          .then(res => res.json())
+          .then(submitData => {
+            if (submitData.success) {
+              toast("Kasus berhasil diajukan", "success");
+              setTimeout(() => {
+                window.location.href = `/cases/${data.id}`;
+              }, 1500);
+            } else {
+              toast("Kasus disimpan sebagai draft, tetapi gagal diajukan: " + submitData.message, "error");
+              setTimeout(() => {
+                window.location.href = `/cases/${data.id}`;
+              }, 1500);
+            }
+          })
+          .catch(err => {
+            toast("Kasus disimpan sebagai draft, tetapi gagal diajukan karena kesalahan sistem", "error");
+            setTimeout(() => {
+              window.location.href = `/cases/${data.id}`;
+            }, 1500);
+          });
+        } else {
+          toast(data.message, "error");
+          btn.disabled = false;
+          btn.textContent = originalText;
+        }
+      })
+      .catch(err => {
+        toast("Terjadi kesalahan sistem saat menyimpan kasus", "error");
+        btn.disabled = false;
+        btn.textContent = originalText;
       });
     });
   </script>

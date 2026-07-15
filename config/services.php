@@ -41,6 +41,7 @@ return [
         'port' => env('LDAP_PORT', 389),
         'base_dn' => env('LDAP_BASE_DN'),
         'user_domain' => env('LDAP_USER_DOMAIN'),
+        'group' => env('LDAP_GROUP'),
     ],
 
 ];

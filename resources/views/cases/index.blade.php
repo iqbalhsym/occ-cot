@@ -184,9 +184,45 @@
       @if($isMine)
         <input type="hidden" name="queue" value="mine">
       @endif
-      <input type="text" name="search" placeholder="Cari ID, Nama, RM..." value="{{ request()->query('search') }}" style="padding:7px 11px; border-radius:6px; border:1px solid var(--slate-200); font-size:13px; width:220px;">
+      @if(request()->filled('status'))
+        <input type="hidden" name="status" value="{{ request()->query('status') }}">
+      @endif
+
+      <!-- Penjamin Filter -->
+      <select name="penjamin" onchange="this.form.submit()" style="padding:6px 10px; border-radius:6px; border:1px solid var(--slate-200); font-size:13px; background:var(--white);">
+        <option value="All" {{ request()->query('penjamin', 'All') === 'All' ? 'selected' : '' }}>Semua Penjamin</option>
+        <option value="Umum" {{ request()->query('penjamin') === 'Umum' ? 'selected' : '' }}>Umum</option>
+        <option value="BPJS Kesehatan" {{ request()->query('penjamin') === 'BPJS Kesehatan' ? 'selected' : '' }}>BPJS Kesehatan</option>
+        <option value="Asuransi" {{ request()->query('penjamin') === 'Asuransi' ? 'selected' : '' }}>Asuransi Swasta / Lainnya</option>
+      </select>
+
+      <!-- Lokasi Filter -->
+      <select name="lokasi" onchange="this.form.submit()" style="padding:6px 10px; border-radius:6px; border:1px solid var(--slate-200); font-size:13px; background:var(--white);">
+        <option value="All" {{ request()->query('lokasi', 'All') === 'All' ? 'selected' : '' }}>Semua Lokasi</option>
+        <option value="COT" {{ request()->query('lokasi') === 'COT' ? 'selected' : '' }}>COT</option>
+        <option value="OT IGD" {{ request()->query('lokasi') === 'OT IGD' ? 'selected' : '' }}>OT IGD</option>
+        <option value="Cathlab" {{ request()->query('lokasi') === 'Cathlab' ? 'selected' : '' }}>Cathlab</option>
+        <option value="Endoskopi" {{ request()->query('lokasi') === 'Endoskopi' ? 'selected' : '' }}>Endoskopi</option>
+        <option value="Lainnya" {{ request()->query('lokasi') === 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
+      </select>
+
+      <!-- Modul Aktif Filter -->
+      <select name="flow" onchange="this.form.submit()" style="padding:6px 10px; border-radius:6px; border:1px solid var(--slate-200); font-size:13px; background:var(--white);">
+        <option value="All" {{ request()->query('flow', 'All') === 'All' ? 'selected' : '' }}>Semua Modul Aktif</option>
+        <option value="Nurse" {{ request()->query('flow') === 'Nurse' ? 'selected' : '' }}>Nurse</option>
+        <option value="VA" {{ request()->query('flow') === 'VA' ? 'selected' : '' }}>VA</option>
+        <option value="Kasir" {{ request()->query('flow') === 'Kasir' ? 'selected' : '' }}>Kasir</option>
+        <option value="ADRUCOT" {{ request()->query('flow') === 'ADRUCOT' ? 'selected' : '' }}>ADRU COT</option>
+        <option value="Farmasi" {{ request()->query('flow') === 'Farmasi' ? 'selected' : '' }}>Farmasi</option>
+        <option value="AdminCOT" {{ request()->query('flow') === 'AdminCOT' ? 'selected' : '' }}>Admin COT</option>
+        <option value="CaseManager" {{ request()->query('flow') === 'CaseManager' ? 'selected' : '' }}>Case Manager</option>
+        <option value="CS" {{ request()->query('flow') === 'CS' ? 'selected' : '' }}>CS</option>
+        <option value="Selesai" {{ request()->query('flow') === 'Selesai' ? 'selected' : '' }}>Selesai</option>
+      </select>
+
+      <input type="text" name="search" placeholder="Cari ID, Nama, RM..." value="{{ request()->query('search') }}" style="padding:7px 11px; border-radius:6px; border:1px solid var(--slate-200); font-size:13px; width:150px; background:var(--white);">
       <button type="submit" class="btn btn-sm" style="padding:7px 14px;">🔍 Cari</button>
-      @if(request()->filled('search'))
+      @if(request()->filled('search') || request()->filled('penjamin') || request()->filled('lokasi') || request()->filled('flow'))
         <a href="{{ url()->current() }}{{ $isMine ? '?queue=mine' : '' }}" class="btn btn-sm btn-danger" style="padding:7px 12px; text-decoration:none;">Reset</a>
       @endif
     </form>
@@ -196,6 +232,10 @@
   @php
     $currentStatus = request()->query('status', 'All');
     $filterBase = url()->current() . ($isMine ? '?queue=mine&' : '?');
+    $queryParams = request()->except(['status', 'page']);
+    if (!empty($queryParams)) {
+        $filterBase .= http_build_query($queryParams) . '&';
+    }
   @endphp
   <div class="filter-nav-tabs">
     <a href="{{ $filterBase }}status=All" class="filter-tab {{ $currentStatus === 'All' ? 'active' : '' }}">Semua</a>

@@ -4,6 +4,22 @@
 @section('page_title', 'Edit Case ' . $case->id)
 
 @section('content')
+  @php
+    $lamaJam = 0;
+    $lamaMenit = 0;
+    if ($case->estimasi_lama_operasi) {
+        if (is_numeric($case->estimasi_lama_operasi)) {
+            $lamaJam = (int)$case->estimasi_lama_operasi;
+        } else {
+            if (preg_match('/(\d+)\s*Jam/i', $case->estimasi_lama_operasi, $m)) {
+                $lamaJam = (int)$m[1];
+            }
+            if (preg_match('/(\d+)\s*Menit/i', $case->estimasi_lama_operasi, $m)) {
+                $lamaMenit = (int)$m[1];
+            }
+        }
+    }
+  @endphp
   <div class="card">
     <h3>Edit Form Penjadwalan Tindakan (Nurse — Edit Draft)</h3>
     <div class="permission-note">Mengedit data penjadwalan. Anda dapat mengubah data identitas, dokter, medis, penjamin, alat, dan BMHP sebelum mengajukan kembali kasus ke workflow.</div>
@@ -110,7 +126,15 @@
         <div class="field"><label>Tanggal Operasi — Pilihan 1</label><input type="date" name="tanggalPilihan1" value="{{ $case->tanggal_pilihan1 ? $case->tanggal_pilihan1->format('Y-m-d') : '' }}"></div>
         <div class="field"><label>Tanggal Operasi — Pilihan 2</label><input type="date" name="tanggalPilihan2" value="{{ $case->tanggal_pilihan2 ? $case->tanggal_pilihan2->format('Y-m-d') : '' }}"></div>
         <div class="field"><label>Jam Operasi</label><input type="time" name="jamOperasi" value="{{ $case->jam_operasi ?: '' }}"></div>
-        <div class="field"><label>Estimasi Lama Operasi</label><input name="estimasiLamaOperasi" placeholder="mis. 2 jam" value="{{ $case->estimasi_lama_operasi }}"></div>
+        <div class="field">
+          <label class="req">Estimasi Lama Operasi</label>
+          <div style="display:flex; gap:6px; align-items:center;">
+            <input type="number" name="estimasiLamaOperasiJam" min="0" max="24" required placeholder="0" class="form-control" style="width:70px; display:inline-block;" value="{{ $lamaJam }}">
+            <span style="font-size:13px; color:var(--slate-600);">Jam</span>
+            <input type="number" name="estimasiLamaOperasiMenit" min="0" max="59" required placeholder="0" class="form-control" style="width:70px; display:inline-block;" value="{{ $lamaMenit }}">
+            <span style="font-size:13px; color:var(--slate-600);">Menit</span>
+          </div>
+        </div>
       </div>
 
       <h4>G. Lokasi Tindakan (wajib)</h4>
@@ -167,7 +191,10 @@
 
       <h4>J. Estimasi Rawat Inap</h4>
       <div class="form-grid">
-        <div class="field"><label>Estimasi Rawat Inap <span class="hint">(satuan hari)</span></label><input name="estimasiRawatInap" placeholder="mis. 3 - 4 hari" value="{{ $case->estimasi_rawat_inap }}"></div>
+        <div class="field">
+          <label class="req">Estimasi Rawat Inap (Hari)</label>
+          <input type="number" min="0" max="365" name="estimasiRawatInap" required placeholder="mis. 3" class="form-control" value="{{ $case->estimasi_rawat_inap }}">
+        </div>
       </div>
 
       <h4>K. Penjamin (wajib)</h4>
@@ -176,7 +203,8 @@
           <label class="req">Penjamin</label>
           <select name="penjamin" required id="penjaminSel">
             <option value="Umum" {{ $case->penjamin === 'Umum' ? 'selected' : '' }}>Umum</option>
-            <option value="Asuransi" {{ $case->penjamin === 'Asuransi' ? 'selected' : '' }}>Asuransi</option>
+            <option value="BPJS Kesehatan" {{ $case->penjamin === 'BPJS Kesehatan' ? 'selected' : '' }}>BPJS Kesehatan</option>
+            <option value="Asuransi" {{ $case->penjamin === 'Asuransi' ? 'selected' : '' }}>Asuransi Swasta / Lainnya</option>
           </select>
         </div>
         <div class="field" id="guarantorWrap" style="{{ $case->penjamin === 'Asuransi' ? '' : 'display:none;' }}">

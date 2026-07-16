@@ -124,6 +124,16 @@ class CaseController extends Controller
             $query->where('current_flow', $request->flow);
         }
 
+        // Filter penjamin
+        if ($request->filled('penjamin') && $request->penjamin !== 'All') {
+            $query->where('penjamin', $request->penjamin);
+        }
+
+        // Filter lokasi
+        if ($request->filled('lokasi') && $request->lokasi !== 'All') {
+            $query->where('lokasi_tindakan', $request->lokasi);
+        }
+
         $cases = $query->orderBy('created_at', 'desc')->paginate(20);
 
         return view('cases.index', compact('cases'));
@@ -180,7 +190,7 @@ class CaseController extends Controller
                 'tanggal_pilihan1' => $request->tanggalPilihan1 ?: null,
                 'tanggal_pilihan2' => $request->tanggalPilihan2 ?: null,
                 'jam_operasi' => $request->jamOperasi ?: null,
-                'estimasi_lama_operasi' => $request->estimasiLamaOperasi,
+                'estimasi_lama_operasi' => (($request->filled('estimasiLamaOperasiJam') || $request->filled('estimasiLamaOperasiMenit')) ? ((int)$request->estimasiLamaOperasiJam . " Jam " . (int)$request->estimasiLamaOperasiMenit . " Menit") : null),
                 'lokasi_tindakan' => $request->lokasiTindakan ?? 'COT',
                 'lokasi_tindakan_lainnya' => $request->lokasiTindakanLainnya,
                 'asal_pasien' => $request->asalPasien,
@@ -327,7 +337,7 @@ class CaseController extends Controller
                 'tanggal_pilihan1' => $request->tanggalPilihan1 ?: null,
                 'tanggal_pilihan2' => $request->tanggalPilihan2 ?: null,
                 'jam_operasi' => $request->jamOperasi ?: null,
-                'estimasi_lama_operasi' => $request->estimasi_lama_operasi,
+                'estimasi_lama_operasi' => (($request->filled('estimasiLamaOperasiJam') || $request->filled('estimasiLamaOperasiMenit')) ? ((int)$request->estimasiLamaOperasiJam . " Jam " . (int)$request->estimasiLamaOperasiMenit . " Menit") : null),
                 'lokasi_tindakan' => $request->lokasiTindakan ?? 'COT',
                 'lokasi_tindakan_lainnya' => $request->lokasiTindakanLainnya,
                 'asal_pasien' => $request->asalPasien,

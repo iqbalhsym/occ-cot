@@ -147,7 +147,7 @@ class OperationCase extends Model
             'Draft'      => 'Draft',
             'Submitted'  => 'Diajukan',
             'InProgress' => 'Dalam Proses',
-            'Returned'   => 'Dikembalikan',
+            'Returned'   => 'Returned',
             'Completed'  => 'Selesai',
             'Cancelled'  => 'Dibatalkan',
             default      => $this->status,
@@ -156,16 +156,20 @@ class OperationCase extends Model
 
     public function addAudit(string $action, ?string $note = null, ?string $actor = null): void
     {
+        $resolvedActor = 'Sistem';
+        if (auth()->check()) {
+            $user = auth()->user();
+            $activeRole = session('role', $user->role);
+            $resolvedActor = "{$user->name} ({$activeRole})";
+        } elseif ($actor) {
+            $resolvedActor = $actor;
+        }
+
         $this->audit()->create([
-            'actor'  => $actor ?? 'Sistem',
+            'actor'  => $resolvedActor,
             'action' => $action,
             'note'   => $note,
         ]);
-    }
-
-    public function isNeedingAsuransiFlow(): bool
-    {
-        return $this->penjamin === 'Asuransi';
     }
 
     public static function getQueueQueryForRole(string $activeRole)
@@ -174,156 +178,75 @@ class OperationCase extends Model
             return self::whereIn('status', ['Draft', 'Returned']);
         }
 
-        $query = self::whereNotIn('status', ['Cancelled', 'Draft']);
+        $query = self::whereNotIn('status', ['Cancelled', 'Draft', 'Completed']);
 
         if ($activeRole === 'VA') {
-            return $query->where('penjamin', 'Asuransi')
+            return $query->whereIn('penjamin', ['Asuransi', 'BPJS Kesehatan'])
                 ->where(function ($q) {
-                    $q->where(function ($q2) {
-                        $q2->whereDoesntHave('va')
-                           ->orWhereHas('va', function ($q3) {
-                               $q3->where('estimasi_total', 0);
-                           });
-                    })
-                    ->orWhere(function ($q2) {
-                        $q2->whereHas('caseManager', function ($q3) {
-                            $q3->where('done', true);
-                        })
-                        ->where(function ($q3) {
-                            $q3->whereDoesntHave('va')
-                               ->orWhereHas('va', function ($q4) {
-                                   $q4->where('done', false);
-                               });
-                        });
-                    });
+                    $q->whereDoesntHave('va')
+                       ->orWhereHas('va', function ($q2) {
+                           $q2->where('done', false)
+                              ->orWhere('stage1_done', false);
+                       });
                 });
         }
 
         if ($activeRole === 'Kasir') {
             return $query->where('penjamin', 'Umum')
                 ->where(function ($q) {
-                    $q->where(function ($q2) {
-                        $q2->whereDoesntHave('kasir')
-                           ->orWhereHas('kasir', function ($q3) {
-                               $q3->where('done', false);
-                           });
-                    })
-                    ->orWhere(function ($q2) {
-                        $q2->whereHas('caseManager', function ($q3) {
-                            $q3->where('done', true);
-                        })
-                        ->where('status', 'InProgress');
-                    });
+                    $q->whereDoesntHave('kasir')
+                       ->orWhereHas('kasir', function ($q2) {
+                           $q2->where('done', false)
+                              ->orWhere('stage1_done', false);
+                       });
                 });
         }
 
         if ($activeRole === 'ADRUCOT') {
             return $query->where('penjamin', 'Umum')
                 ->where(function ($q) {
-                    $q->where(function ($q2) {
-                        $q2->whereDoesntHave('adru')
-                           ->orWhereHas('adru', function ($q3) {
-                               $q3->where('done', false);
-                           });
-                    })
-                    ->orWhere(function ($q2) {
-                        $q2->whereHas('caseManager', function ($q3) {
-                            $q3->where('done', true);
-                        })
-                        ->where('status', 'InProgress');
-                    });
+                    $q->whereDoesntHave('adru')
+                       ->orWhereHas('adru', function ($q2) {
+                           $q2->where('done', false);
+                       });
                 });
         }
 
         if ($activeRole === 'Farmasi') {
             return $query->where(function ($q) {
                 $q->whereDoesntHave('farmasi')
-                  ->orWhereHas('farmasi', function ($q2) {
-                      $q2->where('done', false);
-                  });
+                   ->orWhereHas('farmasi', function ($q2) {
+                       $q2->where('done', false);
+                   });
             });
         }
 
         if ($activeRole === 'AdminCOT') {
             return $query->where('lokasi_tindakan', 'COT')
                 ->where(function ($q) {
-                    $q->where(function ($q2) {
-                        $q2->whereDoesntHave('adminCot')
-                           ->orWhereHas('adminCot', function ($q3) {
-                               $q3->where('prelim_done', false);
-                           });
-                    })
-                    ->orWhere(function ($q2) {
-                        $q2->where(function ($q3) {
-                            $q3->where('penjamin', 'Asuransi')
-                               ->whereHas('cs', function ($q4) {
-                                   $q4->where('done', true);
-                               });
-                        })
-                        ->orWhere(function ($q3) {
-                            $q3->where('penjamin', '!=', 'Asuransi')
-                               ->whereHas('kasir', function ($q4) {
-                                   $q4->where('done', true);
-                               })
-                               ->whereHas('adru', function ($q4) {
-                                   $q4->where('done', true);
-                               });
-                        })
-                        ->where(function ($q3) {
-                            $q3->whereDoesntHave('adminCot')
-                               ->orWhereHas('adminCot', function ($q4) {
-                                   $q4->where('final_done', false);
-                               });
-                        });
-                    });
+                    $q->whereDoesntHave('adminCot')
+                       ->orWhereHas('adminCot', function ($q2) {
+                           $q2->where('final_done', false);
+                       });
                 });
         }
 
         if ($activeRole === 'CaseManager') {
-            return $query->whereHas('farmasi', function ($q) {
-                $q->where('done', true);
-            })
-            ->where(function ($q) {
-                $q->where('lokasi_tindakan', '!=', 'COT')
-                  ->orWhereHas('adminCot', function ($q2) {
-                      $q2->where('prelim_done', true);
-                  });
-            })
-            ->where(function ($q) {
+            return $query->where(function ($q) {
                 $q->whereDoesntHave('caseManager')
-                  ->orWhereHas('caseManager', function ($q2) {
-                      $q2->where('done', false);
-                  });
-            })
-            ->where(function ($q) {
-                $q->where(function ($q2) {
-                    $q2->where('penjamin', 'Asuransi')
-                       ->whereHas('va', function ($q3) {
-                           $q3->where('estimasi_total', '>', 0);
-                       });
-                })
-                ->orWhere(function ($q2) {
-                    $q2->where('penjamin', '!=', 'Asuransi')
-                       ->whereHas('kasir', function ($q3) {
-                           $q3->where('done', true);
-                       })
-                       ->whereHas('adru', function ($q3) {
-                           $q3->where('done', true);
-                       });
-                });
+                   ->orWhereHas('caseManager', function ($q2) {
+                       $q2->where('done', false);
+                   });
             });
         }
 
         if ($activeRole === 'CS') {
-            return $query->where('penjamin', 'Asuransi')
-                ->whereHas('va', function ($q) {
-                    $q->where('done', true);
-                })
+            return $query->whereIn('penjamin', ['Asuransi', 'BPJS Kesehatan'])
                 ->where(function ($q) {
                     $q->whereDoesntHave('cs')
-                      ->orWhereHas('cs', function ($q2) {
-                          $q2->where('done', false);
-                      });
+                       ->orWhereHas('cs', function ($q2) {
+                           $q2->where('done', false);
+                       });
                 });
         }
 

@@ -122,7 +122,15 @@
         <div class="field"><label>Tanggal Operasi — Pilihan 1</label><input type="date" name="tanggalPilihan1"></div>
         <div class="field"><label>Tanggal Operasi — Pilihan 2</label><input type="date" name="tanggalPilihan2"></div>
         <div class="field"><label>Jam Operasi</label><input type="time" name="jamOperasi"></div>
-        <div class="field"><label>Estimasi Lama Operasi</label><input name="estimasiLamaOperasi" placeholder="mis. 2 jam"></div>
+        <div class="field">
+          <label class="req">Estimasi Lama Operasi</label>
+          <div style="display:flex; gap:6px; align-items:center;">
+            <input type="number" name="estimasiLamaOperasiJam" min="0" max="24" required placeholder="0" class="form-control" style="width:70px; display:inline-block;">
+            <span style="font-size:13px; color:var(--slate-600);">Jam</span>
+            <input type="number" name="estimasiLamaOperasiMenit" min="0" max="59" required placeholder="0" class="form-control" style="width:70px; display:inline-block;">
+            <span style="font-size:13px; color:var(--slate-600);">Menit</span>
+          </div>
+        </div>
       </div>
 
       <h4>G. Lokasi Tindakan (wajib)</h4>
@@ -179,7 +187,10 @@
 
       <h4>J. Estimasi Rawat Inap</h4>
       <div class="form-grid">
-        <div class="field"><label>Estimasi Rawat Inap <span class="hint">(satuan hari)</span></label><input name="estimasiRawatInap" placeholder="mis. 3 - 4 hari"></div>
+        <div class="field">
+          <label class="req">Estimasi Rawat Inap (Hari)</label>
+          <input type="number" min="0" max="365" name="estimasiRawatInap" required placeholder="mis. 3" class="form-control">
+        </div>
       </div>
 
       <h4>K. Penjamin (wajib)</h4>
@@ -188,7 +199,8 @@
           <label class="req">Penjamin</label>
           <select name="penjamin" required id="penjaminSel">
             <option value="Umum">Umum</option>
-            <option value="Asuransi">Asuransi</option>
+            <option value="BPJS Kesehatan">BPJS Kesehatan</option>
+            <option value="Asuransi">Asuransi Swasta / Lainnya</option>
           </select>
         </div>
         <div class="field" id="guarantorWrap" style="display:none;">

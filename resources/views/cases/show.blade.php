@@ -61,7 +61,7 @@
         $statusMap['Nurse'] = 'done';
     }
 
-    $vaActive = ($case->penjamin === 'Asuransi');
+    $vaActive = ($case->penjamin === 'Asuransi' || $case->penjamin === 'BPJS Kesehatan');
     $adminCotRequired = ($case->lokasi_tindakan === 'COT');
 
     // VA stage
@@ -278,11 +278,11 @@
           <div><dt>Asal Pasien</dt><dd>{{ $case->asal_pasien === 'Lainnya' ? $case->asal_pasien_lainnya : $case->asal_pasien }}</dd></div>
           <div><dt>Ruang Pasca Operasi</dt><dd>{{ $case->ruang_pasca_operasi === 'Lainnya' ? $case->ruang_pasca_operasi_lainnya : $case->ruang_pasca_operasi }}</dd></div>
           <div><dt>Estimasi Rawat Inap</dt><dd>{{ $case->estimasi_rawat_inap ?: '-' }}</dd></div>
-          <div><dt>Penjamin</dt><dd>{{ $case->penjamin }} {{ $case->penjamin === 'Asuransi' ? ' — ' . $case->nama_guarantor : '' }}</dd></div>
+          <div><dt>Penjamin</dt><dd>{{ $case->penjamin }} {{ ($case->penjamin === 'Asuransi' && $case->nama_guarantor) ? ' — ' . $case->nama_guarantor : '' }}</dd></div>
           <div><dt>Kelas Perawatan</dt><dd>{{ $case->kelas_perawatan ?: '-' }}</dd></div>
           <div>
             <dt>Estimasi Biaya Jasa Medis</dt>
-            <dd>
+            <dd id="summaryJasaMedis">
               @if($case->va && $case->va->estimasi_total > 0)
                 Rp {{ number_format($case->va->estimasi_total, 0, ',', '.') }}
               @elseif($case->adru && $case->adru->estimasi)
@@ -290,6 +290,18 @@
               @else
                 -
               @endif
+            </dd>
+          </div>
+          <div>
+            <dt>Estimasi Biaya Alat Khusus</dt>
+            <dd id="summaryAlat">
+              Rp {{ number_format($totalAlat, 0, ',', '.') }}
+            </dd>
+          </div>
+          <div>
+            <dt>Estimasi Biaya BMHP &amp; Obat</dt>
+            <dd id="summaryBmhp">
+              Rp {{ number_format($totalBmhp, 0, ',', '.') }}
             </dd>
           </div>
           <div>
@@ -306,7 +318,7 @@
                 }
                 $grandTotal = $jasaMedis + $totalAlat + $totalBmhp;
               @endphp
-              <strong style="color:var(--primary-600); font-size:16px;">Rp {{ number_format($grandTotal, 0, ',', '.') }}</strong>
+              <strong id="summaryGrandTotal" style="color:var(--primary-600); font-size:16px;">Rp {{ number_format($grandTotal, 0, ',', '.') }}</strong>
             </dd>
           </div>
         </dl>
@@ -724,7 +736,6 @@
                   <textarea id="farmasiNote" style="width:100%;" placeholder="Catatan obat/BMHP...">{{ $case->farmasi->note ?: '' }}</textarea>
                 </div>
                 <div class="btn-row">
-                  <button type="button" class="btn" id="farmasiMulaiBtn">Mulai Review</button>
                   <button type="button" class="btn btn-primary" id="farmasiSaveOnlyBtn">Simpan BMHP (Draft)</button>
                   <button type="button" class="btn btn-primary" id="farmasiSetujuBtn">Setujui &amp; Selesaikan</button>
                   <button type="button" class="btn btn-danger" id="farmasiRevisiBtn">Kembalikan ke Nurse</button>
@@ -736,14 +747,7 @@
 
             <!-- CASE MANAGER ACTION -->
             @if($activeRole === 'CaseManager')
-              @php
-                $stage1Done = $vaActive ? ($case->va && $case->va->stage1_done) : (($case->kasir && $case->kasir->stage1_done) && ($case->adru && $case->adru->stage1_done));
-              @endphp
-              @if(!$stage1Done)
-                <div class="locked-note" style="background:#FEF3C7; color:#B45309; border-color:#FDE68A;">
-                  ⚡ Menunggu penyusunan estimasi awal oleh {{ $vaActive ? 'VA (Asuransi)' : 'Kasir & ADRU COT (Umum)' }} sebelum Case Manager dapat melakukan verifikasi.
-                </div>
-              @elseif(!$case->caseManager->done)
+              @if(!$case->caseManager->done)
                 <h4>Persetujuan Case Manager (Verifikator Dokumen)</h4>
 
                 <!-- Display Uploaded Insurance Documents for CM -->
@@ -969,6 +973,41 @@
       "VVIP": "vvip"
     };
 
+    // Live Summary & Grand Total calculation
+    let currentJasaMedis = @json($jasaMedis);
+
+    function updateSummaryPanel() {
+      let totalBmhp = 0;
+      if (typeof farmasiBmhpList !== 'undefined') {
+        farmasiBmhpList.forEach(item => {
+          totalBmhp += (Number(item.qty) || 0) * (Number(item.harga) || 0);
+        });
+      } else {
+        totalBmhp = @json($totalBmhp);
+      }
+
+      let totalAlat = 0;
+      if (typeof adminAlatList !== 'undefined') {
+        adminAlatList.forEach(item => {
+          totalAlat += Number(item.harga) || 0;
+        });
+      } else {
+        totalAlat = @json($totalAlat);
+      }
+
+      const elBmhp = document.getElementById("summaryBmhp");
+      if (elBmhp) elBmhp.textContent = rupiah(totalBmhp);
+
+      const elAlat = document.getElementById("summaryAlat");
+      if (elAlat) elAlat.textContent = rupiah(totalAlat);
+
+      const grandTotal = currentJasaMedis + totalAlat + totalBmhp;
+      const elGrandTotal = document.getElementById("summaryGrandTotal");
+      if (elGrandTotal) {
+        elGrandTotal.textContent = rupiah(grandTotal);
+      }
+    }
+
     // Initialize VA Jasa Medis Estimasi form
     function initVaEstimasi() {
       const golSelect = document.getElementById("vaGolongan");
@@ -987,9 +1026,18 @@
               <span class="hint">Estimasi manual untuk golongan non-standar:</span>
               <div class="field" style="margin-top:8px;">
                 <label>Total Estimasi (Rp)</label>
-                <input id="vaTotalManual" class="form-control" type="number" style="width:100%; text-align:right;">
+                <input id="vaTotalManual" class="form-control" type="number" style="width:100%; text-align:right;" value="${currentJasaMedis || ''}">
               </div>
             </div>`;
+          const manualInput = document.getElementById("vaTotalManual");
+          if (manualInput) {
+            manualInput.addEventListener("input", function() {
+              currentJasaMedis = Number(manualInput.value) || 0;
+              const elJasa = document.getElementById("summaryJasaMedis");
+              if (elJasa) elJasa.textContent = rupiah(currentJasaMedis);
+              updateSummaryPanel();
+            });
+          }
           return;
         }
 
@@ -1022,8 +1070,18 @@
             let t = 0;
             box.querySelectorAll(".vaKomp").forEach(x => t += (Number(x.value) || 0));
             document.getElementById("vaTotalCell").textContent = rupiah(t);
+            currentJasaMedis = t;
+            const elJasa = document.getElementById("summaryJasaMedis");
+            if (elJasa) elJasa.textContent = rupiah(t);
+            updateSummaryPanel();
           });
         });
+
+        // Update summary on load
+        currentJasaMedis = total;
+        const elJasa = document.getElementById("summaryJasaMedis");
+        if (elJasa) elJasa.textContent = rupiah(total);
+        updateSummaryPanel();
       }
 
       golSelect.addEventListener("change", render);
@@ -1542,6 +1600,7 @@
       farmasiBmhpList.forEach(item => grandTotal += (item.qty * item.harga));
       const el = document.getElementById("farmasiGrandTotal");
       if (el) el.textContent = "Total: " + rupiah(grandTotal);
+      updateSummaryPanel();
     }
 
     const farmasiAddBtn = document.getElementById("farmasiAddBtn");
@@ -1646,6 +1705,7 @@
       adminAlatList.forEach(item => grandTotal += item.harga);
       const el = document.getElementById("adminAlatGrandTotal");
       if (el) el.textContent = "Total: " + rupiah(grandTotal);
+      updateSummaryPanel();
     }
 
     const adminAddAlatBtn = document.getElementById("adminAddAlatBtn");

@@ -784,8 +784,8 @@
         if (data.success) {
           toast(data.message, "success");
           setTimeout(() => {
-            window.location.href = `/cases/${data.id}`;
-          }, 1500);
+            window.location.href = `/cases?queue=mine`;
+          }, 800);
         } else {
           toast(data.message, "error");
         }
@@ -832,20 +832,20 @@
             if (submitData.success) {
               toast("Kasus berhasil diajukan", "success");
               setTimeout(() => {
-                window.location.href = `/cases/${data.id}`;
-              }, 1500);
+                window.location.href = `/cases?queue=mine`;
+              }, 800);
             } else {
               toast("Kasus disimpan sebagai draft, tetapi gagal diajukan: " + submitData.message, "error");
               setTimeout(() => {
-                window.location.href = `/cases/${data.id}`;
-              }, 1500);
+                window.location.href = `/cases?queue=mine`;
+              }, 800);
             }
           })
           .catch(err => {
             toast("Kasus disimpan sebagai draft, tetapi gagal diajukan karena kesalahan sistem", "error");
             setTimeout(() => {
-              window.location.href = `/cases/${data.id}`;
-            }, 1500);
+              window.location.href = `/cases?queue=mine`;
+            }, 800);
           });
         } else {
           toast(data.message, "error");

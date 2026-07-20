@@ -29,17 +29,17 @@
       $activeRole  = session('role', $currentUser ? $currentUser->role : 'Viewer');
       $isViewer    = ($activeRole === 'Viewer');
 
-      $rolesList = [
-        ['id' => 'Nurse',       'label' => 'Nurse (Entry Point)'],
-        ['id' => 'VA',          'label' => 'VA (Asuransi)'],
-        ['id' => 'Kasir',       'label' => 'Kasir (Umum)'],
-        ['id' => 'ADRUCOT',     'label' => 'ADRU COT (Umum)'],
-        ['id' => 'Farmasi',     'label' => 'Farmasi'],
-        ['id' => 'AdminCOT',    'label' => 'Admin COT'],
-        ['id' => 'CaseManager', 'label' => 'Case Manager'],
-        ['id' => 'CS',          'label' => 'Customer Service'],
-        ['id' => 'Viewer',      'label' => 'Viewer (Hanya Lihat)'],
-      ];
+      // Fetch dynamic role configurations from database
+      $rolePerms = \App\Models\RolePermission::orderBy('id')->get();
+      
+      // Build rolesList from database
+      $rolesList = $rolePerms->map(function($rp) {
+          return ['id' => $rp->role_id, 'label' => $rp->label];
+      })->toArray();
+
+      $activePermission = $rolePerms->where('role_id', $activeRole)->first();
+      $allowedMenus = $activePermission ? ($activePermission->menus ?: []) : [];
+      $activeRoleLabel = $activePermission ? $activePermission->label : $activeRole;
 
       // Queue count per active role
       $queueCount = 0;
@@ -78,19 +78,28 @@
         {{-- Navigation --}}
         <nav id="navList">
           {{-- Dashboard — semua user --}}
-          <a href="{{ route('dashboard') }}" class="nav-item {{ Route::is('dashboard') ? 'active' : '' }}">
-            <span>◆</span><span class="sidebar-label">Dashboard</span>
-          </a>
+          @if(in_array('dashboard', $allowedMenus))
+            <a href="{{ route('dashboard') }}" class="nav-item {{ Route::is('dashboard') ? 'active' : '' }}">
+              <span>◆</span><span class="sidebar-label">Dashboard</span>
+            </a>
+          @endif
+
+          {{-- Jadwal Operasi — semua user --}}
+          @if(in_array('monitoring', $allowedMenus))
+            <a href="{{ route('schedule.index') }}" class="nav-item {{ Route::is('schedule.index') ? 'active' : '' }}">
+              <span>📅</span><span class="sidebar-label">Jadwal Operasi</span>
+            </a>
+          @endif
 
           {{-- Buat Case Baru — semua user kecuali Viewer --}}
-          @if(!$isViewer)
+          @if(in_array('newcase', $allowedMenus))
             <a href="{{ route('cases.create') }}" class="nav-item {{ Route::is('cases.create') ? 'active' : '' }}">
               <span>＋</span><span class="sidebar-label">Buat Case Baru</span>
             </a>
           @endif
 
           {{-- Antrian Saya — semua user kecuali Viewer --}}
-          @if(!$isViewer)
+          @if(in_array('queue', $allowedMenus))
             <a href="{{ route('cases.index') }}?queue=mine" class="nav-item {{ request()->query('queue') === 'mine' ? 'active' : '' }}">
               <span>➜</span><span class="sidebar-label">Antrian Saya</span>
               @if($queueCount > 0)
@@ -104,10 +113,46 @@
             <span>≡</span><span class="sidebar-label">Semua Case</span>
           </a>
 
+          {{-- Estimasi Mandiri --}}
+          @if(in_array('estimasiMandiri', $allowedMenus))
+            <a href="{{ route('estimasi.mandiri') }}" class="nav-item {{ Route::is('estimasi.mandiri') ? 'active' : '' }}">
+              <span>🧮</span><span class="sidebar-label">Estimasi Mandiri</span>
+            </a>
+          @endif
+
+          {{-- Mapping Guarantor --}}
+          @if(in_array('guarantorMapping', $allowedMenus))
+            <a href="{{ route('guarantor.mapping') }}" class="nav-item {{ Route::is('guarantor.mapping') ? 'active' : '' }}">
+              <span>🏷️</span><span class="sidebar-label">Mapping Guarantor</span>
+            </a>
+          @endif
+
+          {{-- History Estimasi --}}
+          @if(in_array('estimasiHistory', $allowedMenus))
+            <a href="{{ route('estimasi.history') }}" class="nav-item {{ Route::is('estimasi.history') ? 'active' : '' }}">
+              <span>🕘</span><span class="sidebar-label">History Estimasi</span>
+            </a>
+          @endif
+
+          {{-- Manajemen Role --}}
+          @if(in_array('roleManagement', $allowedMenus))
+            <a href="{{ route('role.management') }}" class="nav-item {{ Route::is('role.management') ? 'active' : '' }}">
+              <span>🛡️</span><span class="sidebar-label">Manajemen Role</span>
+            </a>
+          @endif
+
+          {{-- Penafian (Disclaimer) --}}
+          @if(in_array('roles', $allowedMenus))
+            <a href="{{ route('disclaimer') }}" class="nav-item {{ Route::is('disclaimer') ? 'active' : '' }}">
+              <span>⚠️</span><span class="sidebar-label">Penafian</span>
+            </a>
+          @endif
+
           {{-- User & Doctor Management — SuperAdmin & Administrator --}}
           @if($currentUser && in_array($currentUser->role, ['SuperAdmin','Administrator']))
+            <div style="margin: 10px 14px 4px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.30);">Administrasi</div>
             <a href="{{ route('admin.users') }}" class="nav-item {{ Route::is('admin.users') ? 'active' : '' }}">
-              <span>◆</span><span class="sidebar-label">User Management</span>
+              <span>👥</span><span class="sidebar-label">User Management</span>
             </a>
             <a href="{{ route('admin.doctors') }}" class="nav-item {{ Route::is('admin.doctors') ? 'active' : '' }}">
               <span>🩺</span><span class="sidebar-label">Dokter Management</span>
@@ -117,7 +162,7 @@
             </a>
           @endif
 
-          {{-- Role & Status Reference — semua user --}}
+          {{-- Role & Status Reference --}}
           <a href="{{ route('roles.reference') }}" class="nav-item {{ Route::is('roles.reference') ? 'active' : '' }}">
             <span>⚙</span><span class="sidebar-label">Role & Status</span>
           </a>
@@ -129,7 +174,7 @@
             <div class="sidebar-foot-text" style="margin-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
               <div style="font-size:10px; color:rgba(255,255,255,0.45); margin-bottom:2px;">Logged in as</div>
               <div style="font-weight:700; font-size:12.5px; color:var(--white);">{{ $currentUser->name }}</div>
-              <div style="font-size:10px; color:rgba(255,255,255,0.50);">{{ $currentUser->username }} &middot; {{ $currentUser->role }}</div>
+              <div style="font-size:10px; color:rgba(255,255,255,0.50);">{{ $currentUser->username }} &middot; {{ $activeRoleLabel }}</div>
             </div>
             <div class="sidebar-foot-text">
               <form action="{{ route('logout') }}" method="POST">

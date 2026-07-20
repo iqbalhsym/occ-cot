@@ -107,7 +107,7 @@ class LoginController extends Controller
         }
 
         // Log the user in
-        Auth::login($user, true);
+        Auth::login($user);
 
         // Store active role in session
         session(['role' => $user->role]);

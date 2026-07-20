@@ -47,6 +47,9 @@ Route::middleware(['auth'])->group(function () {
     // Estimation PDF Document View
     Route::get('/cases/{id}/download-estimasi', [CaseController::class, 'downloadEstimasi'])->name('cases.download-estimasi');
 
+    // Schedule Route
+    Route::get('/schedule', [\App\Http\Controllers\ScheduleController::class, 'index'])->name('schedule.index');
+
     // Master Data APIs
     Route::get('/api/patients/{rm}', [PasienController::class, 'lookup'])->name('api.patients.lookup');
     Route::get('/api/master-data', [TindakanController::class, 'getMasterData'])->name('api.master-data');
@@ -56,6 +59,23 @@ Route::middleware(['auth'])->group(function () {
         session(['role' => $request->role]);
         return response()->json(['success' => true]);
     });
+
+    // Prototype Sync Routes
+    Route::get('/estimasi-mandiri', [CaseController::class, 'estimasiMandiri'])->name('estimasi.mandiri');
+    Route::post('/api/estimasi-history', [CaseController::class, 'saveEstimasiHistory']);
+    Route::get('/estimasi-history', [CaseController::class, 'estimasiHistory'])->name('estimasi.history');
+    Route::delete('/api/estimasi-history/{id}', [CaseController::class, 'deleteEstimasiHistory']);
+    Route::post('/api/estimasi-history/clear', [CaseController::class, 'clearEstimasiHistory']);
+
+    Route::get('/guarantor-mapping', [CaseController::class, 'guarantorMapping'])->name('guarantor.mapping');
+    Route::post('/api/guarantor-mapping', [CaseController::class, 'saveGuarantorMapping']);
+
+    Route::get('/role-management', [CaseController::class, 'roleManagement'])->name('role.management');
+    Route::post('/api/role-permissions', [CaseController::class, 'saveRolePermissions']);
+    Route::post('/api/role-permissions/add-role', [CaseController::class, 'addRole']);
+
+    Route::get('/disclaimer', [CaseController::class, 'disclaimer'])->name('disclaimer');
+
 
     // Admin & SuperAdmin only Routes
     Route::middleware(['role:SuperAdmin,Administrator'])->group(function () {

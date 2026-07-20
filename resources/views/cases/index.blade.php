@@ -239,7 +239,9 @@
   @endphp
   <div class="filter-nav-tabs">
     <a href="{{ $filterBase }}status=All" class="filter-tab {{ $currentStatus === 'All' ? 'active' : '' }}">Semua</a>
-    <a href="{{ $filterBase }}status=Draft" class="filter-tab {{ $currentStatus === 'Draft' ? 'active' : '' }}">📝 Draft</a>
+    @if($activeRole === 'Nurse')
+      <a href="{{ $filterBase }}status=Draft" class="filter-tab {{ $currentStatus === 'Draft' ? 'active' : '' }}">📝 Draft</a>
+    @endif
     <a href="{{ $filterBase }}status=Submitted" class="filter-tab {{ $currentStatus === 'Submitted' ? 'active' : '' }}">📤 Diajukan</a>
     <a href="{{ $filterBase }}status=InProgress" class="filter-tab {{ $currentStatus === 'InProgress' ? 'active' : '' }}">⚙️ Dalam Proses</a>
     <a href="{{ $filterBase }}status=Returned" class="filter-tab {{ $currentStatus === 'Returned' ? 'active' : '' }}">↩️ Revisi</a>
@@ -383,8 +385,8 @@
           // Show brief success then reload
           const card = btn.closest('.case-card');
           card.style.opacity = '0.5';
-          card.style.transition = 'opacity 0.3s';
-          setTimeout(() => window.location.reload(), 500);
+          card.style.transition = 'opacity 0.1s';
+          setTimeout(() => window.location.reload(), 100);
         } else {
           alert('Gagal: ' + (data.message || 'Terjadi kesalahan'));
           btn.disabled = false;
@@ -420,7 +422,7 @@
         if (data.success) {
           const card = btn.closest('.case-card');
           card.style.opacity = '0.5';
-          setTimeout(() => window.location.reload(), 500);
+          setTimeout(() => window.location.reload(), 100);
         } else {
           alert('Gagal: ' + (data.message || 'Terjadi kesalahan'));
           btn.disabled = false;

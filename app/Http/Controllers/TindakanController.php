@@ -29,7 +29,7 @@ class TindakanController extends Controller
         $alat = file_exists($alatPath) ? array_column(json_decode(file_get_contents($alatPath), true), 'nama') : [];
 
         // Let's parse the master lists directly from the original HTML to make sure they are 100% accurate
-        $htmlPath = database_path('seeders/Operation_Command_Center_COT_RSUI_v2.html');
+        $htmlPath = database_path('seeders/Operation_Command_Center_COT_RSUI_v7620.html');
         if (file_exists($htmlPath)) {
             $html = file_get_contents($htmlPath);
             preg_match('/const COT_DB\s*=\s*(\{.*?\});/s', $html, $matches);
@@ -96,7 +96,7 @@ class TindakanController extends Controller
         $hargaUmum = null;
         $hargaBpjs = null;
 
-        $htmlPath = database_path('seeders/Operation_Command_Center_COT_RSUI_v2.html');
+        $htmlPath = database_path('seeders/Operation_Command_Center_COT_RSUI_v7620.html');
         if (file_exists($htmlPath)) {
             $html = file_get_contents($htmlPath);
             preg_match('/const COT_DB\s*=\s*(\{.*?\});/s', $html, $matches);

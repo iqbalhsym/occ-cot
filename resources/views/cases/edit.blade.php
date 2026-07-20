@@ -763,8 +763,8 @@
         if (data.success) {
           toast(data.message, "success");
           setTimeout(() => {
-            window.location.href = `/cases/${data.id}`;
-          }, 1500);
+            window.location.href = `/cases?queue=mine`;
+          }, 800);
         } else {
           toast(data.message, "error");
         }

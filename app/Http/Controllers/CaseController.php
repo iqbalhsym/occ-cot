@@ -9,6 +9,9 @@ use App\Models\CaseTindakan;
 use App\Models\CaseAlat;
 use App\Models\CaseTambahanBmhp;
 use App\Models\Pasien;
+use App\Models\GuarantorMapping;
+use App\Models\EstimasiHistory;
+use App\Models\RolePermission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -89,9 +92,10 @@ class CaseController extends Controller
 
     public function index(Request $request)
     {
+        $activeRole = session('role', Auth::user()->role);
+
         // Apply Antrian Saya (My Queue) filter directly on query if requested
         if ($request->query('queue') === 'mine') {
-            $activeRole = session('role', 'Nurse');
             if ($activeRole !== 'Viewer') {
                 $query = OperationCase::getQueueQueryForRole($activeRole);
             } else {
@@ -99,6 +103,10 @@ class CaseController extends Controller
             }
         } else {
             $query = OperationCase::query();
+            // If user's active role is not Nurse, exclude draft cases
+            if ($activeRole !== 'Nurse') {
+                $query->where('status', '!=', 'Draft');
+            }
         }
 
         // Eager load relations
@@ -288,7 +296,17 @@ class CaseController extends Controller
     public function show($id)
     {
         $case = OperationCase::with(['dpjp', 'operators', 'tindakan', 'alat.masterAlat', 'tambahanBmhp', 'audit', 'va', 'kasir', 'adru', 'farmasi', 'adminCot', 'caseManager', 'cs'])->findOrFail($id);
-        return view('cases.show', compact('case'));
+        
+        $activeRole = session('role', Auth::user()->role);
+        if ($activeRole !== 'Nurse' && $case->status === 'Draft') {
+            abort(403, 'Akses ditolak. Pengajuan masih berstatus Draft.');
+        }
+
+        $mappings = \App\Models\GuarantorMapping::all();
+        $db = $this->getParsedDatabase();
+        $masterTarifDb = $db['masterTarifDb'] ?: [];
+
+        return view('cases.show', compact('case', 'mappings', 'masterTarifDb'));
     }
 
     public function edit($id)
@@ -299,6 +317,10 @@ class CaseController extends Controller
         $case = OperationCase::with(['dpjp', 'operators', 'tindakan', 'alat', 'tambahanBmhp'])->findOrFail($id);
         
         $activeRole = session('role', Auth::user()->role);
+        if ($activeRole !== 'Nurse' && $case->status === 'Draft') {
+            abort(403, 'Akses ditolak. Pengajuan masih berstatus Draft.');
+        }
+        
         if ($activeRole === 'Nurse' && !in_array($case->status, ['Draft', 'Returned'])) {
             abort(403, 'Nurse tidak diperbolehkan mengedit kasus yang sudah dikirim/diajukan.');
         }
@@ -314,6 +336,10 @@ class CaseController extends Controller
         $c = OperationCase::findOrFail($id);
 
         $activeRole = session('role', Auth::user()->role);
+        if ($activeRole !== 'Nurse' && $c->status === 'Draft') {
+            return response()->json(['success' => false, 'message' => 'Akses ditolak. Pengajuan masih berstatus Draft.'], 403);
+        }
+
         if ($activeRole === 'Nurse' && !in_array($c->status, ['Draft', 'Returned'])) {
             return response()->json(['success' => false, 'message' => 'Nurse tidak diperbolehkan memperbarui kasus yang sudah dikirim/diajukan.'], 403);
         }
@@ -438,7 +464,7 @@ class CaseController extends Controller
         $c->addAudit("Submit pengajuan", "Case ID dibuat, sistem broadcast ke unit terkait.", "Nurse");
 
         // Populate default BMHP package items from seeder database
-        $htmlPath = database_path('seeders/Operation_Command_Center_COT_RSUI_v2.html');
+        $htmlPath = database_path('seeders/Operation_Command_Center_COT_RSUI_v7620.html');
         if (file_exists($htmlPath)) {
             $html = file_get_contents($htmlPath);
             preg_match('/const COT_DB\s*=\s*(\{.*?\});/s', $html, $matches);
@@ -1153,5 +1179,163 @@ class CaseController extends Controller
 </html>
 HTML;
         return response($htmlContent);
+    }
+
+    private function getParsedDatabase()
+    {
+        $htmlPath = database_path('seeders/Operation_Command_Center_COT_RSUI_v7620.html');
+        $data = [
+            'cotDb' => [],
+            'masterTarifDb' => [],
+            'paketBmhpDb' => [],
+            'nonpaketBmhpDb' => []
+        ];
+
+        if (file_exists($htmlPath)) {
+            $html = file_get_contents($htmlPath);
+
+            if (preg_match('/const COT_DB\s*=\s*(\{.*?\});/s', $html, $matches)) {
+                $data['cotDb'] = json_decode($matches[1], true) ?: [];
+            }
+
+            if (preg_match('/const MASTER_TARIF_DB\s*=\s*(\{.*?\});/s', $html, $matches)) {
+                $data['masterTarifDb'] = json_decode($matches[1], true) ?: [];
+            }
+
+            if (preg_match('/const PAKET_BMHP_DB\s*=\s*(\[.*?\]);/s', $html, $matches)) {
+                $data['paketBmhpDb'] = json_decode($matches[1], true) ?: [];
+            }
+
+            if (preg_match('/const NONPAKET_BMHP_DB\s*=\s*(\[.*?\]);/s', $html, $matches)) {
+                $data['nonpaketBmhpDb'] = json_decode($matches[1], true) ?: [];
+            }
+        }
+
+        return $data;
+    }
+
+    public function estimasiMandiri()
+    {
+        $db = $this->getParsedDatabase();
+        $mappings = \App\Models\GuarantorMapping::all();
+        return view('estimasi.mandiri', compact('db', 'mappings'));
+    }
+
+    public function saveEstimasiHistory(Request $request)
+    {
+        $validated = $request->validate([
+            'rm' => 'nullable|string',
+            'nama' => 'nullable|string',
+            'tindakan' => 'nullable|string',
+            'penjamin' => 'nullable|string',
+            'guarantor' => 'nullable|string',
+            'golongan' => 'nullable|string',
+            'kelas' => 'nullable|string',
+            'total_estimasi' => 'required|numeric',
+            'rincian' => 'nullable|array'
+        ]);
+
+        $history = EstimasiHistory::create($validated);
+        return response()->json(['success' => true, 'id' => $history->id]);
+    }
+
+    public function estimasiHistory()
+    {
+        $history = EstimasiHistory::latest()->get();
+        return view('estimasi.history', compact('history'));
+    }
+
+    public function deleteEstimasiHistory($id)
+    {
+        $history = EstimasiHistory::findOrFail($id);
+        $history->delete();
+        return response()->json(['success' => true]);
+    }
+
+    public function clearEstimasiHistory()
+    {
+        EstimasiHistory::truncate();
+        return response()->json(['success' => true]);
+    }
+
+    public function guarantorMapping()
+    {
+        $mappings = GuarantorMapping::orderBy('id')->get();
+        $db = $this->getParsedDatabase();
+        $tarifDb = $db['masterTarifDb'] ?: [];
+        return view('estimasi.guarantor', compact('mappings', 'tarifDb'));
+    }
+
+    public function saveGuarantorMapping(Request $request)
+    {
+        $mappings = $request->input('mappings', []);
+
+        DB::beginTransaction();
+        try {
+            GuarantorMapping::truncate();
+            foreach ($mappings as $m) {
+                if (empty($m['pola'])) continue;
+                GuarantorMapping::create([
+                    'pola' => $m['pola'],
+                    'kelompok_tarif' => $m['kelompok_tarif'] ?? '2026',
+                    'cob' => filter_var($m['cob'] ?? false, FILTER_VALIDATE_BOOLEAN)
+                ]);
+            }
+            DB::commit();
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function roleManagement()
+    {
+        $permissions = RolePermission::orderBy('id')->get();
+        return view('admin.role_management', compact('permissions'));
+    }
+
+    public function saveRolePermissions(Request $request)
+    {
+        $perms = $request->input('permissions', []);
+
+        DB::beginTransaction();
+        try {
+            foreach ($perms as $roleId => $data) {
+                $role = RolePermission::where('role_id', $roleId)->first();
+                if ($role) {
+                    $role->update([
+                        'label' => $data['label'] ?? $role->label,
+                        'menus' => $data['menus'] ?? []
+                    ]);
+                }
+            }
+            DB::commit();
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function addRole(Request $request)
+    {
+        $request->validate([
+            'role_id' => 'required|string|unique:role_permissions,role_id',
+            'label' => 'required|string',
+        ]);
+
+        $role = RolePermission::create([
+            'role_id' => $request->role_id,
+            'label' => $request->label,
+            'menus' => ['dashboard', 'monitoring', 'roles']
+        ]);
+
+        return response()->json(['success' => true]);
+    }
+
+    public function disclaimer()
+    {
+        return view('dashboard.disclaimer');
     }
 }

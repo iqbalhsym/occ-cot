@@ -17,6 +17,7 @@ Route::get('/refresh-captcha', [LoginController::class, 'refreshCaptcha'])->name
 
 // Authenticated Routes
 Route::middleware(['auth'])->group(function () {
+    Route::get('/schedule', [CaseController::class, 'schedule'])->name('schedule.index');
     Route::get('/', function () {
         return redirect()->route('dashboard');
     });
@@ -34,6 +35,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/cases/{id}', [CaseController::class, 'update'])->name('cases.update');
     Route::post('/cases/{id}/submit', [CaseController::class, 'submit'])->name('cases.submit');
     Route::post('/cases/{id}/cancel', [CaseController::class, 'cancel'])->name('cases.cancel');
+    Route::post('/cases/{id}/upload-attachment', [CaseController::class, 'uploadCaseAttachment'])->name('cases.upload-attachment');
+    Route::post('/cases/{id}/delete-attachment', [CaseController::class, 'deleteCaseAttachment'])->name('cases.delete-attachment');
 
     // Workflow Actions
     Route::post('/cases/{id}/va', [CaseController::class, 'vaAction'])->name('cases.va');
@@ -44,11 +47,27 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/cases/{id}/case-manager', [CaseController::class, 'caseManagerAction'])->name('cases.case-manager');
     Route::post('/cases/{id}/cs', [CaseController::class, 'csAction'])->name('cases.cs');
 
+    // Sync & Upload APIs
+    Route::post('/api/cases/sync-all', [CaseController::class, 'syncAllCases']);
+    Route::post('/api/patients/save', [CaseController::class, 'savePatients']);
+    Route::post('/api/guarantor-mapping/save', [CaseController::class, 'saveGuarantorMapping']);
+    Route::post('/api/role-permissions/save', [CaseController::class, 'saveRolePermissions']);
+    Route::post('/api/slot-config/save', [CaseController::class, 'saveSetting'])->defaults('key', 'slot_config');
+    Route::post('/api/resource-master/save', [CaseController::class, 'saveSetting'])->defaults('key', 'resource_master');
+    Route::post('/api/tot-minutes/save', [CaseController::class, 'saveSetting'])->defaults('key', 'tot_minutes');
+    Route::post('/api/estimasi-template/save', [CaseController::class, 'saveSetting'])->defaults('key', 'estimasi_templates');
+    Route::post('/api/alat-history/save', [CaseController::class, 'saveSetting'])->defaults('key', 'alat_history');
+    Route::post('/api/attachments/save', [CaseController::class, 'saveSetting'])->defaults('key', 'attachments');
+    Route::post('/api/attachments/upload', [CaseController::class, 'uploadAttachment']);
+
     // Estimation PDF Document View
     Route::get('/cases/{id}/download-estimasi', [CaseController::class, 'downloadEstimasi'])->name('cases.download-estimasi');
 
-    // Schedule Route
-    Route::get('/schedule', [\App\Http\Controllers\ScheduleController::class, 'index'])->name('schedule.index');
+    // Schedule Routes
+    Route::post('/schedule/drag-reschedule/{id}', [CaseController::class, 'dragReschedule'])->name('schedule.drag-reschedule');
+    Route::post('/schedule/settings/save', [CaseController::class, 'saveScheduleSettings'])->name('schedule.settings.save');
+    Route::post('/schedule/tindakan-selesai/{id}', [CaseController::class, 'markTindakanSelesai'])->name('schedule.tindakan-selesai');
+    Route::post('/schedule/batal-tindakan/{id}', [CaseController::class, 'cancelTindakan'])->name('schedule.batal-tindakan');
 
     // Master Data APIs
     Route::get('/api/patients/{rm}', [PasienController::class, 'lookup'])->name('api.patients.lookup');
@@ -76,7 +95,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/disclaimer', [CaseController::class, 'disclaimer'])->name('disclaimer');
 
-
     // Admin & SuperAdmin only Routes
     Route::middleware(['role:SuperAdmin,Administrator'])->group(function () {
         Route::get('/users', [UserController::class, 'index'])->name('admin.users');
@@ -93,3 +111,4 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/admin/master/{id}', [MasterDataController::class, 'destroy'])->name('admin.master.destroy');
     });
 });
+

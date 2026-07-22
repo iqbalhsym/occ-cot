@@ -87,7 +87,7 @@
           {{-- Jadwal Operasi — semua user --}}
           @if(in_array('monitoring', $allowedMenus))
             <a href="{{ route('schedule.index') }}" class="nav-item {{ Route::is('schedule.index') ? 'active' : '' }}">
-              <span>📅</span><span class="sidebar-label">Jadwal Operasi</span>
+              <span>📅</span><span class="sidebar-label">Monitoring Penjadwalan COT</span>
             </a>
           @endif
 

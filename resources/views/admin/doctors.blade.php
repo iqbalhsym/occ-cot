@@ -42,6 +42,7 @@
             <th style="width:50px;">#</th>
             <th>Nama Dokter</th>
             <th>Nama Dokter + Gelar</th>
+            <th>No HP</th>
             <th>KSM</th>
             <th>Spesialis</th>
             <th>Konsultan</th>
@@ -57,6 +58,7 @@
               <td style="color:var(--slate-400); font-size:12px;">{{ $doctors->firstItem() + $idx }}</td>
               <td><strong>{{ $d->nama }}</strong></td>
               <td>{{ $d->nama_gelar }}</td>
+              <td><span style="font-size:12.5px; font-family:monospace;">{{ $d->no_hp ?: '-' }}</span></td>
               <td><span style="font-size:12.5px;">{{ $d->ksm ?: '-' }}</span></td>
               <td><span style="font-size:12.5px;">{{ $d->spesialis ?: '-' }}</span></td>
               <td><span style="font-size:12.5px; color:var(--slate-600);">{{ $d->konsultan ?: '-' }}</span></td>
@@ -76,6 +78,7 @@
                       data-id="{{ $d->id }}"
                       data-nama="{{ $d->nama }}"
                       data-nama_gelar="{{ $d->nama_gelar }}"
+                      data-no_hp="{{ $d->no_hp }}"
                       data-ksm="{{ $d->ksm }}"
                       data-spesialis="{{ $d->spesialis }}"
                       data-konsultan="{{ $d->konsultan }}"
@@ -95,7 +98,7 @@
           @endforeach
           @if($doctors->isEmpty())
             <tr class="empty-row">
-              <td colspan="{{ $isAdminOrSuper ? 8 : 7 }}" style="text-align:center; padding:30px;">
+              <td colspan="{{ $isAdminOrSuper ? 9 : 8 }}" style="text-align:center; padding:30px;">
                 Belum ada data dokter terdaftar.
               </td>
             </tr>
@@ -172,6 +175,11 @@
           <label style="font-weight:600; margin-bottom:4px; display:block;">Status</label>
           <input type="text" id="docStatus" class="form-control" placeholder="mis. SPESIALIS GIGI PART TIME" style="width:100%;">
         </div>
+
+        <div class="field" style="margin-bottom:12px;">
+          <label style="font-weight:600; margin-bottom:4px; display:block;">No HP (WhatsApp)</label>
+          <input type="text" id="docNoHp" class="form-control" placeholder="mis. 08123456789" style="width:100%;">
+        </div>
         
         <div class="btn-row" style="margin-top:20px; display:flex; justify-content:flex-end; gap:8px;">
           <button type="button" class="btn" id="closeModalBtn" style="background:var(--slate-100); color:var(--slate-700); border-color:var(--slate-300);">Batal</button>
@@ -201,6 +209,7 @@
     const docSpesialis = document.getElementById("docSpesialis");
     const docKonsultan = document.getElementById("docKonsultan");
     const docStatus = document.getElementById("docStatus");
+    const docNoHp = document.getElementById("docNoHp");
 
     // Open Add Doctor Modal
     const addBtn = document.getElementById("addDoctorBtn");
@@ -235,6 +244,7 @@
         editIdInput.value = this.dataset.id;
         docName.value = this.dataset.nama || '';
         docNameGelar.value = this.dataset.nama_gelar || '';
+        docNoHp.value = this.dataset.no_hp || '';
         docKsm.value = this.dataset.ksm || '';
         docSpesialis.value = this.dataset.spesialis || '';
         docKonsultan.value = this.dataset.konsultan || '';
@@ -254,6 +264,7 @@
       const payload = {
         nama: docName.value,
         nama_gelar: docNameGelar.value,
+        no_hp: docNoHp.value,
         ksm: docKsm.value,
         spesialis: docSpesialis.value,
         konsultan: docKonsultan.value,

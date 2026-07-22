@@ -38,6 +38,7 @@ class DoctorController extends Controller
             'ksm' => 'nullable|string|max:255',
             'konsultan' => 'nullable|string|max:255',
             'status' => 'nullable|string|max:255',
+            'no_hp' => 'nullable|string|max:255',
         ]);
 
         $doc = Doctor::create($request->all());
@@ -58,6 +59,7 @@ class DoctorController extends Controller
             'ksm' => 'nullable|string|max:255',
             'konsultan' => 'nullable|string|max:255',
             'status' => 'nullable|string|max:255',
+            'no_hp' => 'nullable|string|max:255',
         ]);
 
         $doc = Doctor::findOrFail($id);

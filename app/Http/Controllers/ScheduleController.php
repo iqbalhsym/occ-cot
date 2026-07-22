@@ -2,125 +2,215 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CaseAdminCot;
 use App\Models\OperationCase;
+use App\Models\PrototypeSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ScheduleController extends Controller
 {
+    /**
+     * Show the Monitoring Penjadwalan COT page.
+     *
+     * Passes the following to the view (matching the JS shape expected by index.blade.php):
+     *  - $cases          : array of case objects in camelCase JS shape
+     *  - $slotConfigs    : array of slot config objects
+     *  - $resourceMaster : array of resource master objects
+     *  - $totMinutes     : integer (Turn Over Time in minutes)
+     *  - $activeRole     : string (current session role)
+     */
     public function index(Request $request)
     {
-        // Fetch completed cases that finished submission from all roles
-        $cases = OperationCase::where('status', 'Completed')
-            ->where('current_flow', 'Selesai')
-            ->with(['tindakan', 'operators', 'adminCot', 'va', 'kasir', 'adru'])
+        $activeRole = session('role', optional(Auth::user())->role ?? 'Viewer');
+
+        // ── Cases ─────────────────────────────────────────────────────────────
+        // Load ALL cases so the table view (which shows all statuses) can work.
+        // The JS filters further by tab view (tabel shows all, timeline filters by date etc.)
+        $rawCases = OperationCase::with([
+                'adminCot', 'dpjp', 'operators', 'tindakan', 'alat',
+            ])
+            ->whereNotIn('status', ['Draft'])   // exclude bare drafts that haven't been submitted
+            ->orderBy('created_at', 'desc')
             ->get();
 
-        // Map cases to structured schedule details
-        $schedules = $cases->map(function ($c) {
-            $date = null;
-            $time = '-';
-            $room = '-';
-            $isFinalized = false;
+        $cases = $rawCases->map(function ($c) {
+            $ac = $c->adminCot;  // CaseAdminCot model or null
 
-            if ($c->adminCot && $c->adminCot->final_done && $c->adminCot->tanggal_fix) {
-                $date = $c->adminCot->tanggal_fix;
-                $time = $c->adminCot->jam_fix ?: '-';
-                $room = $c->adminCot->kamar_operasi ?: '-';
-                $isFinalized = true;
-            } else {
-                $date = $c->tanggal_pilihan1;
-                $time = $c->jam_operasi ?: '-';
-                $room = $c->lokasi_tindakan ?: '-';
-            }
-
-            // Normalize room name for daily timetable columns
-            $normRoom = strtoupper($room);
-            $mappedRoom = '1';
-            if (strpos($normRoom, '1') !== false) {
-                $mappedRoom = '1';
-            } elseif (strpos($normRoom, '2') !== false) {
-                $mappedRoom = '2';
-            } elseif (strpos($normRoom, '3') !== false) {
-                $mappedRoom = '3';
-            } elseif (strpos($normRoom, '4') !== false) {
-                $mappedRoom = '4';
-            } elseif (strpos($normRoom, '5') !== false) {
-                $mappedRoom = '5';
-            } elseif (strpos($normRoom, '6') !== false) {
-                $mappedRoom = '6';
-            } elseif (strpos($normRoom, 'HYBRID') !== false) {
-                $mappedRoom = 'HYBRID';
-            } elseif (strpos($normRoom, 'COT LT 5') !== false || strpos($normRoom, 'COT LT. 5') !== false) {
-                $mappedRoom = 'COT LT 5';
-            } elseif (strpos($normRoom, 'IGD') !== false) {
-                $mappedRoom = 'IGD';
-            } elseif (strpos($normRoom, 'CATHLAB') !== false || strpos($normRoom, 'CATH') !== false) {
-                $mappedRoom = 'CATHLAB';
-            } elseif (strpos($normRoom, 'ICU') !== false) {
-                $mappedRoom = 'ICU';
-            } else {
-                $mappedRoom = $room;
-            }
-
-            // Join tindakan and operator list
-            $tindakanStr = $c->tindakan->pluck('nama')->implode(', ') ?: '-';
-            $operatorStr = $c->operators->pluck('nama')->implode(', ') ?: '-';
-
-            // Golongan & Kelas
-            $golongan = $c->golongan ?: '-';
-            $kelas = $c->kelas_perawatan ?: '-';
-            $golonganKelas = "Gol. {$golongan} / {$kelas}";
-
-            // Status Administrasi
-            $statusAdmin = '-';
-            if ($c->penjamin === 'BPJS Kesehatan') {
-                $statusAdmin = 'BPJS Kesehatan (Disetujui VA)';
-            } elseif ($c->penjamin === 'Asuransi') {
-                $statusAdmin = 'Asuransi ' . ($c->nama_guarantor ? '— ' . $c->nama_guarantor : '') . ' (Disetujui VA)';
-            } else {
-                $statusAdmin = 'Umum (Disetujui Kasir)';
-            }
-
-            // Status Tindakan
-            $statusTindakan = $isFinalized ? 'Terjadwal' : 'Selesai Pengajuan';
-
-            // Additional details for the detail panel
-            $diagnosis = $c->diagnosis ?: '-';
-            $ruangPasca = $c->ruang_pasca_operasi === 'Lainnya' ? $c->ruang_pasca_operasi_lainnya : ($c->ruang_pasca_operasi ?: '-');
-            $estimasiRawat = $c->estimasi_rawat_inap ? $c->estimasi_rawat_inap . ' Hari' : '-';
-            $estimasiBiaya = 0;
-            if ($c->va && $c->va->estimasi_total > 0) {
-                $estimasiBiaya = $c->va->estimasi_total;
-            } elseif ($c->kasir && $c->kasir->total_estimasi > 0) {
-                $estimasiBiaya = $c->kasir->total_estimasi;
+            // Build adminCot shape expected by JS
+            $adminCotJs = null;
+            if ($ac) {
+                $adminCotJs = [
+                    'required'        => (bool) $ac->required,
+                    'prelimDone'      => (bool) $ac->prelim_done,
+                    'finalDone'       => (bool) $ac->final_done,
+                    'tindakanSelesai' => (bool) ($ac->tindakan_selesai ?? false),
+                    'decision'        => $ac->decision,
+                    'decisionNote'    => $ac->decision_note,
+                    'jadwal'          => [
+                        'tanggal' => $ac->tanggal_fix ? $ac->tanggal_fix->format('Y-m-d') : null,
+                        'jam'     => $ac->jam_fix,
+                        'ruang'   => $ac->kamar_operasi,
+                    ],
+                    'alat'            => $c->alat->pluck('nama')->filter()->values()->toArray(),
+                    'estimasiJam'     => $this->parseEstimasiJam($c->estimasi_lama_operasi),
+                ];
             }
 
             return [
-                'id' => $c->id,
-                'tanggal_raw' => $date ? $date->format('Y-m-d') : null,
-                'tanggal_formatted' => $date ? $date->format('d M Y') : '-',
-                'jam' => $time,
-                'ruang' => $room,
-                'mapped_room' => $mappedRoom,
-                'pasien_nama' => $c->nama ?: 'Tanpa Nama',
-                'pasien_rm' => $c->rm ?: '-',
-                'tindakan' => $tindakanStr,
-                'operator' => $operatorStr,
-                'golongan_kelas' => $golonganKelas,
-                'status_administrasi' => $statusAdmin,
-                'status_tindakan' => $statusTindakan,
-                'details' => [
-                    'diagnosis' => $diagnosis,
-                    'ruang_pasca' => $ruangPasca,
-                    'estimasi_rawat' => $estimasiRawat,
-                    'estimasi_biaya' => 'Rp ' . number_format($estimasiBiaya, 0, ',', '.'),
-                    'jenis_operasi' => is_array($c->jenis_operasi) ? implode(', ', $c->jenis_operasi) : ($c->jenis_operasi ?: '-'),
-                    'anestesi' => $c->anestesi === 'Lainnya' ? $c->anestesi_lainnya : ($c->anestesi ?: '-'),
-                    'estimasi_lama' => $c->estimasi_lama_operasi ?: '-'
-                ]
+                'id'                  => $c->id,
+                'nama'                => $c->nama,
+                'rm'                  => $c->rm,
+                'penjamin'            => $c->penjamin,
+                'status'              => $c->status,
+                'golongan'            => $c->golongan,
+                'kelasPerawatan'      => $c->kelas_perawatan,
+                'dokterAnestesi'      => $c->anestesi === 'Lainnya' ? $c->anestesi_lainnya : $c->anestesi,
+                'jenisOperasi'        => is_array($c->jenis_operasi) ? $c->jenis_operasi : [],
+                'dpjpList'            => $c->dpjp->pluck('nama')->filter()->values()->toArray(),
+                'operatorList'        => $c->operators->pluck('nama')->filter()->values()->toArray(),
+                'tindakanList'        => $c->tindakan->pluck('nama')->filter()->values()->toArray(),
+                'estimasiLamaOperasi' => $c->estimasi_lama_operasi,
+                'adminCot'            => $adminCotJs,
             ];
-        });
+        })->values()->toArray();
 
-        return view('schedule.index', compact('schedules'));
+        // ── Slot Configs ──────────────────────────────────────────────────────
+        $slotConfigRaw = PrototypeSetting::find('slot_configs');
+        $slotConfigs   = $slotConfigRaw ? ($slotConfigRaw->value ?? []) : [];
+        if (! is_array($slotConfigs)) {
+            $slotConfigs = [];
+        }
+
+        // ── Resource Master ───────────────────────────────────────────────────
+        $resourceRaw    = PrototypeSetting::find('resource_master');
+        $resourceMaster = $resourceRaw ? ($resourceRaw->value ?? []) : [];
+        if (! is_array($resourceMaster)) {
+            $resourceMaster = [];
+        }
+
+        // ── Turn Over Time ────────────────────────────────────────────────────
+        $totRaw     = PrototypeSetting::find('tot_minutes');
+        $totMinutes = $totRaw ? (int) ($totRaw->value[0] ?? 45) : 45;
+        if ($totMinutes <= 0) {
+            $totMinutes = 45;
+        }
+
+        $doctors = \App\Models\Doctor::orderBy('nama')->get()->toArray();
+
+        return view('schedule.index', compact(
+            'cases',
+            'slotConfigs',
+            'resourceMaster',
+            'totMinutes',
+            'activeRole',
+            'doctors'
+        ));
+    }
+
+    /**
+     * Convert estimasi lama operasi string (e.g. "3 Jam 30 Menit") to decimal hours.
+     */
+    private function parseEstimasiJam(?string $estimasi): float
+    {
+        if (! $estimasi) {
+            return 1.0;
+        }
+        $jam   = 0;
+        $menit = 0;
+        if (preg_match('/(\d+)\s*Jam/i', $estimasi, $m)) {
+            $jam = (int) $m[1];
+        }
+        if (preg_match('/(\d+)\s*Menit/i', $estimasi, $m)) {
+            $menit = (int) $m[1];
+        }
+        return round($jam + ($menit / 60), 2) ?: 1.0;
+    }
+
+    /**
+     * Save schedule settings (slot configs, resource master, TOT) from AJAX.
+     */
+    public function saveSettings(Request $request)
+    {
+        $data = $request->validate([
+            'slot_configs'    => 'nullable|array',
+            'resource_master' => 'nullable|array',
+            'tot_minutes'     => 'nullable|integer|min:0|max:999',
+        ]);
+
+        if (array_key_exists('slot_configs', $data)) {
+            PrototypeSetting::updateOrCreate(
+                ['key' => 'slot_configs'],
+                ['value' => $data['slot_configs'] ?? []]
+            );
+        }
+
+        if (array_key_exists('resource_master', $data)) {
+            PrototypeSetting::updateOrCreate(
+                ['key' => 'resource_master'],
+                ['value' => $data['resource_master'] ?? []]
+            );
+        }
+
+        if (array_key_exists('tot_minutes', $data)) {
+            PrototypeSetting::updateOrCreate(
+                ['key' => 'tot_minutes'],
+                ['value' => [$data['tot_minutes']]]
+            );
+        }
+
+        return response()->json(['ok' => true]);
+    }
+
+    /**
+     * Drag-and-drop reschedule: update adminCot jadwal for a case.
+     */
+    public function dragReschedule(Request $request, string $caseId)
+    {
+        $data = $request->validate([
+            'tanggal' => 'required|date',
+            'jam'     => 'required|string|max:10',
+            'ruang'   => 'required|string|max:50',
+        ]);
+
+        $ac = CaseAdminCot::where('case_id', $caseId)->first();
+        if (! $ac) {
+            return response()->json(['ok' => false, 'message' => 'Admin COT record not found.'], 404);
+        }
+
+        $ac->tanggal_fix    = $data['tanggal'];
+        $ac->jam_fix        = $data['jam'];
+        $ac->kamar_operasi  = $data['ruang'];
+        $ac->save();
+
+        return response()->json(['ok' => true]);
+    }
+
+    /**
+     * Mark a tindakan as completed.
+     */
+    public function markTindakanSelesai(Request $request, string $caseId)
+    {
+        $ac = CaseAdminCot::where('case_id', $caseId)->first();
+        if (! $ac) {
+            return response()->json(['ok' => false, 'message' => 'Admin COT record not found.'], 404);
+        }
+
+        $ac->tindakan_selesai = true;
+        $ac->save();
+
+        return response()->json(['ok' => true]);
+    }
+
+    /**
+     * Cancel a tindakan (set case status to Cancelled).
+     */
+    public function cancelTindakan(Request $request, string $caseId)
+    {
+        $case = OperationCase::findOrFail($caseId);
+        $case->status = 'Cancelled';
+        $case->save();
+
+        return response()->json(['ok' => true]);
     }
 }

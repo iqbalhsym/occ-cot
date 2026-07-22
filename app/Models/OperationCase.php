@@ -24,7 +24,7 @@ class OperationCase extends Model
         'estimasi_rawat_inap',
         'penjamin', 'nama_guarantor', 'kelas_perawatan',
         'golongan', 'spesialisasi_op',
-        'current_flow', 'status', 'catatan',
+        'current_flow', 'status', 'catatan', 'expensive_flag',
     ];
 
     protected $casts = [
@@ -32,6 +32,7 @@ class OperationCase extends Model
         'jenis_operasi' => 'array',
         'tanggal_pilihan1' => 'date',
         'tanggal_pilihan2' => 'date',
+        'expensive_flag' => 'boolean',
     ];
 
     // ─── Relationships ────────────────────────────────────────────────────────
@@ -251,5 +252,53 @@ class OperationCase extends Model
         }
 
         return $query->whereRaw('1 = 0');
+    }
+
+    public function getHakKelasAttribute(): ?string
+    {
+        $data = json_decode($this->raw_data, true);
+        return $data['hakKelas'] ?? $this->kelas_perawatan;
+    }
+
+    public function getRujukanBpjsAttribute(): ?string
+    {
+        $data = json_decode($this->raw_data, true);
+        return $data['rujukanBpjs'] ?? null;
+    }
+
+    public function getPreOpAnestesiAttribute(): ?string
+    {
+        $data = json_decode($this->raw_data, true);
+        return $data['preOpAnestesi'] ?? 'Tidak';
+    }
+
+    public function getPreOpLabAttribute(): ?string
+    {
+        $data = json_decode($this->raw_data, true);
+        return $data['preOpLab'] ?? 'Tidak';
+    }
+
+    public function getPreOpRadAttribute(): ?string
+    {
+        $data = json_decode($this->raw_data, true);
+        return $data['preOpRad'] ?? 'Tidak';
+    }
+
+    public function getPreOpKonsulAttribute(): ?string
+    {
+        $data = json_decode($this->raw_data, true);
+        return $data['preOpKonsul'] ?? 'Tidak';
+    }
+
+    public function getPreOpKonsulDetailAttribute(): ?string
+    {
+        $data = json_decode($this->raw_data, true);
+        return $data['preOpKonsulDetail'] ?? '';
+    }
+
+    public function getAttachmentsAttribute(): array
+    {
+        $data = json_decode($this->raw_data, true);
+        return $data['attachments'] ?? [];
     }
 }

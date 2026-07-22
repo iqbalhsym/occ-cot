@@ -262,13 +262,20 @@
       <div class="case-card status-{{ $c->status }}">
         <div class="case-card-header">
           <div>
-            <div class="case-id">{{ $c->id }}</div>
+            <div class="case-id">
+              {{ $c->id }}
+              @if($c->expensive_flag)
+                <span class="badge-status st-op-merah" style="background:var(--red-500); color:white; font-size:10px; padding:2px 4px; border-radius:3px; font-weight:700;">🚨 Mahal</span>
+              @endif
+            </div>
             <div class="case-date">{{ $c->created_at->format('d M Y · H:i') }}</div>
           </div>
           <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap; justify-content:flex-end;">
             <span class="badge-status {{ $c->status_badge_class }}">{{ $c->status_label }}</span>
             @if($c->penjamin === 'Asuransi')
               <span class="chip" style="background:#DBEAFE; color:#1E40AF; font-size:10px; padding:2px 7px;">Asuransi</span>
+            @elseif($c->penjamin === 'BPJS')
+              <span class="chip" style="background:#E2F3EA; color:#2E7D5B; font-size:10px; padding:2px 7px;">BPJS (JKN)</span>
             @endif
           </div>
         </div>
@@ -297,6 +304,12 @@
             <span class="lbl">Lokasi / Anestesi</span>
             <span class="val">{{ $c->lokasi_tindakan === 'Lainnya' ? $c->lokasi_tindakan_lainnya : $c->lokasi_tindakan }} · {{ $c->anestesi ?: 'Konfirmasi' }}</span>
           </div>
+          @if($c->penjamin === 'BPJS')
+            <div class="case-info-row" style="grid-column: span 2;">
+              <span class="lbl">Hak Kelas &amp; Rujukan BPJS</span>
+              <span class="val">{{ $c->hak_kelas ?: '-' }} • {{ $c->rujukan_bpjs ?: '-' }}</span>
+            </div>
+          @endif
         </div>
         <div class="case-card-footer">
           <div style="display:flex; flex-direction:column; gap:2px;">

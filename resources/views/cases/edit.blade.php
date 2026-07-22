@@ -19,6 +19,28 @@
             }
         }
     }
+
+    $rawData = json_decode($case->raw_data, true) ?: [];
+    $alatFromRaw = [];
+    if (isset($rawData['adminCot']['alat'])) {
+        foreach ($rawData['adminCot']['alat'] as $a) {
+            $alatFromRaw[] = [
+                'nama' => $a['nama'] ?? '',
+                'flag' => $a['flag'] ?? 'Hijau'
+            ];
+        }
+    }
+    
+    $tambahanFromRaw = [];
+    if (isset($rawData['tambahanBMHP'])) {
+        foreach ($rawData['tambahanBMHP'] as $t) {
+            $tambahanFromRaw[] = [
+                'nama' => $t['jenis'] ?? $t['nama'] ?? '',
+                'qty' => $t['qty'] ?? 1,
+                'flag' => $t['flag'] ?? 'Hijau'
+            ];
+        }
+    }
   @endphp
   <div class="card">
     <h3>Edit Form Penjadwalan Tindakan (Nurse — Edit Draft)</h3>
@@ -28,7 +50,39 @@
       @csrf
       @method('PUT')
 
-      <h4>A. Identitas Pasien</h4>
+      <h4>A. Penjamin (wajib)</h4>
+      <div class="form-grid">
+        <div class="field">
+          <label class="req">Penjamin</label>
+          <select name="penjamin" required id="penjaminSel">
+            <option value="Umum" {{ $case->penjamin === 'Umum' ? 'selected' : '' }}>Umum</option>
+            <option value="BPJS Kesehatan" {{ $case->penjamin === 'BPJS Kesehatan' ? 'selected' : '' }}>BPJS Kesehatan</option>
+            <option value="Asuransi" {{ $case->penjamin === 'Asuransi' ? 'selected' : '' }}>Asuransi Swasta / Lainnya</option>
+          </select>
+        </div>
+        <div class="field" id="guarantorWrap" style="{{ $case->penjamin === 'Asuransi' ? '' : 'display:none;' }}">
+          <label>Nama Guarantor / Asuransi</label>
+          <input name="namaGuarantor" id="guarantorInput" value="{{ $case->nama_guarantor }}">
+        </div>
+        <div class="field" id="hakKelasWrap" style="{{ $case->penjamin === 'BPJS Kesehatan' ? '' : 'display:none;' }}">
+          <label class="req">Hak Kelas BPJS</label>
+          <select name="hakKelas" id="hakKelasSel">
+            <option value="">Pilih Kelas Perawatan…</option>
+            <option value="Kelas 1 (Rajal)" {{ $case->hak_kelas === 'Kelas 1 (Rajal)' ? 'selected' : '' }}>Kelas 1 (Rajal)</option>
+            <option value="Kelas 2 (Rajal)" {{ $case->hak_kelas === 'Kelas 2 (Rajal)' ? 'selected' : '' }}>Kelas 2 (Rajal)</option>
+            <option value="Kelas 3 (Rajal)" {{ $case->hak_kelas === 'Kelas 3 (Rajal)' ? 'selected' : '' }}>Kelas 3 (Rajal)</option>
+            <option value="Kelas 1 (Ranap)" {{ $case->hak_kelas === 'Kelas 1 (Ranap)' ? 'selected' : '' }}>Kelas 1 (Ranap)</option>
+            <option value="Kelas 2 (Ranap)" {{ $case->hak_kelas === 'Kelas 2 (Ranap)' ? 'selected' : '' }}>Kelas 2 (Ranap)</option>
+            <option value="Kelas 3 (Ranap)" {{ $case->hak_kelas === 'Kelas 3 (Ranap)' ? 'selected' : '' }}>Kelas 3 (Ranap)</option>
+          </select>
+        </div>
+        <div class="field" id="rujukanBpjsWrap" style="{{ $case->penjamin === 'BPJS Kesehatan' ? '' : 'display:none;' }}">
+          <label class="req">Rujukan Aktif BPJS</label>
+          <input name="rujukanBpjs" id="rujukanBpjsInput" placeholder="Ketik nomor/detail rujukan aktif" value="{{ $case->rujukan_bpjs }}">
+        </div>
+      </div>
+
+      <h4>B. Identitas Pasien</h4>
       <div class="form-grid">
         <div class="field">
           <label class="req">No. Rekam Medis</label>
@@ -197,22 +251,6 @@
         </div>
       </div>
 
-      <h4>K. Penjamin (wajib)</h4>
-      <div class="form-grid">
-        <div class="field">
-          <label class="req">Penjamin</label>
-          <select name="penjamin" required id="penjaminSel">
-            <option value="Umum" {{ $case->penjamin === 'Umum' ? 'selected' : '' }}>Umum</option>
-            <option value="BPJS Kesehatan" {{ $case->penjamin === 'BPJS Kesehatan' ? 'selected' : '' }}>BPJS Kesehatan</option>
-            <option value="Asuransi" {{ $case->penjamin === 'Asuransi' ? 'selected' : '' }}>Asuransi Swasta / Lainnya</option>
-          </select>
-        </div>
-        <div class="field" id="guarantorWrap" style="{{ $case->penjamin === 'Asuransi' ? '' : 'display:none;' }}">
-          <label>Nama Guarantor / Asuransi</label>
-          <input name="namaGuarantor" id="guarantorInput" value="{{ $case->nama_guarantor }}">
-        </div>
-      </div>
-
       <h4>M. Golongan Tindakan</h4>
       <div class="form-grid">
         <div class="field">
@@ -231,14 +269,75 @@
         <span class="af-empty">Pilih Tindakan berpaket untuk menampilkan paket BMHP.</span>
       </div>
 
-      <h4>O. Alat Khusus</h4>
-      <div class="permission-note" style="margin-bottom:10px;">Alat awal dapat ditarik dari database tindakan. Nurse boleh menambah bila ada data; penambahan utama dilakukan oleh <strong>Admin COT</strong>.</div>
-      <div id="alatEditor"></div>
-      <button type="button" class="btn btn-sm" id="addAlat" style="margin-top:8px;">+ Tambah Alat Khusus</button>
+      <div id="alatKhususWrapper">
+        <h4>O. Alat Khusus</h4>
+        <div class="permission-note" style="margin-bottom:10px;">Alat awal dapat ditarik dari database tindakan. Nurse boleh menambah bila ada data; penambahan utama dilakukan oleh <strong>Admin COT</strong>.</div>
+        <div id="alatEditor"></div>
+        <button type="button" class="btn btn-sm" id="addAlat" style="margin-top:8px; margin-bottom: 20px;">+ Tambah Alat Khusus</button>
+      </div>
 
-      <h4>P. Tambahan di Luar Paket</h4>
-      <div id="tambahanEditor"></div>
-      <button type="button" class="btn btn-sm" id="addTambahan" style="margin-top:8px;">+ Tambah item BMHP/Obat</button>
+      <div id="tambahanWrapper">
+        <h4>P. Tambahan di Luar Paket</h4>
+        <div id="tambahanEditor"></div>
+        <button type="button" class="btn btn-sm" id="addTambahan" style="margin-top:8px; margin-bottom: 20px;">+ Tambah item BMHP/Obat</button>
+      </div>
+
+      <h4>Q. Kebutuhan Pre-Op <span class="hint" style="font-weight:400;">(dikirim sebagai trigger untuk Admin COT)</span></h4>
+      <div style="background:var(--white); border:1px solid var(--slate-200); border-radius:8px; padding:16px; display:flex; flex-direction:column; gap:8px; margin-bottom: 20px;">
+        
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--slate-100); padding:8px 0;">
+          <span style="font-weight:600; font-size:13.5px; color:var(--slate-700);">Anestesi</span>
+          <div style="display:flex; gap:20px;">
+            <label style="display:flex; align-items:center; gap:6px; font-weight:600; cursor:pointer; margin:0; font-size:13.5px;">
+              <input type="radio" name="preOpAnestesi" value="Ya" {{ $case->pre_op_anestesi === 'Ya' ? 'checked' : '' }} style="width:16px; height:16px; margin:0;"> Ya
+            </label>
+            <label style="display:flex; align-items:center; gap:6px; font-weight:600; cursor:pointer; margin:0; font-size:13.5px;">
+              <input type="radio" name="preOpAnestesi" value="Tidak" {{ $case->pre_op_anestesi === 'Ya' ? '' : 'checked' }} style="width:16px; height:16px; margin:0;"> Tidak
+            </label>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--slate-100); padding:8px 0;">
+          <span style="font-weight:600; font-size:13.5px; color:var(--slate-700);">Laboratorium</span>
+          <div style="display:flex; gap:20px;">
+            <label style="display:flex; align-items:center; gap:6px; font-weight:600; cursor:pointer; margin:0; font-size:13.5px;">
+              <input type="radio" name="preOpLab" value="Ya" {{ $case->pre_op_lab === 'Ya' ? 'checked' : '' }} style="width:16px; height:16px; margin:0;"> Ya
+            </label>
+            <label style="display:flex; align-items:center; gap:6px; font-weight:600; cursor:pointer; margin:0; font-size:13.5px;">
+              <input type="radio" name="preOpLab" value="Tidak" {{ $case->pre_op_lab === 'Ya' ? '' : 'checked' }} style="width:16px; height:16px; margin:0;"> Tidak
+            </label>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--slate-100); padding:8px 0;">
+          <span style="font-weight:600; font-size:13.5px; color:var(--slate-700);">Radiologi</span>
+          <div style="display:flex; gap:20px;">
+            <label style="display:flex; align-items:center; gap:6px; font-weight:600; cursor:pointer; margin:0; font-size:13.5px;">
+              <input type="radio" name="preOpRad" value="Ya" {{ $case->pre_op_rad === 'Ya' ? 'checked' : '' }} style="width:16px; height:16px; margin:0;"> Ya
+            </label>
+            <label style="display:flex; align-items:center; gap:6px; font-weight:600; cursor:pointer; margin:0; font-size:13.5px;">
+              <input type="radio" name="preOpRad" value="Tidak" {{ $case->pre_op_rad === 'Ya' ? '' : 'checked' }} style="width:16px; height:16px; margin:0;"> Tidak
+            </label>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:8px; padding:8px 0;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-weight:600; font-size:13.5px; color:var(--slate-700);">Konsul Spesialis Lain</span>
+            <div style="display:flex; gap:20px;">
+              <label style="display:flex; align-items:center; gap:6px; font-weight:600; cursor:pointer; margin:0; font-size:13.5px;">
+                <input type="radio" name="preOpKonsul" value="Ya" {{ $case->pre_op_konsul === 'Ya' ? 'checked' : '' }} style="width:16px; height:16px; margin:0;"> Ya
+              </label>
+              <label style="display:flex; align-items:center; gap:6px; font-weight:600; cursor:pointer; margin:0; font-size:13.5px;">
+                <input type="radio" name="preOpKonsul" value="Tidak" {{ $case->pre_op_konsul === 'Ya' ? '' : 'checked' }} style="width:16px; height:16px; margin:0;"> Tidak
+              </label>
+            </div>
+          </div>
+          <div id="konsulDetailWrap" class="field" style="display:{{ $case->pre_op_konsul === 'Ya' ? 'block' : 'none' }}; margin-top:4px; width:100%;">
+            <input type="text" name="preOpKonsulDetail" id="konsulDetailInput" value="{{ $case->pre_op_konsul_detail }}" placeholder="Ketik nama spesialisasi konsul...">
+          </div>
+        </div>
+      </div>
 
       <div class="btn-row" style="margin-top:30px;">
         <button type="submit" class="btn btn-primary">Simpan Draft</button>
@@ -273,9 +372,9 @@
     let tindakanList = {!! json_encode($case->tindakan->pluck('nama')->toArray()) !!};
     if (tindakanList.length === 0) tindakanList = [""];
     
-    let alatList = {!! json_encode($case->alat->pluck('nama')->toArray()) !!};
+    let alatList = {!! json_encode($alatFromRaw) !!};
     
-    let tambahanList = {!! json_encode($case->tambahanBmhp->where('jenis', 'tambahan')->map(fn($t) => ['nama' => $t->nama, 'qty' => $t->qty])->values()->toArray()) !!};
+    let tambahanList = {!! json_encode($tambahanFromRaw) !!};
 
     // Format utility
     function rupiah(n) {
@@ -509,17 +608,37 @@
         const inp = document.createElement("input");
         inp.type = "text";
         inp.name = "alat[]";
-        inp.value = v;
+        inp.value = v.nama || "";
         inp.placeholder = "Ketik & pilih Alat Khusus...";
         inp.className = "form-control";
         
         let selectedTarif = 0;
         if (masterData.alat_details) {
-          const found = masterData.alat_details.find(item => item.nama === v);
+          const found = masterData.alat_details.find(item => item.nama === (v.nama || v));
           if (found) selectedTarif = found.tarif;
         }
         
+        const flagSel = document.createElement("select");
+        flagSel.name = "alatFlag[]";
+        flagSel.className = "form-control";
+        flagSel.style.width = "120px";
+        flagSel.style.flex = "0 0 120px";
+        const currentFlag = v.flag || "Hijau";
+        flagSel.innerHTML = `
+          <option value="Hijau" ${currentFlag === 'Hijau' ? 'selected' : ''}>🟢 Hijau</option>
+          <option value="Kuning" ${currentFlag === 'Kuning' ? 'selected' : ''}>🟡 Kuning</option>
+          <option value="Merah" ${currentFlag === 'Merah' ? 'selected' : ''}>🔴 Merah</option>
+        `;
+        flagSel.onchange = (e) => {
+          if (typeof alatList[i] === 'string') {
+            alatList[i] = { nama: alatList[i], flag: e.target.value };
+          } else {
+            alatList[i].flag = e.target.value;
+          }
+        };
+
         row.appendChild(inp);
+        row.appendChild(flagSel);
         
         const priceLabel = document.createElement("span");
         priceLabel.style.flex = "1";
@@ -544,7 +663,11 @@
         // Setup autocomplete
         const suggestions = masterData.alat_details ? masterData.alat_details.map(x => x.nama) : [];
         makeAutocomplete(inp, suggestions, (selectedName) => {
-          alatList[i] = selectedName;
+          if (typeof alatList[i] === 'string') {
+             alatList[i] = { nama: selectedName, flag: "Hijau" };
+          } else {
+             alatList[i].nama = selectedName;
+          }
           renderAlatRows();
         });
 
@@ -556,7 +679,11 @@
         // Typing updates
         inp.addEventListener("input", (e) => {
           const val = e.target.value;
-          alatList[i] = val;
+          if (typeof alatList[i] === 'string') {
+            alatList[i] = { nama: val, flag: "Hijau" };
+          } else {
+            alatList[i].nama = val;
+          }
           let rowTarif = 0;
           if (masterData.alat_details) {
             const found = masterData.alat_details.find(item => item.nama === val);
@@ -593,7 +720,7 @@
       }
     }
 
-    document.getElementById("addAlat").onclick = () => { alatList.push(""); renderAlatRows(); };
+    document.getElementById("addAlat").onclick = () => { alatList.push({ nama: "", flag: "Hijau" }); renderAlatRows(); };
 
     // Tambahan BMHP/Obat editor
     function renderTambahanRows() {
@@ -631,9 +758,25 @@
         }
         
         const rowTotal = (v.qty || 1) * selectedTarif;
+
+        const flagSel = document.createElement("select");
+        flagSel.name = "tambahanBmhpFlag[]";
+        flagSel.className = "form-control";
+        flagSel.style.width = "120px";
+        flagSel.style.flex = "0 0 120px";
+        const currentFlag = v.flag || "Hijau";
+        flagSel.innerHTML = `
+          <option value="Hijau" ${currentFlag === 'Hijau' ? 'selected' : ''}>🟢 Hijau</option>
+          <option value="Kuning" ${currentFlag === 'Kuning' ? 'selected' : ''}>🟡 Kuning</option>
+          <option value="Merah" ${currentFlag === 'Merah' ? 'selected' : ''}>🔴 Merah</option>
+        `;
+        flagSel.onchange = (e) => {
+          tambahanList[i].flag = e.target.value;
+        };
         
         row.appendChild(inpN);
         row.appendChild(inpQ);
+        row.appendChild(flagSel);
         
         const priceLabel = document.createElement("span");
         priceLabel.style.flex = "1.5";
@@ -726,7 +869,7 @@
       }
     }
 
-    document.getElementById("addTambahan").onclick = () => { tambahanList.push({ nama: "", qty: "1" }); renderTambahanRows(); };
+    document.getElementById("addTambahan").onclick = () => { tambahanList.push({ nama: "", qty: "1", flag: "Hijau" }); renderTambahanRows(); };
 
     // Conditional selectors visibility
     document.getElementById("anestesiSel").addEventListener("change", function() {
@@ -741,9 +884,23 @@
     document.getElementById("ruangPascaSel").addEventListener("change", function() {
       document.getElementById("ruangPascaLainnyaWrap").style.display = this.value === "Lainnya" ? "block" : "none";
     });
-    document.getElementById("penjaminSel").addEventListener("change", function() {
-      document.getElementById("guarantorWrap").style.display = this.value === "Asuransi" ? "block" : "none";
-    });
+    function togglePenjaminFields() {
+      const penSel = document.getElementById("penjaminSel");
+      if (!penSel) return;
+      const val = penSel.value;
+      const isAsuransi = (val === "Asuransi");
+      const isBpjs = (val === "BPJS Kesehatan");
+
+      document.getElementById("guarantorWrap").style.display = isAsuransi ? "block" : "none";
+      document.getElementById("hakKelasWrap").style.display = isBpjs ? "block" : "none";
+      document.getElementById("rujukanBpjsWrap").style.display = isBpjs ? "block" : "none";
+
+      document.getElementById("alatKhususWrapper").style.display = isBpjs ? "none" : "block";
+      document.getElementById("tambahanWrapper").style.display = isBpjs ? "none" : "block";
+    }
+
+    document.getElementById("penjaminSel").addEventListener("change", togglePenjaminFields);
+    togglePenjaminFields();
 
     // Form Submission (updates existing Draft)
     document.getElementById("caseForm").addEventListener("submit", function(e) {
@@ -771,6 +928,14 @@
       })
       .catch(err => {
         toast("Terjadi kesalahan sistem", "error");
+      });
+    // Pre-Op Konsul toggle visibility
+    document.querySelectorAll('input[name="preOpKonsul"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        const wrap = document.getElementById('konsulDetailWrap');
+        if (wrap) wrap.style.display = this.value === 'Ya' ? 'block' : 'none';
+        const inp = document.getElementById('konsulDetailInput');
+        if (inp && this.value === 'Tidak') inp.value = '';
       });
     });
   </script>

@@ -71,7 +71,7 @@ class TindakanController extends Controller
             'alat' => $alat,
             'alat_details' => $alatList,
             'paket_bmhp' => $paketBmhpList,
-            'doctors' => \App\Models\Doctor::select('nama', 'nama_gelar')->orderBy('nama')->get()->toArray()
+            'doctors' => \App\Models\Doctor::select('nama', 'nama_gelar', 'spesialis')->orderBy('nama')->get()->toArray()
         ]);
     }
 

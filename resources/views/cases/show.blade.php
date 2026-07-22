@@ -21,35 +21,57 @@
       ['id' => 'Viewer',     'label' => 'Viewer (Hanya Lihat)'],
     ];
 
+    // Parse raw data JSON
+    $rawData = json_decode($case->raw_data, true) ?: [];
+    
+    $alatFromRaw = [];
+    if (isset($rawData['adminCot']['alat'])) {
+        foreach ($rawData['adminCot']['alat'] as $a) {
+            $alatFromRaw[] = [
+                'nama' => $a['nama'] ?? '',
+                'harga' => $a['harga'] ?? 0,
+                'flag' => $a['flag'] ?? 'Hijau'
+            ];
+        }
+    }
+    
+    $tambahanFromRaw = [];
+    if (isset($rawData['tambahanBMHP'])) {
+        foreach ($rawData['tambahanBMHP'] as $t) {
+            $tambahanFromRaw[] = [
+                'nama' => $t['jenis'] ?? $t['nama'] ?? '',
+                'qty' => $t['qty'] ?? 1,
+                'harga' => $t['harga'] ?? 0,
+                'flag' => $t['flag'] ?? 'Hijau'
+            ];
+        }
+    }
+
     // Calculate total prices for tools and BMHP
     $totalAlat = 0;
-    foreach($case->alat as $a) {
-        $totalAlat += ($a->harga > 0 ? $a->harga : ($a->masterAlat ? $a->masterAlat->tarif : 0));
+    foreach($alatFromRaw as $a) {
+        $totalAlat += $a['harga'];
     }
     
     $totalBmhpPaket = 0;
-    $totalBmhpTambahan = 0;
     foreach($case->tambahanBmhp as $t) {
-        $subTotal = ($t->qty ?: 1) * ($t->harga ?: 0);
         if ($t->jenis === 'paket') {
-            $totalBmhpPaket += $subTotal;
-        } else {
-            $totalBmhpTambahan += $subTotal;
+            $totalBmhpPaket += ($t->qty ?: 1) * ($t->harga ?: 0);
         }
+    }
+    
+    $totalBmhpTambahan = 0;
+    foreach($tambahanFromRaw as $t) {
+        $totalBmhpTambahan += $t['qty'] * $t['harga'];
     }
     $totalBmhp = $totalBmhpPaket + $totalBmhpTambahan;
     
-    // Evaluate workflow stages matching JS stepStatusFor function
-    // stepper statuses: done, active, next, skip, warning, returned
+    // Evaluate workflow stages matching JKN simplified workflow
     $statusMap = [
         'Nurse' => 'done',
-        'VA' => 'next',
-        'Kasir' => 'next',
-        'ADRU' => 'next',
         'Farmasi' => 'next',
-        'CM' => 'next',
-        'CS' => 'next',
         'Admin' => 'next',
+        'CM' => 'next',
         'Selesai' => 'next'
     ];
 
@@ -61,31 +83,6 @@
         $statusMap['Nurse'] = 'done';
     }
 
-    $vaActive = ($case->penjamin === 'Asuransi' || $case->penjamin === 'BPJS Kesehatan');
-    $adminCotRequired = ($case->lokasi_tindakan === 'COT');
-
-    // VA stage
-    if ($vaActive) {
-        $statusMap['Kasir'] = 'skip';
-        $statusMap['ADRU'] = 'skip';
-        if ($case->status === 'Draft' || $case->status === 'Returned' && !$case->va->estimasi_total) {
-            $statusMap['VA'] = 'next';
-        } elseif (!$case->va->done) {
-            $statusMap['VA'] = 'active';
-        } else {
-            $statusMap['VA'] = 'done';
-        }
-    } else {
-        $statusMap['VA'] = 'skip';
-        if ($case->status === 'Draft' || $case->status === 'Returned') {
-            $statusMap['Kasir'] = 'next';
-            $statusMap['ADRU'] = 'next';
-        } else {
-            $statusMap['Kasir'] = $case->kasir->done ? 'done' : 'active';
-            $statusMap['ADRU'] = $case->adru->done ? 'done' : 'active';
-        }
-    }
-
     // Farmasi stage
     if ($case->status === 'Draft') {
         $statusMap['Farmasi'] = 'next';
@@ -93,46 +90,18 @@
         $statusMap['Farmasi'] = $case->farmasi->done ? 'done' : 'active';
     }
 
+    // Admin COT stage
+    if ($case->status === 'Draft') {
+        $statusMap['Admin'] = 'next';
+    } else {
+        $statusMap['Admin'] = $case->adminCot->final_done ? 'done' : 'active';
+    }
+
     // CM stage
     if ($case->status === 'Draft') {
         $statusMap['CM'] = 'next';
     } else {
-        $stage1Done = $vaActive ? ($case->va->stage1_done) : ($case->kasir->stage1_done && $case->adru->stage1_done);
-        $cmGateReady = $stage1Done && $case->farmasi->done && (!$adminCotRequired || $case->adminCot->prelim_done);
-        if ($case->caseManager->done) {
-            $statusMap['CM'] = 'done';
-        } elseif ($cmGateReady) {
-            $statusMap['CM'] = 'active';
-        } else {
-            $statusMap['CM'] = 'next';
-        }
-    }
-
-    // CS stage
-    if ($vaActive) {
-        if ($case->cs->done) {
-            $statusMap['CS'] = 'done';
-        } elseif ($case->va->done) {
-            $statusMap['CS'] = 'active';
-        } else {
-            $statusMap['CS'] = 'next';
-        }
-    } else {
-        $statusMap['CS'] = 'skip';
-    }
-
-    // Admin COT stage
-    if ($adminCotRequired) {
-        if ($case->adminCot->final_done) {
-            $statusMap['Admin'] = 'done';
-        } elseif ($case->adminCot->prelim_done) {
-            $routeDone = $vaActive ? $case->cs->done : ($case->kasir->done && $case->adru->done);
-            $statusMap['Admin'] = $routeDone ? 'active' : 'next'; // Active for final scheduling
-        } else {
-            $statusMap['Admin'] = ($case->status !== 'Draft') ? 'active' : 'next'; // Active for prelim tools
-        }
-    } else {
-        $statusMap['Admin'] = 'skip';
+        $statusMap['CM'] = $case->caseManager->done ? 'done' : (($case->farmasi->done && $case->adminCot->final_done) ? 'active' : 'next');
     }
 
     // Selesai stage
@@ -169,23 +138,9 @@
     <h3>Progres Alur Kerja</h3>
     <div class="stepper">
       <div class="step {{ $statusMap['Nurse'] }}">Nurse (Awal)</div>
-      @if($vaActive)
-        <div class="step {{ $statusMap['VA'] }}">VA (Estimasi)</div>
-      @else
-        <div class="step {{ $statusMap['Kasir'] }}">Kasir</div>
-        <div class="step {{ $statusMap['ADRU'] }}">ADRU COT</div>
-      @endif
       <div class="step {{ $statusMap['Farmasi'] }}">Farmasi</div>
-      @if($adminCotRequired)
-        <div class="step {{ $statusMap['Admin'] }}">Admin COT (Alat)</div>
-      @endif
+      <div class="step {{ $statusMap['Admin'] }}">Admin COT</div>
       <div class="step {{ $statusMap['CM'] }}">Case Manager</div>
-      @if($vaActive)
-        <div class="step {{ $statusMap['CS'] }}">CS (Konfirmasi)</div>
-      @endif
-      @if($adminCotRequired)
-        <div class="step {{ $statusMap['Admin'] }}">Admin COT (Final)</div>
-      @endif
       <div class="step {{ $statusMap['Selesai'] }}">Selesai</div>
     </div>
   </div>
@@ -194,30 +149,6 @@
   <div class="card">
     <h3>Status Tiap Unit</h3>
     <div class="unit-status-grid">
-      @if($vaActive)
-        <div class="unit-status-card">
-          <div class="u-name">VA</div>
-          @if($case->va->done)
-            <span class="badge-status st-Approved">Selesai</span>
-          @elseif($case->case_manager_done)
-            <span class="badge-status st-{{ $case->va->decision ?: 'Menunggu' }}">{{ $case->va->decision ?: 'Menunggu' }}</span>
-          @elseif($case->va->estimasi_total > 0)
-            <span class="badge-status st-Approved">Approved</span>
-          @else
-            <span class="badge-status st-Menunggu">Menunggu</span>
-          @endif
-        </div>
-      @else
-        <div class="unit-status-card">
-          <div class="u-name">Kasir</div>
-          <span class="badge-status st-{{ $case->kasir->done ? 'Approved' : 'Menunggu' }}">{{ $case->kasir->done ? 'Selesai' : 'Menunggu' }}</span>
-        </div>
-        <div class="unit-status-card">
-          <div class="u-name">ADRU COT</div>
-          <span class="badge-status st-{{ $case->adru->done ? 'Approved' : 'Menunggu' }}">{{ $case->adru->done ? 'Selesai' : 'Menunggu' }}</span>
-        </div>
-      @endif
-      
       <div class="unit-status-card">
         <div class="u-name">Farmasi</div>
         <span class="badge-status st-{{ $case->farmasi->done ? 'Approved' : 'Menunggu' }}">{{ $case->farmasi->done ? 'Approved' : 'Menunggu' }}</span>
@@ -225,9 +156,7 @@
 
       <div class="unit-status-card">
         <div class="u-name">Admin COT</div>
-        @if(!$case->adminCot->required)
-          <span class="badge-status st-default">Tidak Diperlukan</span>
-        @elseif($case->adminCot->final_done)
+        @if($case->adminCot->final_done)
           <span class="badge-status st-{{ $case->adminCot->decision ?: 'Terjadwal' }}">{{ $case->adminCot->decision ?: 'Terjadwal' }}</span>
         @elseif($case->adminCot->prelim_done)
           <span class="badge-status st-DalamKonfirmasi">Dalam Konfirmasi</span>
@@ -245,14 +174,12 @@
         @else
           <span class="badge-status st-Menunggu">Menunggu</span>
         @endif
+        @if($case->expensive_flag)
+          <div style="background:#FEE2E2; border:1px solid #EF4444; color:#991B1B; padding:6px 10px; border-radius:4px; margin-top:8px; font-size:11px; font-weight:700;">
+            ⚠️ Terdapat item/alkes manual bernilai tinggi (flag merah)
+          </div>
+        @endif
       </div>
-
-      @if($vaActive)
-        <div class="unit-status-card">
-          <div class="u-name">CS</div>
-          <span class="badge-status st-{{ $case->cs->done ? 'Approved' : ($case->cs->decision ?: 'Menunggu') }}">{{ $case->cs->done ? 'Selesai' : ($case->cs->decision ?: 'Menunggu') }}</span>
-        </div>
-      @endif
     </div>
   </div>
 
@@ -279,7 +206,23 @@
           <div><dt>Ruang Pasca Operasi</dt><dd>{{ $case->ruang_pasca_operasi === 'Lainnya' ? $case->ruang_pasca_operasi_lainnya : $case->ruang_pasca_operasi }}</dd></div>
           <div><dt>Estimasi Rawat Inap</dt><dd>{{ $case->estimasi_rawat_inap ?: '-' }}</dd></div>
           <div><dt>Penjamin</dt><dd>{{ $case->penjamin }} {{ ($case->penjamin === 'Asuransi' && $case->nama_guarantor) ? ' - ' . $case->nama_guarantor : '' }}</dd></div>
-          <div><dt>Kelas Perawatan</dt><dd>{{ $case->kelas_perawatan ?: '-' }}</dd></div>
+          @if($case->penjamin === 'BPJS Kesehatan' || $case->penjamin === 'BPJS')
+            <div><dt>Hak Kelas BPJS</dt><dd>{{ $case->hak_kelas ?: '-' }}</dd></div>
+            <div><dt>Rujukan BPJS</dt><dd>{{ $case->rujukan_bpjs ?: '-' }}</dd></div>
+          @else
+            <div><dt>Kelas Perawatan</dt><dd>{{ $case->kelas_perawatan ?: '-' }}</dd></div>
+          @endif
+          <div style="grid-column: span 2;">
+            <dt>Kebutuhan Pre-Op (Trigger Admin COT)</dt>
+            <dd>
+              <ul style="margin: 4px 0 0 0; padding-left: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; font-size: 12.5px;">
+                <li>Anestesi: <strong style="color: {{ $case->pre_op_anestesi === 'Ya' ? 'var(--red-600)' : 'inherit' }}">{{ $case->pre_op_anestesi ?: 'Tidak' }}</strong></li>
+                <li>Laboratorium: <strong style="color: {{ $case->pre_op_lab === 'Ya' ? 'var(--red-600)' : 'inherit' }}">{{ $case->pre_op_lab ?: 'Tidak' }}</strong></li>
+                <li>Radiologi: <strong style="color: {{ $case->pre_op_rad === 'Ya' ? 'var(--red-600)' : 'inherit' }}">{{ $case->pre_op_rad ?: 'Tidak' }}</strong></li>
+                <li>Konsul Spesialis Lain: <strong style="color: {{ $case->pre_op_konsul === 'Ya' ? 'var(--red-600)' : 'inherit' }}">{{ $case->pre_op_konsul === 'Ya' ? 'Ya (' . $case->pre_op_konsul_detail . ')' : 'Tidak' }}</strong></li>
+              </ul>
+            </dd>
+          </div>
           <div>
             <dt>Estimasi Biaya Jasa Medis</dt>
             <dd id="summaryJasaMedis">
@@ -353,11 +296,17 @@
 
         <div class="section-lbl" style="margin-top:18px;">Alat Khusus (Total: Rp {{ number_format($totalAlat, 0, ',', '.') }})</div>
         <div style="margin-top:6px;">
-          @forelse($case->alat as $a)
+          @forelse($alatFromRaw as $a)
             @php
-              $price = $a->harga > 0 ? $a->harga : ($a->masterAlat ? $a->masterAlat->tarif : 0);
+              $flag = $a['flag'] ?? 'Hijau';
+              $bg = '#E2F3EA'; $fg = '#2E7D5B'; // Hijau
+              if ($flag === 'Kuning') { $bg = '#FEF3C7'; $fg = '#B45309'; }
+              elseif ($flag === 'Merah') { $bg = '#FEE2E2'; $fg = '#B91C1C'; }
             @endphp
-            <span class="chip">{{ $a->nama }} (Rp {{ $isViewer ? '***' : number_format($price, 0, ',', '.') }})</span>
+            <span class="chip" style="background: {{ $bg }}; color: {{ $fg }}; font-weight: 700; border: 1px solid {{ $fg }}44;">
+              @if($flag === 'Merah') 🚨 @elseif($flag === 'Kuning') ⚠️ @else 🟢 @endif
+              {{ $a['nama'] }} (Rp {{ $isViewer ? '***' : number_format($a['harga'], 0, ',', '.') }})
+            </span>
           @empty
             <span class="footer-hint">Belum ada</span>
           @endforelse
@@ -378,16 +327,20 @@
           @endif
 
           <div style="font-size:12px; font-weight:600; color:var(--slate-500); margin-top:8px; margin-bottom:4px;">B. Tambahan di Luar Paket (Total: Rp {{ number_format($totalBmhpTambahan, 0, ',', '.') }})</div>
-          @php $hasTambahan = false; @endphp
-          @foreach($case->tambahanBmhp as $t)
-            @if($t->jenis !== 'paket')
-              @php $hasTambahan = true; @endphp
-              <span class="chip" style="background:#FEF3C7; color:#B45309;">{{ $t->nama }} (x{{ $t->qty }} @ Rp {{ $isViewer ? '***' : number_format($t->harga ?: 0, 0, ',', '.') }})</span>
-            @endif
-          @endforeach
-          @if(!$hasTambahan)
+          @forelse($tambahanFromRaw as $t)
+            @php
+              $flag = $t['flag'] ?? 'Hijau';
+              $bg = '#E2F3EA'; $fg = '#2E7D5B'; // Hijau
+              if ($flag === 'Kuning') { $bg = '#FEF3C7'; $fg = '#B45309'; }
+              elseif ($flag === 'Merah') { $bg = '#FEE2E2'; $fg = '#B91C1C'; }
+            @endphp
+            <span class="chip" style="background: {{ $bg }}; color: {{ $fg }}; font-weight: 700; border: 1px solid {{ $fg }}44;">
+              @if($flag === 'Merah') 🚨 @elseif($flag === 'Kuning') ⚠️ @else 🟢 @endif
+              {{ $t['nama'] }} (x{{ $t['qty'] }} @ Rp {{ $isViewer ? '***' : number_format($t['harga'], 0, ',', '.') }})
+            </span>
+          @empty
             <span class="footer-hint" style="display:block;">Tidak ada tambahan BMHP.</span>
-          @endif
+          @endforelse
         </div>
 
         @if($case->adminCot->final_done)
@@ -396,6 +349,53 @@
             {{ $case->adminCot->tanggal_fix->format('d M Y') }} - {{ $case->adminCot->jam_fix }} - Ruang {{ $case->adminCot->kamar_operasi }}
           </div>
         @endif
+
+        <!-- L. Dokumen Pengajuan Awal -->
+        <div class="section-lbl" style="margin-top:18px;">L. Dokumen Pengajuan Awal</div>
+        <div style="font-size:12.5px; color:var(--slate-500); line-height:1.4; margin-top:4px;">
+          Unggah Formulir Penjadwalan Tindakan (telah diisi DPJP) beserta dokumen pendukung setelah data ini disimpan sebagai Draft — buka kembali Case ini dan gunakan panel Attachment Center pada halaman Detail. Minimal 1 dokumen wajib diunggah sebelum Submit Pengajuan.
+        </div>
+
+        <div style="margin-top:12px; border: 1px solid var(--slate-200); border-radius: 8px; padding: 12px; background: var(--slate-50);">
+          <div style="font-weight:700; font-size:13px; color:var(--slate-800); margin-bottom:8px;">Attachment Center</div>
+          
+          <div id="attachmentsContainer" style="display:flex; flex-direction:column; gap:8px;">
+            @php $attachments = $case->attachments; @endphp
+            @forelse($attachments as $att)
+              <div class="attachment-item" data-id="{{ $att['id'] }}" style="display:flex; justify-content:space-between; align-items:center; background:var(--white); border:1px solid var(--slate-200); padding:8px 12px; border-radius:6px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="font-size:16px;">📄</span>
+                  <a href="{{ $att['path'] }}" target="_blank" class="att-name-link" style="font-weight:600; font-size:12.5px; color:var(--primary-700); text-decoration:none; max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                    {{ $att['name'] }}
+                  </a>
+                </div>
+                <div style="display:flex; gap:6px;">
+                  @php
+                    $ext = strtolower(pathinfo($att['name'], PATHINFO_EXTENSION));
+                    $isPreviewable = in_array($ext, ['png', 'jpg', 'jpeg', 'gif', 'pdf']);
+                  @endphp
+                  @if($isPreviewable)
+                    <button type="button" class="btn btn-sm btn-preview" onclick="previewAttachment('{{ $att['path'] }}', '{{ $att['name'] }}')" style="padding:4px 8px; font-size:11px;">Preview</button>
+                  @endif
+                  <a href="{{ $att['path'] }}" download="{{ $att['name'] }}" class="btn btn-sm" style="padding:4px 8px; font-size:11px; text-decoration:none; display:inline-block; line-height:1.2;">Download</a>
+                  @if(($case->status === 'Draft' || $case->status === 'Returned') && $activeRole === 'Nurse')
+                    <button type="button" class="btn btn-sm btn-danger btn-delete-att" onclick="deleteAttachment('{{ $att['id'] }}')" style="padding:4px 8px; font-size:11px;">Hapus</button>
+                  @endif
+                </div>
+              </div>
+            @empty
+              <div id="noAttachmentsHint" style="font-size:12px; color:var(--slate-400); text-align:center; padding:12px 0;">Belum ada dokumen yang diunggah.</div>
+            @endforelse
+          </div>
+
+          @if(($case->status === 'Draft' || $case->status === 'Returned') && $activeRole === 'Nurse')
+            <div style="margin-top:12px; border-top:1px dashed var(--slate-200); padding-top:12px;">
+              <label style="display:block; font-weight:600; font-size:12px; margin-bottom:4px; color:var(--slate-600);">Unggah Dokumen Baru (Maks 2 MB)</label>
+              <input type="file" id="attachmentFileInput" class="form-control" style="background:var(--white); font-size:12px;">
+              <span class="hint" style="display:block; margin-top:2px;">Format didukung: PDF, Gambar (PNG, JPG, JPEG, GIF)</span>
+            </div>
+          @endif
+        </div>
       </div>
 
       <!-- Actions Panel -->
@@ -823,6 +823,29 @@
                  CASE MANAGER ACTION
             - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -  - -->
             @if($activeRole === 'CaseManager')
+              @if(!$case->caseManager->done)
+                <h4>Persetujuan Case Manager</h4>
+                
+                @php
+                  $lengkap = $case->farmasi->done && $case->adminCot->final_done;
+                  $belum = [];
+                  if (!$case->farmasi->done) $belum[] = 'Farmasi';
+                  if (!$case->adminCot->final_done) $belum[] = 'Admin COT';
+                @endphp
+                @if($lengkap)
+                  <div class="permission-note">Semua unit terkait sudah lengkap. Silakan review &amp; putuskan.</div>
+                @else
+                  <div class="permission-note" style="background:var(--amber-100);">
+                    ⚡ <strong>Mode Bypass:</strong> Anda dapat merespon sebelum lengkap. Menunggu: {{ implode(', ', $belum) }}.
+                  </div>
+                @endif
+
+                <div class="field" style="margin-bottom:12px;">
+                  <label>Golongan Tindakan (Adjustable)</label>
+                  <select id="cmGolongan" class="form-control">
+                    <option value="KECIL" {{ $case->golongan === 'KECIL' ? 'selected' : '' }}>KECIL</option>
+                    <option value="SEDANG" {{ $case->golongan === 'SEDANG' ? 'selected' : '' }}>SEDANG</option>
+                    <option value="BESAR" {{ $case->golongan === 'BESAR' ? 'selected' : '' }}>BESAR</option>
                     <option value="KHUSUS A" {{ $case->golongan === 'KHUSUS A' ? 'selected' : '' }}>KHUSUS A</option>
                     <option value="KHUSUS B" {{ $case->golongan === 'KHUSUS B' ? 'selected' : '' }}>KHUSUS B</option>
                     <option value="KHUSUS C" {{ $case->golongan === 'KHUSUS C' ? 'selected' : '' }}>KHUSUS C</option>
@@ -939,10 +962,11 @@
                   <button type="button" class="btn" id="adminConfirmBtn">Tandai Dalam Konfirmasi</button>
                   <button type="button" class="btn" id="adminRescheduleBtn">Reschedule Jadwal</button>
                 </div>
-              @else
-                <div class="locked-note">Proses penjadwalan kamar operasi final telah selesai.</div>
-              @endif
-            @endif
+               @else
+                 <div class="locked-note">Proses penjadwalan kamar operasi final telah selesai.</div>
+               @endif
+             @endif
+           @endif
         </div>
       </div>
     </div>
@@ -964,6 +988,19 @@
           <span class="footer-hint">Belum ada aktivitas.</span>
         @endforelse
       </ul>
+    </div>
+  </div>
+
+  <!-- Preview Modal -->
+  <div id="previewModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center; padding:20px;">
+    <div style="background:var(--white); width:100%; max-width:800px; height:100%; max-height:600px; border-radius:12px; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.2);">
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-bottom:1px solid var(--slate-200); background:var(--slate-50);">
+        <h4 id="previewModalTitle" style="margin:0; font-size:14px; font-weight:700; color:var(--slate-800);">Pratinjau Dokumen</h4>
+        <button type="button" onclick="closePreviewModal()" style="border:none; background:none; font-size:20px; font-weight:bold; color:var(--slate-400); cursor:pointer; padding:0 4px; line-height:1;">&times;</button>
+      </div>
+      <div id="previewModalBody" style="flex:1; padding:16px; display:flex; justify-content:center; align-items:center; background:var(--slate-100); overflow:auto;">
+        <!-- Embedded preview content (iframe or img) will go here -->
+      </div>
     </div>
   </div>
 @endsection
@@ -1300,6 +1337,11 @@
     const submitBtn = document.getElementById("submitBtn");
     if (submitBtn) {
       submitBtn.onclick = () => {
+        const items = document.querySelectorAll('#attachmentsContainer .attachment-item');
+        if (items.length === 0) {
+          toast('Minimal 1 dokumen (Formulir Penjadwalan Tindakan) wajib diunggah sebelum Submit Pengajuan.', 'error');
+          return;
+        }
         if (confirm("Apakah anda yakin data sudah sesuai?")) {
           submitAction('{{ route("cases.submit", $case->id) }}', {}, "Kasus diajukan ke Workflow Engine!");
         }
@@ -1571,12 +1613,12 @@
       };
     }
 
-    // Case Manager buttons
     const cmSetujuBtn = document.getElementById("cmSetujuBtn");
     if (cmSetujuBtn) {
       cmSetujuBtn.onclick = () => {
         const note = document.getElementById("cmNote") ? document.getElementById("cmNote").value : '';
-        submitAction('{{ route("cases.case-manager", $case->id) }}', { action: 'setuju', note }, "Dokumen disetujui Case Manager!");
+        const golongan = document.getElementById("cmGolongan") ? document.getElementById("cmGolongan").value : '';
+        submitAction('{{ route("cases.case-manager", $case->id) }}', { action: 'setuju', note, golongan }, "Dokumen disetujui Case Manager!");
       };
     }
     const cmRevisiBtn = document.getElementById("cmRevisiBtn");
@@ -1584,15 +1626,17 @@
       cmRevisiBtn.onclick = () => {
         const note = document.getElementById("cmNote") ? document.getElementById("cmNote").value : '';
         const target = document.getElementById("cmReturnTo") ? document.getElementById("cmReturnTo").value : 'Nurse';
+        const golongan = document.getElementById("cmGolongan") ? document.getElementById("cmGolongan").value : '';
         if (!note.trim()) { toast('Catatan instruksi wajib diisi saat revisi', 'error'); return; }
-        submitAction('{{ route("cases.case-manager", $case->id) }}', { action: 'revisi', returnTo: target, note }, "Revisi dikirim ke " + target);
+        submitAction('{{ route("cases.case-manager", $case->id) }}', { action: 'revisi', returnTo: target, note, golongan }, "Revisi dikirim ke " + target);
       };
     }
     const cmBelumLengkapBtn = document.getElementById("cmBelumLengkapBtn");
     if (cmBelumLengkapBtn) {
       cmBelumLengkapBtn.onclick = () => {
         const note = document.getElementById("cmNote") ? document.getElementById("cmNote").value : '';
-        submitAction('{{ route("cases.case-manager", $case->id) }}', { action: 'konfirmasi', note }, "Status dikonfirmasi");
+        const golongan = document.getElementById("cmGolongan") ? document.getElementById("cmGolongan").value : '';
+        submitAction('{{ route("cases.case-manager", $case->id) }}', { action: 'dokbelumlengkap', note, golongan }, "Status dokumen belum lengkap dikonfirmasi");
       };
     }
 
@@ -2027,5 +2071,148 @@
       tick();
       setInterval(tick, 1000);
     }
+
+    // Attachment Center Upload Handler
+    const attachmentFileInput = document.getElementById('attachmentFileInput');
+    if (attachmentFileInput) {
+      attachmentFileInput.addEventListener('change', function() {
+        const file = this.files[0];
+        if (!file) return;
+        
+        // Size validation (2MB max)
+        if (file.size > 2 * 1024 * 1024) {
+          toast('File terlalu besar. Maksimal 2 MB', 'error');
+          this.value = '';
+          return;
+        }
+        
+        const formData = new FormData();
+        formData.append('file', file);
+        
+        this.disabled = true;
+        
+        fetch('{{ route("cases.upload-attachment", $case->id) }}', {
+          method: 'POST',
+          headers: {
+            'X-CSRF-TOKEN': csrfToken
+          },
+          body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+          this.disabled = false;
+          this.value = '';
+          if (data.success) {
+            toast(data.message, 'success');
+            refreshAttachmentsList(data.attachments);
+          } else {
+            toast(data.message, 'error');
+          }
+        })
+        .catch(err => {
+          this.disabled = false;
+          this.value = '';
+          toast('Gagal mengunggah berkas.', 'error');
+        });
+      });
+    }
+
+    // Attachment Center Delete Handler
+    window.deleteAttachment = function(attId) {
+      if (!confirm('Apakah Anda yakin ingin menghapus dokumen ini?')) return;
+      
+      fetch('{{ route("cases.delete-attachment", $case->id) }}', {
+        method: 'POST',
+        headers: {
+          'X-CSRF-TOKEN': csrfToken,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ attachment_id: attId })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          toast(data.message, 'success');
+          refreshAttachmentsList(data.attachments);
+        } else {
+          toast(data.message, 'error');
+        }
+      })
+      .catch(err => {
+        toast('Gagal menghapus berkas.', 'error');
+      });
+    };
+
+    // Refresh attachments DOM list
+    window.refreshAttachmentsList = function(attachments) {
+      const container = document.getElementById('attachmentsContainer');
+      if (!container) return;
+      
+      container.innerHTML = '';
+      
+      if (attachments.length === 0) {
+        container.innerHTML = `<div id="noAttachmentsHint" style="font-size:12px; color:var(--slate-400); text-align:center; padding:12px 0;">Belum ada dokumen yang diunggah.</div>`;
+        return;
+      }
+      
+      attachments.forEach(att => {
+        const ext = att.name.split('.').pop().toLowerCase();
+        const isPreviewable = ['png', 'jpg', 'jpeg', 'gif', 'pdf'].includes(ext);
+        
+        let previewBtn = '';
+        if (isPreviewable) {
+          previewBtn = `<button type="button" class="btn btn-sm btn-preview" onclick="previewAttachment('${att.path}', '${att.name}')" style="padding:4px 8px; font-size:11px;">Preview</button>`;
+        }
+        
+        let deleteBtn = '';
+        const isDraftOrReturned = ('{{ $case->status }}' === 'Draft' || '{{ $case->status }}' === 'Returned');
+        const isNurse = ('{{ $activeRole }}' === 'Nurse');
+        if (isDraftOrReturned && isNurse) {
+          deleteBtn = `<button type="button" class="btn btn-sm btn-danger btn-delete-att" onclick="deleteAttachment('${att.id}')" style="padding:4px 8px; font-size:11px;">Hapus</button>`;
+        }
+        
+        const itemHtml = `
+          <div class="attachment-item" data-id="${att.id}" style="display:flex; justify-content:space-between; align-items:center; background:var(--white); border:1px solid var(--slate-200); padding:8px 12px; border-radius:6px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:16px;">📄</span>
+              <a href="${att.path}" target="_blank" class="att-name-link" style="font-weight:600; font-size:12.5px; color:var(--primary-700); text-decoration:none; max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                ${att.name}
+              </a>
+            </div>
+            <div style="display:flex; gap:6px;">
+              ${previewBtn}
+              <a href="${att.path}" download="${att.name}" class="btn btn-sm" style="padding:4px 8px; font-size:11px; text-decoration:none; display:inline-block; line-height:1.2;">Download</a>
+              ${deleteBtn}
+            </div>
+          </div>
+        `;
+        
+        container.insertAdjacentHTML('beforeend', itemHtml);
+      });
+    };
+
+    // Preview modal actions
+    window.previewAttachment = function(path, name) {
+      const modal = document.getElementById('previewModal');
+      const title = document.getElementById('previewModalTitle');
+      const body = document.getElementById('previewModalBody');
+      
+      title.textContent = "Pratinjau: " + name;
+      body.innerHTML = '';
+      
+      const ext = name.split('.').pop().toLowerCase();
+      if (ext === 'pdf') {
+        body.innerHTML = `<iframe src="${path}" style="width:100%; height:100%; border:none;"></iframe>`;
+      } else {
+        body.innerHTML = `<img src="${path}" style="max-width:100%; max-height:100%; object-fit:contain; border-radius:4px; box-shadow:0 4px 12px rgba(0,0,0,0.15);">`;
+      }
+      
+      modal.style.display = 'flex';
+    };
+    
+    window.closePreviewModal = function() {
+      document.getElementById('previewModal').style.display = 'none';
+      document.getElementById('previewModalBody').innerHTML = '';
+    };
   </script>
 @endsection

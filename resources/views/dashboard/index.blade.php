@@ -70,6 +70,9 @@
             <tr style="cursor:pointer; background: {{ $isOverdue ? '#FFF5F5' : '#FFFDF5' }}; border-bottom: 1px solid #FEB2B2;" onclick="window.location.href='{{ route('cases.show', $c->id) }}'">
               <td>
                 <strong style="color:var(--primary-800);">{{ $c->id }}</strong>
+                @if($c->expensive_flag)
+                  <span class="badge-status st-op-merah" style="background:var(--red-500); color:white; font-size:10px; padding:2px 4px; border-radius:3px; font-weight:700;">🚨 Mahal</span>
+                @endif
                 @if($isOverdue)
                   <br><span class="badge-status st-Returned" style="font-size:10px; padding:2px 6px;">TERLEWAT / OVERDUE</span>
                 @endif
@@ -138,7 +141,11 @@
           @forelse($timelineCases as $c)
             <tr style="cursor:pointer;" onclick="window.location.href='{{ route('cases.show', $c->id) }}'">
               <td>
-                <strong>{{ $c->id }}</strong><br>
+                <strong>{{ $c->id }}</strong>
+                @if($c->expensive_flag)
+                  <span class="badge-status st-op-merah" style="background:var(--red-500); color:white; font-size:10px; padding:2px 4px; border-radius:3px; font-weight:700;">🚨 Mahal</span>
+                @endif
+                <br>
                 <span class="footer-hint">{{ $c->created_at->format('d M Y H:i') }}</span>
               </td>
               <td>

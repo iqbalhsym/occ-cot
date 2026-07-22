@@ -1,0 +1,97 @@
+# Dokumentasi Alur Kerja, Fitur, Dan Peran (Role) Aplikasi COT Operation Command Center (OCC) RSUI
+
+Aplikasi COT Operation Command Center (OCC) RSUI adalah sistem manajemen alur kerja (workflow) penjadwalan tindakan operasi kamar bedah (COT) terpadu. Sistem ini memfasilitasi koordinasi antar-unit (Nurse, Verifikator, Admisi, Farmasi, Admin COT, Case Manager, hingga Customer Service) mulai dari pendaftaran tindakan pasien hingga pemantauan jadwal operasi secara real-time.
+
+---
+
+## 1. Sumber Data Resource Monitor
+Data pada menu **Resource Monitor** (seperti C-Arm, Mikroskop Bedah, Laparoskopi, dll.) berasal dan disimpan di dalam **DATABASE** resmi, yaitu pada tabel `prototype_settings` dengan field key bernilai `resource_master`.
+* **Data Dinamis**: Jika pengguna dengan peran **Admin COT** melakukan penambahan, perubahan jumlah, harga, atau menghapus item di menu tersebut, perubahan akan langsung tersimpan secara permanen di database.
+* **Bukan Dummy**: Data ini bukan dummy hardcoded murni, melainkan master data dinamis yang dikelola secara langsung oleh admin sistem.
+
+---
+
+## 2. Struktur Menu Aplikasi
+Aplikasi memiliki navigasi utama yang diatur aksesnya secara otomatis berdasarkan konfigurasi izin peran (Role Permission):
+
+1. **📊 Dashboard**
+   - Berisi rangkuman statistik case (Draft, Diajukan, Dalam Proses, Revisi, Selesai).
+   - Menampilkan grafik utilisasi kamar operasi, distribusi spesialisasi, dan status.
+
+2. **📅 Monitoring Penjadwalan COT (Menu Utama)**
+   - 📋 **Tampilan Tabel**: Rekapitulasi daftar seluruh operasi terjadwal yang diurutkan berdasarkan tanggal terdekat. Dilengkapi pencarian dan filter ruang/status/penjamin.
+   - 🗓️ **Tampilan Timeline**: Dashboard visual (Gantt Chart) utilisasi kamar operasi. Dilengkapi deteksi bentrok jadwal, visualisasi utilisasi kamar, seret-pindah (drag & drop) jadwal khusus Admin COT, pemantauan ICU/PACU, dan pencetakan laporan rekapitulasi terjadwal.
+   - 🔧 **Resource Monitor**: Pengelolaan ketersediaan alat medis penunjang operasi (C-Arm, Microscope, USG, dll) beserta tarif sewa alat.
+   - 🗂️ **Konfigurasi Alokasi Slot**: Penjatahan prioritas spesialisasi bedah atau slot standby/buffer untuk kamar bedah pada tanggal-tanggal tertentu.
+
+3. **➜ Antrian Saya (My Queue)**
+   - Daftar pengajuan case yang saat ini membutuhkan persetujuan/tindakan dari peran (role) aktif pengguna saat itu.
+
+4. **≡ Semua Case (All Cases)**
+   - Arsip seluruh riwayat pengajuan tindakan operasi, baik yang masih draft, berjalan, selesai, maupun dibatalkan.
+
+5. **🧮 Estimasi Mandiri**
+   - Kalkulator biaya simulasi tindakan operasi mandiri. Mengintegrasikan data tarif tindakan medis, sewa kamar operasi, pemakaian BMHP paket/non-paket, dan sewa alat medis secara instan untuk memperkirakan biaya akhir pasien.
+
+6. **🏷️ Mapping Guarantor**
+   - Konfigurasi pola substring pencocokan nama asuransi/guarantor (misal: "Inhealth", "Admedika") ke kelompok tabel tarif acuan (2025, 2026, dst) dan status COB.
+
+7. **🕘 History Estimasi**
+   - Rekam jejak seluruh simulasi biaya estimasi mandiri yang pernah dihitung oleh pengguna di sistem.
+
+8. **🛡️ Manajemen Role (Role Management)**
+   - Halaman konfigurasi hak akses menu dinamis per peran pengguna.
+
+9. **👥 User Management** (Khusus Admin/SuperAdmin)
+   - Manajemen akun pengguna sistem.
+
+10. **🩺 Dokter Management** (Khusus Admin/SuperAdmin)
+    - Manajemen data dokter (Nama, Spesialis, KSM, dan Nomor HP WhatsApp).
+
+---
+
+## 3. Alur Aliran Kerja Case (Case Workflow Flow) Per Peran (Role)
+Setiap tindakan operasi berjalan melalui siklus hidup alur persetujuan berikut:
+
+```mermaid
+graph LR
+  Nurse[Nurse] --> VA[VA / Kasir]
+  VA --> ADRU[ADRU]
+  ADRU --> Farmasi[Farmasi]
+  Farmasi --> Admin[Admin COT]
+  Admin --> Manager[Case Manager]
+  Manager --> CS[Customer Service]
+```
+
+1. **Nurse (Perawat Pengaju)**
+   - Membuat pengajuan case operasi baru dengan mengisi identitas pasien (RM, Nama), diagnosis, rencana tindakan bedah, operator, dokter anestesi, asal pasien, rencana pasca operasi, penjamin (BPJS/Asuransi/Umum), dan unggah dokumen pendukung.
+   - Mengirimkan (*Submit*) case ke tahap verifikasi penjamin.
+
+2. **VA (Verifikator Asuransi) / Kasir**
+   - **VA** (untuk penjamin BPJS / Asuransi): Memeriksa keabsahan berkas jaminan, mencocokkan nama penjamin, dan menyetujui rincian estimasi biaya pra-operasi.
+   - **Kasir** (untuk penjamin Umum/Pribadi): Melakukan verifikasi pembayaran uang muka atau persetujuan pembiayaan umum pasien.
+
+3. **ADRU (Admisi & Ruang)**
+   - Memastikan ketersediaan ruangan rawat inap pasca-operasi yang dipesan (misalnya pesanan ruang ICU/HCU atau ruang rawat biasa).
+
+4. **Farmasi**
+   - Melakukan penelaahan resep pra-operasi dan mempersiapkan ketersediaan paket BMHP (Bahan Medis Habis Pakai) obat-obatan anestesi dan bedah yang dibutuhkan.
+
+5. **Admin COT**
+   - Menentukan dan mem-finalisasi **Kamar Operasi (OK 1 - ICU)**, **Tanggal Operasi**, **Jam Operasi**, serta alokasi alat medis penunjang yang dibutuhkan.
+   - Data jadwal yang ditentukan di sini akan langsung terhubung ke papan monitoring.
+
+6. **Case Manager**
+   - Melakukan tinjauan manajerial mutu medis dan menyetujui bahwa case siap dijadwalkan.
+
+7. **CS (Customer Service)**
+   - Menghubungi keluarga pasien untuk melakukan konfirmasi jadwal final operasi dan persyaratan admisi sebelum hari tindakan.
+   - Menandai case sebagai **Completed (Selesai)**.
+
+---
+
+## 4. Integrasi Penjamin (Insurance Matching Engine)
+Sistem memiliki logika penjaminan otomatis yang fleksibel:
+* **BPJS Kesehatan**: Secara otomatis diverifikasi oleh peran VA, menggunakan kelompok tarif acuan BPJS.
+* **Asuransi Swasta/Corporate**: Nama asuransi dicocokkan menggunakan mesin pencocokan substring di **Mapping Guarantor**. Jika nama asuransi mengandung pola terdaftar (misal: "Allianz"), sistem akan otomatis menggunakan kelompok tarif rujukan yang telah ditentukan (misal: Kelompok Tarif 2026).
+* **Umum/Pribadi**: Pembayaran langsung diverifikasi oleh Kasir.

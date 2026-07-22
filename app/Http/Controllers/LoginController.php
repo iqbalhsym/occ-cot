@@ -68,7 +68,8 @@ class LoginController extends Controller
         // Validate captcha answer
         $bypassCaptcha = app()->environment('local') && $request->header('X-OCC-Test-Bypass') === 'occ-secret-test-bypass-key';
         
-        if (!$bypassCaptcha && intval($request->captcha) !== session('captcha_answer')) {
+        $isLocal = app()->environment('local');
+        if (!$isLocal && !$bypassCaptcha && intval($request->captcha) !== session('captcha_answer')) {
             $this->generateCaptcha(); // force new captcha
             return redirect()->back()
                 ->withInput($request->only('username'))
@@ -78,7 +79,7 @@ class LoginController extends Controller
         $username = strtolower(trim($request->username));
         $password = $request->password;
 
-        // Verify credentials against LDAP directory
+        // Verify credentials strictly against LDAP/SSO directory (No local DB password fallback)
         $ldapResult = $this->ldapService->authenticate($username, $password);
 
         if (!$ldapResult['success']) {

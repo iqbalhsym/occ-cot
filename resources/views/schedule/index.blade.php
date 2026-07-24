@@ -220,16 +220,16 @@
         <label>Ruang Operasi</label>
         <select id="monRuang" onchange="updateMonitorFilter('ruang', this.value)">
           <option value="">Semua Ruang</option>
-          <option value="OK 1">OK 1</option>
-          <option value="OK 2">OK 2</option>
-          <option value="OK 3">OK 3</option>
-          <option value="OK 4">OK 4</option>
-          <option value="OK 5">OK 5</option>
-          <option value="OK 6">OK 6</option>
-          <option value="HYBRID">HYBRID</option>
-          <option value="COT LT 5">COT LT 5</option>
+          <option value="OT 1">OT 1</option>
+          <option value="OT 2">OT 2</option>
+          <option value="OT 3">OT 3</option>
+          <option value="OT 4">OT 4</option>
+          <option value="OT 5">OT 5</option>
+          <option value="OT 6">OT 6</option>
+          <option value="Hybrid">Hybrid</option>
+          <option value="OT lt 5">OT lt 5</option>
           <option value="IGD">IGD</option>
-          <option value="CATHLAB">CATHLAB</option>
+          <option value="Cathlab">Cathlab</option>
           <option value="ICU">ICU</option>
         </select>
       </div>
@@ -283,9 +283,10 @@
   let slotConfigsData = Array.isArray(@json($slotConfigs)) ? @json($slotConfigs) : [];
   let resourceMasterData = Array.isArray(@json($resourceMaster)) ? @json($resourceMaster) : [];
   let doctors = Array.isArray(@json($doctors)) ? @json($doctors) : [];
+  let alkesKhusus = Array.isArray(@json($alkesKhusus ?? [])) ? @json($alkesKhusus) : [];
   let totMinutesData = {{ $totMinutes }} || 45;
 
-  const OK_ROOM_LIST = ["OK 1", "OK 2", "OK 3", "OK 4", "OK 5", "OK 6", "HYBRID", "COT LT 5", "IGD", "CATHLAB", "ICU"];
+  const OK_ROOM_LIST = ["OT 1", "OT 2", "OT 3", "OT 4", "OT 5", "OT 6", "Hybrid", "OT lt 5", "IGD", "Cathlab", "ICU"];
   const SPECIALTIES = ["Bedah Saraf", "Orthopaedi", "Bedah Anak", "Digestif", "Obgyn", "Urologi", "Bedah Umum", "Mata", "Lain-lain"];
   const SLOT_CONFIG_STATUS = ["Prioritas Spesialis", "Standby / Buffer", "Tidak Digunakan"];
 
@@ -580,6 +581,20 @@
   function validasiAlokasiSlot(ruang, tanggal, alatNamesNeeded, jamMulai, durasiSlotMenit, excludeCaseId) {
     const norm = s => String(s || "").toLowerCase().trim();
     const needed = (alatNamesNeeded || []).map(norm).filter(Boolean);
+
+    // Check Alkes Khusus room restrictions
+    if (needed.length && typeof alkesKhusus !== 'undefined' && Array.isArray(alkesKhusus)) {
+      for (const n of needed) {
+        const found = alkesKhusus.find(ak => ak.nama.toLowerCase().trim() === n);
+        if (found && Array.isArray(found.allowed_rooms)) {
+          const isAllowed = found.allowed_rooms.some(r => r.toLowerCase().trim() === ruang.toLowerCase().trim());
+          if (!isAllowed) {
+            return { ok: false, alasan: `Alat khusus "${found.nama}" tidak diperbolehkan digunakan di ruangan "${ruang}".` };
+          }
+        }
+      }
+    }
+
     const cfgs = getSlotConfigsFor(ruang, tanggal);
     if (!cfgs.length) return { ok: false, alasan: `Ruang ${ruang} belum memiliki Konfigurasi Alokasi Slot Operasi pada ${tanggal}.` };
     const cfgAktif = cfgs.filter(c => c.status !== "Tidak Digunakan");
@@ -1333,7 +1348,7 @@
             <div class="field full">
               <label>Ruang Operasi</label>
               <div id="cfgRuangContainer" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:6px;">
-                <span class="chip" style="background:#E2E8F0; color:#334155; font-weight:700;">OK 1</span>
+                <span class="chip" style="background:#E2E8F0; color:#334155; font-weight:700;">OT 1</span>
               </div>
               <button type="button" class="btn btn-sm" id="cfgAddRuangBtn">+ Tambah Ruang</button>
             </div>
@@ -1513,7 +1528,7 @@
   };
 
   // --- Slot Configuration Editor ---
-  let selectedCfgRuang = ["OK 1"];
+  let selectedCfgRuang = ["OT 1"];
   let selectedCfgAlat = [];
 
   function wireConfigEditor() {
@@ -1525,15 +1540,18 @@
 
     if (addRuangBtn) {
       addRuangBtn.onclick = () => {
-        const room = prompt(`Masukkan nama ruang operasi (pilih dari: ${OK_ROOM_LIST.join(', ')}):`, "OK 2");
-        if (room && OK_ROOM_LIST.includes(room.toUpperCase().trim())) {
-          const cleanRoom = room.toUpperCase().trim();
-          if (!selectedCfgRuang.includes(cleanRoom)) {
-            selectedCfgRuang.push(cleanRoom);
-            renderCfgRuangChips();
+        const room = prompt(`Masukkan nama ruang operasi (pilih dari: ${OK_ROOM_LIST.join(', ')}):`, "OT 2");
+        if (room) {
+          const cleanRoom = room.trim();
+          const matchedRoom = OK_ROOM_LIST.find(r => r.toLowerCase() === cleanRoom.toLowerCase());
+          if (matchedRoom) {
+            if (!selectedCfgRuang.includes(matchedRoom)) {
+              selectedCfgRuang.push(matchedRoom);
+              renderCfgRuangChips();
+            }
+          } else {
+            toast('Nama ruangan tidak terdaftar.', 'error');
           }
-        } else if (room) {
-          toast('Nama ruangan tidak terdaftar.', 'error');
         }
       };
     }
@@ -1580,7 +1598,7 @@
         });
 
         // Reset inputs
-        selectedCfgRuang = ["OK 1"];
+        selectedCfgRuang = ["OT 1"];
         selectedCfgAlat = [];
         saveSettingsToServer();
         renderMonitoringPage();

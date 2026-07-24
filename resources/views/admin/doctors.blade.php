@@ -86,6 +86,19 @@
                       style="background:var(--slate-200); color:var(--slate-800); border-color:var(--slate-300);">
                       Edit
                     </button>
+                    @if($d->no_hp)
+                      <button type="button" class="btn btn-sm test-wa-btn" 
+                        data-id="{{ $d->id }}"
+                        data-nama="{{ $d->nama }}"
+                        style="background:#16A34A; color:var(--white); border-color:#16A34A;">
+                        Test WA
+                      </button>
+                    @else
+                      <button type="button" class="btn btn-sm" disabled title="Nomor HP belum diisi"
+                        style="background:var(--slate-100); color:var(--slate-400); border-color:var(--slate-200); cursor:not-allowed;">
+                        Test WA
+                      </button>
+                    @endif
                     <button type="button" class="btn btn-sm btn-danger delete-doc-btn" 
                       data-id="{{ $d->id }}"
                       data-nama="{{ $d->nama }}">
@@ -331,6 +344,43 @@
           })
           .catch(() => {
             this.disabled = false;
+            toast("Terjadi kesalahan koneksi", "error");
+          });
+        }
+      };
+    });
+
+    // Test WA via AJAX
+    document.querySelectorAll(".test-wa-btn").forEach(btn => {
+      btn.onclick = function() {
+        const id = this.dataset.id;
+        const name = this.dataset.nama;
+        
+        if (confirm(`Kirim WhatsApp uji coba ke dokter "${name}"?`)) {
+          this.disabled = true;
+          const oldText = this.textContent;
+          this.textContent = "Mengirim...";
+          
+          fetch(`/admin/doctors/${id}/test-wa`, {
+            method: 'POST',
+            headers: {
+              'X-CSRF-TOKEN': csrfToken,
+              'Accept': 'application/json'
+            }
+          })
+          .then(res => res.json())
+          .then(data => {
+            this.disabled = false;
+            this.textContent = oldText;
+            if (data.success) {
+              toast(data.message, "success");
+            } else {
+              toast(data.message || "Gagal mengirim WhatsApp", "error");
+            }
+          })
+          .catch(() => {
+            this.disabled = false;
+            this.textContent = oldText;
             toast("Terjadi kesalahan koneksi", "error");
           });
         }

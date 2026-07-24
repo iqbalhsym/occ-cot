@@ -83,4 +83,44 @@ class DoctorController extends Controller
             'message' => "Dokter '{$name}' berhasil dihapus."
         ]);
     }
+
+    public function testWa($id)
+    {
+        $doc = Doctor::findOrFail($id);
+        if (empty($doc->no_hp)) {
+            return response()->json([
+                'success' => false,
+                'message' => "Nomor HP dokter tidak terdaftar."
+            ], 400);
+        }
+
+        $service = app(\App\Services\QiscusWaService::class);
+        $doctorName = $doc->nama_gelar ?: $doc->nama;
+        
+        $messageText = "Halo {$doctorName},\n\nIni adalah pesan uji coba integrasi notifikasi WhatsApp Qiscus dari sistem COT OCC RSUI.\n\nKoneksi berhasil!";
+
+        // Attempt to send template HSM notification (or fallback to plain text if session exists)
+        $result = $service->sendTemplateNotification(
+            $doc->no_hp, 
+            'dokter_schedule_reminder', 
+            [$doctorName, "OT 1", now()->locale('id')->isoFormat('D MMMM YYYY H:i') . " WIB", "Pasien Uji Coba", "Tindakan Medis Uji Coba"]
+        );
+
+        if (!$result['success']) {
+            // Fallback to sending plain text message
+            $result = $service->sendPlainMessage($doc->no_hp, $messageText);
+        }
+
+        if ($result['success']) {
+            return response()->json([
+                'success' => true,
+                'message' => "Pesan uji coba berhasil dikirim ke {$doctorName}."
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => "Gagal mengirim WhatsApp: " . $result['message']
+        ], 500);
+    }
 }

@@ -157,6 +157,9 @@
             <a href="{{ route('admin.doctors') }}" class="nav-item {{ Route::is('admin.doctors') ? 'active' : '' }}">
               <span>🩺</span><span class="sidebar-label">Dokter Management</span>
             </a>
+            <a href="{{ route('admin.alkes') }}" class="nav-item {{ Route::is('admin.alkes') ? 'active' : '' }}">
+              <span>📦</span><span class="sidebar-label">Alkes Khusus Management</span>
+            </a>
             <a href="{{ route('admin.master') }}" class="nav-item {{ Route::is('admin.master') ? 'active' : '' }}">
               <span>📊</span><span class="sidebar-label">Master Data Management</span>
             </a>

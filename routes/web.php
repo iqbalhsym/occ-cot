@@ -104,6 +104,12 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/admin/doctors', [DoctorController::class, 'store'])->name('admin.doctors.store');
         Route::put('/admin/doctors/{id}', [DoctorController::class, 'update'])->name('admin.doctors.update');
         Route::delete('/admin/doctors/{id}', [DoctorController::class, 'destroy'])->name('admin.doctors.destroy');
+        Route::post('/admin/doctors/{id}/test-wa', [DoctorController::class, 'testWa'])->name('admin.doctors.test-wa');
+
+        Route::get('/admin/alkes', [AlkesController::class, 'index'])->name('admin.alkes');
+        Route::post('/admin/alkes', [AlkesController::class, 'store'])->name('admin.alkes.store');
+        Route::put('/admin/alkes/{id}', [AlkesController::class, 'update'])->name('admin.alkes.update');
+        Route::delete('/admin/alkes/{id}', [AlkesController::class, 'destroy'])->name('admin.alkes.destroy');
 
         Route::get('/admin/master', [MasterDataController::class, 'index'])->name('admin.master');
         Route::post('/admin/master', [MasterDataController::class, 'store'])->name('admin.master.store');

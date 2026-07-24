@@ -812,6 +812,20 @@ class CaseController extends Controller
             }
             $c->addAudit("Admin COT memperbarui daftar alat khusus & harga", $request->note ?: '', "Admin COT");
         } elseif ($action === 'final') {
+            $selectedRoom = $request->ruang;
+            $caseAlatNames = $c->alat->pluck('nama')->toArray();
+            foreach ($caseAlatNames as $alatName) {
+                $alkes = \App\Models\AlkesKhusus::where('nama', $alatName)->first();
+                if ($alkes && is_array($alkes->allowed_rooms)) {
+                    if (!in_array($selectedRoom, $alkes->allowed_rooms)) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => "Alat khusus '{$alatName}' tidak diperbolehkan digunakan di ruangan '{$selectedRoom}'."
+                        ], 422);
+                    }
+                }
+            }
+
             $adminCot->final_done = true;
             $adminCot->decision = 'Terjadwal';
             $adminCot->tanggal_fix = $request->tanggal;
@@ -855,6 +869,20 @@ class CaseController extends Controller
 
             $c->addAudit("Admin COT meminta revisi estimasi (tambahan alat/perubahan golongan) → " . $target, $request->note ?: '', "Admin COT");
         } elseif ($action === 'reschedule') {
+            $selectedRoom = $request->ruang;
+            $caseAlatNames = $c->alat->pluck('nama')->toArray();
+            foreach ($caseAlatNames as $alatName) {
+                $alkes = \App\Models\AlkesKhusus::where('nama', $alatName)->first();
+                if ($alkes && is_array($alkes->allowed_rooms)) {
+                    if (!in_array($selectedRoom, $alkes->allowed_rooms)) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => "Alat khusus '{$alatName}' tidak diperbolehkan digunakan di ruangan '{$selectedRoom}'."
+                        ], 422);
+                    }
+                }
+            }
+
             $adminCot->decision = 'Reschedule';
             $adminCot->decision_note = $request->note ?: '';
             $adminCot->tanggal_fix = $request->tanggal;
@@ -1371,8 +1399,9 @@ HTML;
         $activeRole = session('role', optional(Auth::user())->role ?? 'Viewer');
 
         $doctors = \App\Models\Doctor::orderBy('nama')->get()->toArray();
+        $alkesKhusus = \App\Models\AlkesKhusus::orderBy('nama')->get()->toArray();
 
-        return view('schedule.index', compact('cases', 'slotConfigs', 'resourceMaster', 'totMinutes', 'activeRole', 'doctors'));
+        return view('schedule.index', compact('cases', 'slotConfigs', 'resourceMaster', 'totMinutes', 'activeRole', 'doctors', 'alkesKhusus'));
     }
 
     public function dragReschedule(Request $request, $id)
@@ -1393,6 +1422,20 @@ HTML;
         $newTanggal = $request->tanggal;
         $newJam = $request->jam;
         $newRuang = $request->ruang;
+
+        // Validate if new room is allowed for any special medical devices (alkes khusus) assigned to the case
+        $caseAlatNames = $c->alat->pluck('nama')->toArray();
+        foreach ($caseAlatNames as $alatName) {
+            $alkes = \App\Models\AlkesKhusus::where('nama', $alatName)->first();
+            if ($alkes && is_array($alkes->allowed_rooms)) {
+                if (!in_array($newRuang, $alkes->allowed_rooms)) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => "Alat khusus '{$alatName}' tidak diperbolehkan digunakan di ruangan '{$newRuang}'."
+                    ], 422);
+                }
+            }
+        }
 
         $adminCot->tanggal_fix = $newTanggal;
         $adminCot->jam_fix = $newJam;

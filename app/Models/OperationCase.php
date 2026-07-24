@@ -24,7 +24,7 @@ class OperationCase extends Model
         'estimasi_rawat_inap',
         'penjamin', 'nama_guarantor', 'kelas_perawatan',
         'golongan', 'spesialisasi_op',
-        'current_flow', 'status', 'catatan', 'expensive_flag',
+        'current_flow', 'status', 'catatan', 'expensive_flag', 'wa_sent_at',
     ];
 
     protected $casts = [
@@ -33,6 +33,7 @@ class OperationCase extends Model
         'tanggal_pilihan1' => 'date',
         'tanggal_pilihan2' => 'date',
         'expensive_flag' => 'boolean',
+        'wa_sent_at' => 'datetime',
     ];
 
     // ─── Relationships ────────────────────────────────────────────────────────

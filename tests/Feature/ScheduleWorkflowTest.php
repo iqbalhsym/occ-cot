@@ -46,7 +46,7 @@ class ScheduleWorkflowTest extends TestCase
             'final_done' => true,
             'tanggal_fix' => '2026-07-21',
             'jam_fix' => '08:00',
-            'kamar_operasi' => 'OK 1'
+            'kamar_operasi' => 'OT 1'
         ]);
 
         $response = $this->actingAs($this->adminCot)
@@ -72,7 +72,7 @@ class ScheduleWorkflowTest extends TestCase
             'final_done' => true,
             'tanggal_fix' => '2026-07-21',
             'jam_fix' => '08:00',
-            'kamar_operasi' => 'OK 1'
+            'kamar_operasi' => 'OT 1'
         ]);
 
         $response = $this->actingAs($this->adminCot)
@@ -80,7 +80,7 @@ class ScheduleWorkflowTest extends TestCase
             ->postJson("/schedule/drag-reschedule/{$case->id}", [
                 'tanggal' => '2026-07-22',
                 'jam' => '09:30',
-                'ruang' => 'OK 2'
+                'ruang' => 'OT 2'
             ]);
 
         $response->assertStatus(200);
@@ -89,7 +89,7 @@ class ScheduleWorkflowTest extends TestCase
         $adminCot = $case->fresh()->adminCot;
         $this->assertEquals('2026-07-22', $adminCot->tanggal_fix->format('Y-m-d'));
         $this->assertEquals('09:30', $adminCot->jam_fix);
-        $this->assertEquals('OK 2', $adminCot->kamar_operasi);
+        $this->assertEquals('OT 2', $adminCot->kamar_operasi);
     }
 
     public function test_non_admin_cot_cannot_drag_reschedule()
@@ -106,7 +106,7 @@ class ScheduleWorkflowTest extends TestCase
             'final_done' => true,
             'tanggal_fix' => '2026-07-21',
             'jam_fix' => '08:00',
-            'kamar_operasi' => 'OK 1'
+            'kamar_operasi' => 'OT 1'
         ]);
 
         $response = $this->actingAs($this->nurse)
@@ -114,7 +114,7 @@ class ScheduleWorkflowTest extends TestCase
             ->postJson("/schedule/drag-reschedule/{$case->id}", [
                 'tanggal' => '2026-07-22',
                 'jam' => '09:30',
-                'ruang' => 'OK 2'
+                'ruang' => 'OT 2'
             ]);
 
         $response->assertStatus(403);
@@ -134,7 +134,7 @@ class ScheduleWorkflowTest extends TestCase
             'final_done' => true,
             'tanggal_fix' => '2026-07-21',
             'jam_fix' => '08:00',
-            'kamar_operasi' => 'OK 1'
+            'kamar_operasi' => 'OT 1'
         ]);
 
         $response = $this->actingAs($this->adminCot)
@@ -153,7 +153,7 @@ class ScheduleWorkflowTest extends TestCase
             ->postJson('/schedule/settings/save', [
                 'totMinutes' => 60,
                 'slotConfigs' => [
-                    ['id' => 'cfg_1', 'ruang' => 'OK 3', 'tanggalMulai' => '2026-07-21', 'jamMulai' => '07:00', 'jamSelesai' => '21:00', 'status' => 'Prioritas Spesialis', 'alat' => ['C-Arm']]
+                    ['id' => 'cfg_1', 'ruang' => 'OT 3', 'tanggalMulai' => '2026-07-21', 'jamMulai' => '07:00', 'jamSelesai' => '21:00', 'status' => 'Prioritas Spesialis', 'alat' => ['C-Arm']]
                 ]
             ]);
 

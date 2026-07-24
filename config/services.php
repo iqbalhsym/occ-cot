@@ -44,4 +44,11 @@ return [
         'group' => env('LDAP_GROUP'),
     ],
 
+    'qiscus' => [
+        'app_id' => env('QISCUS_APP_ID'),
+        'secret_key' => env('QISCUS_SECRET_KEY'),
+        'channel_id' => env('QISCUS_WA_CHANNEL_ID'),
+        'base_url' => env('QISCUS_API_BASE_URL', 'https://multichannel.qiscus.com'),
+    ],
+
 ];
